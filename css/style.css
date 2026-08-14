@@ -428,6 +428,14 @@ h1, h2, h3 {
   position: relative; display: block; aspect-ratio: 16 / 10;
   background: var(--nen-3); overflow: hidden;
 }
+/* Dải tối mờ ở mép trên ảnh: nhãn trạng thái luôn đọc rõ, không đè lộn xộn
+   lên chữ có sẵn trong ảnh poster. Nhất là trên điện thoại, ảnh nhỏ nên
+   chữ của poster và nhãn dễ chồng vào nhau.                              */
+.the-ud__anh::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 74px;
+  background: linear-gradient(to bottom, rgba(4, 10, 17, .82), rgba(4, 10, 17, 0));
+  pointer-events: none;
+}
 .the-ud__anh img {
   width: 100%; height: 100%; object-fit: cover; object-position: top center;
   transition: transform .5s var(--do-mo);
@@ -705,6 +713,11 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
   html { scroll-padding-top: 74px; }
   .nut-menu { display: flex; }
 
+  /* Trên điện thoại thanh điều hướng bị đưa ra khỏi dòng (position: fixed),
+     nên không còn gì đẩy hai nút công cụ sang phải. Phải tự đẩy bằng tay,
+     nếu không chúng dính sát vào logo và bỏ trống nửa màn hình bên phải.   */
+  .dau-trang__cong-cu { margin-left: auto; }
+
   .dieu-huong {
     position: fixed; inset: 68px 0 auto; margin: 0;
     background: var(--nen-2); border-bottom: 1px solid var(--vien);
@@ -716,8 +729,53 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
   .dh-link--nut { margin: .6rem 0 0; text-align: center; border-radius: 10px; }
 
   .hang-2 { grid-template-columns: 1fr; }
-  .so-lieu { gap: 1.6rem; }
-  .so-lieu__so { font-size: 1.7rem; }
+
+  /* Ba con số chia đều một hàng, không để 2 trên 1 dưới trông lệch */
+  .so-lieu {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem;
+  }
+  .so-lieu__so { font-size: 1.6rem; }
+
+  /* ── VÙNG BẤM TỐI THIỂU 44px ──────────────────────────────────
+     Đầu ngón tay người lớn rộng khoảng 45px. Nút nhỏ hơn mức này
+     thì bấm hay trượt, nhất là khi đi đường hoặc cầm một tay.
+     Bên dưới chỉ nới VÙNG BẤM, không phóng to chữ — nhìn vẫn gọn. */
+  /* Ô tìm và ô chọn danh mục cùng trải hết bề ngang cho thẳng hàng */
+  .o-tim, .thanh-tim select, .thanh-tim .nut { flex: 1 1 100%; width: 100%; }
+  .thanh-tim .nut { justify-content: center; }
+
+  .nut-icon      { width: 44px; height: 44px; }
+  .nut-loc       { padding: .72rem 1.05rem; }
+  .nut--nho      { padding: .74rem 1rem; }
+  .nut-mang      { padding: .66rem 1.05rem; }
+  .lien-ket-doc  { padding-block: .62rem; }
+  .nut-doc-them  { padding-block: .72rem; margin-top: .3rem; }
+  .the-ud__ten a { display: inline-block; padding-block: .5rem; }
+  .hieu          { padding-block: .3rem; }
+
+  /* Email và số điện thoại là link bấm được — chạm là gọi, là soạn thư.
+     Phải đủ rộng cho ngón tay, đồng thời tách nhau ra cho khỏi bấm nhầm. */
+  a.muc-lien-he__gt { padding-block: .62rem; }
+}
+
+/* ═══════════ 15b. MÀN HÌNH CẢM ỨNG ═══════════
+   Điện thoại không có con trỏ chuột. Khi chạm vào một nút, trình duyệt vẫn
+   kích hoạt trạng thái ":hover" và GIỮ NGUYÊN cho tới khi chạm chỗ khác —
+   nên cái nút vừa bấm cứ sáng viền cam mãi, nhìn như bị lỗi.
+   Khối này tắt toàn bộ hiệu ứng rê chuột trên thiết bị cảm ứng.          */
+@media (hover: none) {
+  .nut-icon:hover {
+    color: var(--chu-2);
+    border-color: var(--vien);
+  }
+  .hieu:hover .hieu__bieu { transform: none; }
+  .nut:hover,
+  .the:hover,
+  .the-ud:hover,
+  .the-tl:hover { transform: none; }
+  .the-ud:hover .the-ud__anh img { transform: none; }
+  .lien-ket-doc:hover span { transform: none; }
+  .nut-doc-them:hover { text-decoration: none; }
 }
 
 /* ═══════════ 16. TÔN TRỌNG LỰA CHỌN GIẢM CHUYỂN ĐỘNG ═══════════ */
