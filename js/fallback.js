@@ -1,0 +1,430 @@
+/* =====================================================================
+   NỘI DUNG DỰ PHÒNG (FALLBACK)
+   ---------------------------------------------------------------------
+   Web ưu tiên lấy nội dung từ Google Sheet. File này chỉ dùng khi:
+     • Chưa dán link Apps Script vào js/config.js, hoặc
+     • Google Sheet lỗi / mất mạng / vượt hạn mức.
+
+   Đây cũng chính là BỘ NỘI DUNG MẪU sẽ được nạp vào Google Sheet khi
+   chạy hàm TAO_BO_KHUNG() trong apps-script/Code.gs.
+
+   ⚠️ TUYỆT ĐỐI KHÔNG ghi tên công ty / nhà máy / khách hàng vào đây.
+      Mọi mô tả về nơi ứng dụng chạy đều để ở dạng chung:
+      "nhà máy sản xuất dược phẩm – thực phẩm – mỹ phẩm".
+   ===================================================================== */
+
+const NOI_DUNG_DU_PHONG = {
+
+  /* ═══════════ 1. CÀI ĐẶT CHUNG (Sheet: CaiDat) ═══════════ */
+  caiDat: {
+    tenThuongHieu:   'rd.newlab',
+    tenHienThi:      'Kỹ sư R&D & Tự động hoá',
+    chucDanh:        'R&D Formulation · Process Automation',
+    tieuDeTrang:     'Kỹ sư R&D & Tự động hoá quy trình',
+    moTaSEO:         'Hồ sơ năng lực của một kỹ sư R&D công thức (thực phẩm – mỹ phẩm – hoá mỹ phẩm) tự xây dựng phần mềm tự động hoá cho nhà máy: Auto RD, Auto KHVT, Auto Box, Autofile, Auto QA-QC, Auto SX.',
+
+    heroDong1:       'Nghiên cứu công thức',
+    heroDong2:       'và tự động hoá quy trình',
+    heroTomTat:      'Tôi làm nghiên cứu phát triển công thức cho thực phẩm, mỹ phẩm và hoá mỹ phẩm. Khi thấy phần lớn thời gian của phòng R&D bị nuốt bởi việc gõ lại số liệu giữa hàng chục file Excel, tôi bắt đầu tự viết phần mềm để dẹp phần việc đó. Sáu ứng dụng đang chạy thật trong nhà máy, và danh sách vẫn còn dài thêm — cứ giải xong một bài toán là lại thấy một bài toán khác đáng làm hơn. Tôi thích cải tiến, ham học cái mới, và luôn sẵn sàng lắng nghe góp ý từ người trong nghề.',
+
+    ctaChinh:        'Xem các ứng dụng',
+    ctaPhu:          'Thư viện tài liệu',
+
+    soLieu1So:       '6+',  soLieu1Nhan: 'ứng dụng đã xây dựng',
+    soLieu2So:       '60+', soLieu2Nhan: 'phân hệ nghiệp vụ',
+    soLieu3So:       '3',   soLieu3Nhan: 'ngành đang phục vụ',
+
+    // Thông tin liên hệ — sửa trên Sheet, không sửa trong code
+    email:           'rd.newlab@gmail.com',
+    emailPhu:        'softwarefull2023@gmail.com',
+    dienThoai:       '0902 620 715',
+    dienThoaiPhu:    '0943 156 780',
+    zalo:            'https://zalo.me/0902620715',
+    github:          '',
+    khuVuc:          'Hà Nội, Việt Nam',
+    nhanViec:        'Nhận việc ở tất cả khu vực',
+
+    driveThuVien:    'https://drive.google.com/drive/folders/1xh5HYDwtYePJjn9-wUpeXXkIAX15ioPA?usp=sharing',
+    congTaiBaoMat:   'https://script.google.com/macros/s/AKfycbyLomg46ybxclBzHUIDH3PwivLOQPjbnYcKRApNj-Ql0JtgFU7skuT3hLVsjExc-nU/exec?id=tailieu',
+
+    chanTrang:       'Nội dung trang được quản lý bằng Google Sheet.'
+  },
+
+  /* ═══════════ 2. ĐỊNH HƯỚNG & MONG MUỐN (Sheet: DinhHuong) ═══════════ */
+  dinhHuong: [
+    {
+      id: 'hoc',
+      icon: '📚',
+      tieuDe: 'Muốn tham gia dự án để học nghề thật',
+      noiDung: 'Tôi tìm những dự án cho phép mình ngồi cùng người trực tiếp làm việc — trưởng ca, thủ kho, kiểm nghiệm viên — chứ không chỉ nhận bản yêu cầu rồi code. Mỗi lần như vậy tôi học được một quy tắc nghiệp vụ mà không tài liệu nào ghi lại.'
+    },
+    {
+      id: 'xaydung',
+      icon: '📐',
+      tieuDe: 'Đi cùng dự án từ bản thiết kế tới sản phẩm chạy được',
+      noiDung: 'Tôi muốn tham gia trọn vòng đời của một sản phẩm: khảo sát nghiệp vụ, dựng luồng dữ liệu, thiết kế giao diện, viết phần mềm, rồi ngồi cạnh người dùng trong những ngày chạy thật đầu tiên. Bàn giao không phải là vạch đích — phần lớn cải tiến có giá trị nhất chỉ lộ ra sau vài tháng sản phẩm sống trong công việc hằng ngày.'
+    },
+    {
+      id: 'gop',
+      icon: '🤝',
+      tieuDe: 'Góp được ngay từ buổi đầu',
+      noiDung: 'Điểm mạnh của tôi là hiểu cả hai đầu: đọc được công thức, định mức, hồ sơ lô — và cũng viết được phần mềm xử lý chúng. Nhờ vậy giai đoạn khảo sát nghiệp vụ thường rút ngắn đáng kể, vì không phải phiên dịch qua lại giữa dân kỹ thuật và dân lập trình.'
+    },
+    {
+      id: 'ai',
+      icon: '🤖',
+      tieuDe: 'Đưa AI vào công việc thật, không dùng theo phong trào',
+      noiDung: 'Tôi dùng AI hằng ngày như một công cụ sản xuất: soạn và rà soát quy trình, đối chiếu văn bản pháp lý, biến hồ sơ scan thành dữ liệu tra cứu được, dựng và kiểm tra mã nguồn. Giá trị nằm ở chỗ biết việc nào giao cho AI thì nhanh gấp nhiều lần, và việc nào bắt buộc con người phải kiểm — với hồ sơ chất lượng, một câu trả lời sai mà nghe rất hợp lý còn nguy hiểm hơn là không có câu trả lời nào.'
+    },
+    {
+      id: 'tich',
+      icon: '🧭',
+      tieuDe: 'Tích luỹ để đi xa hơn công cụ nội bộ',
+      noiDung: 'Sáu ứng dụng hiện tại đều sinh ra từ nhu cầu có thật của một nhà máy. Bước tiếp theo tôi muốn nhắm tới là chuẩn hoá chúng thành sản phẩm dùng được cho nhiều đơn vị: tài liệu đầy đủ, cấp phép rõ ràng, có quy trình cập nhật và hỗ trợ tử tế.'
+    },
+    {
+      id: 'mo',
+      icon: '💬',
+      tieuDe: 'Sẵn sàng nhận phản biện',
+      noiDung: 'Tôi không cho rằng cách mình làm đã là tối ưu. Nếu anh/chị thấy chỗ nào trong các ứng dụng này sai nguyên tắc ngành hoặc có cách làm gọn hơn, tôi rất mong được nghe — đó là loại góp ý khó mua bằng tiền.'
+    }
+  ],
+
+  /* ═══════════ 3. LĨNH VỰC CHUYÊN MÔN (Sheet: LinhVuc) ═══════════ */
+  linhVuc: [
+    {
+      id: 'rd',
+      icon: '🧪',
+      tieuDe: 'Nghiên cứu & phát triển sản phẩm',
+      tenNgan: 'Nghiên cứu & phát triển',
+      moTa: 'Xây dựng công thức cho ba nhóm: dược phẩm và thực phẩm bảo vệ sức khoẻ (cốm, viên nén, bao phim, nang cứng, nang mềm, siro), mỹ phẩm (serum, kem, sữa tắm, dầu gội) và hoá mỹ phẩm gia dụng (nước giặt, nước lau sàn). Công việc không dừng ở công thức: nghiên cứu độ ổn định, chọn bao bì phù hợp cho từng dạng bào chế, và đưa mẫu từ phòng lab lên quy mô công nghiệp mà vẫn giữ được chất lượng.',
+      the: 'Dược · TPBVSK|Mỹ phẩm|Home care|Độ ổn định & bao bì'
+    },
+    {
+      id: 'chatluong',
+      icon: '🛡️',
+      tieuDe: 'Chất lượng & tuân thủ (QA – QC)',
+      tenNgan: 'Chất lượng QA – QC',
+      moTa: 'Xây dựng, cải tiến và tái cấu trúc hệ thống theo GMP, ISO, HACCP và Halal: soạn SOP, dựng tiêu chuẩn cho nguyên liệu – bao bì – bán thành phẩm – thành phẩm, kiểm soát quá trình trên chuyền, xử lý sự không phù hợp và phản hồi chất lượng từ khách hàng. Trực tiếp đào tạo GMP/ISO cho nhân sự và chủ trì làm việc với đoàn thanh tra, kiểm tra.',
+      the: 'GMP · ISO · HACCP · Halal|SOP & tiêu chuẩn|Kiểm soát trên chuyền|Đào tạo nội bộ'
+    },
+    {
+      id: 'vattu',
+      icon: '📦',
+      tieuDe: 'Kế hoạch vật tư, kho & điều phối sản xuất',
+      tenNgan: 'Vật tư & kho',
+      moTa: 'Dự trù nguyên vật liệu từ định mức kỹ thuật cho cả mẻ thử lẫn lô công nghiệp, làm việc với nhà cung cấp để tìm nguyên liệu thay thế, theo dõi tồn kho và xếp lịch chạy cho các tổ pha chế, định liều, đóng gói. Đây là phần việc dạy tôi rằng một kế hoạch chỉ tốt bằng đúng độ chính xác của số liệu tồn kho đứng phía sau nó.',
+      the: 'Dự trù NVL|Định mức kỹ thuật|Quản lý tồn kho|Điều phối chuyền'
+    },
+    {
+      id: 'duan',
+      icon: '🏭',
+      tieuDe: 'Dự án đầu tư & setup nhà xưởng',
+      tenNgan: 'Dự án & nhà xưởng',
+      moTa: 'Triển khai các dự án xây dựng và lắp đặt hệ thống thiết bị cho phân xưởng nước giặt, sữa bột, ngũ cốc và mỹ phẩm — đi trọn từ bản vẽ AutoCAD, chọn công nghệ và thiết bị, lập báo giá và tính chi phí đầu tư, cho tới chạy thử rồi bàn giao vận hành. Kèm theo đó là tìm nguồn nguyên liệu thô và tư vấn công nghệ cho từng dây chuyền.',
+      the: 'Bản vẽ AutoCAD|Chọn thiết bị & công nghệ|Tính chi phí dự án|Chạy thử & bàn giao'
+    },
+    {
+      id: 'luutru',
+      icon: '🗄️',
+      tieuDe: 'Hệ thống lưu trữ & truy xuất hồ sơ',
+      tenNgan: 'Lưu trữ hồ sơ',
+      moTa: 'Thiết kế cách lưu cho cả hai dạng: hồ sơ bản cứng theo yêu cầu GMP — có quy tắc đánh mã, vị trí và thời hạn lưu — và hồ sơ bản mềm với cây thư mục, quy tắc đặt tên, công cụ tra cứu. Thước đo tôi đặt ra rất đơn giản: bất kỳ ai cũng phải lấy được đúng hồ sơ trong vài phút, kể cả khi người lập hồ sơ đó đã nghỉ việc.',
+      the: 'Hồ sơ GMP|Bản cứng & bản mềm|Quy tắc đặt tên|Truy xuất trong vài phút'
+    },
+    {
+      id: 'kpi',
+      icon: '📊',
+      tieuDe: 'Công cụ KPI, tính lương & hành chính',
+      tenNgan: 'KPI & hành chính',
+      moTa: 'Thiết kế bộ chỉ số KPI cho từng phòng ban rồi biến nó thành công cụ chạy được: khai định mức, chấm điểm theo kỳ, tự xếp hạng và xuất báo cáo. Cùng nhóm này là các ứng dụng hành chính — tính lương, tính hệ số khoán theo sản lượng, đăng ký nghỉ phép, tổng hợp công và báo cáo định kỳ tự phát sinh. Phần khó không nằm ở phép tính mà ở chỗ đặt chỉ số sao cho người bị đo thấy công bằng: đo sai một chỉ số là cả phòng xoay theo hướng sai.',
+      the: 'Bộ chỉ số KPI theo phòng ban|Tính lương & hệ số khoán|Đăng ký nghỉ · tổng hợp công|Báo cáo định kỳ tự phát sinh'
+    },
+    {
+      id: 'congnghe',
+      icon: '💻',
+      tieuDe: 'Công nghệ & AI ứng dụng vào vận hành',
+      tenNgan: 'Công nghệ & AI',
+      moTa: 'Quy trình hoá công việc trên Google Sheets và lập trình Apps Script để tự động tính giá trị dinh dưỡng, RNI, KPI và dựng hồ sơ PIF cho mỹ phẩm; tham gia triển khai phần mềm quản trị cho nhà máy. Hiện dùng Claude, NotebookLM và Antigravity như bộ công cụ chính để thiết kế, viết và kiểm thử ứng dụng — cách làm này rút thời gian ra được một công cụ dùng thật từ hàng tháng xuống còn vài ngày.',
+      the: 'Google Sheets|Apps Script|Claude · NotebookLM · Antigravity|Triển khai app'
+    }
+  ],
+
+  /* ═══════════ 4. NĂNG LỰC (Sheet: NangLuc) ═══════════ */
+  nangLuc: [
+    { ten: 'Thiết kế & tối ưu công thức',                nhom: 'R&D',        muc: 95 },
+    { ten: 'Hồ sơ công bố · nhãn · PIF',                 nhom: 'R&D',        muc: 90 },
+    { ten: 'Hệ thống chất lượng GMP / ISO',              nhom: 'R&D',        muc: 88 },
+    { ten: 'Google Sheets & Excel nâng cao',             nhom: 'Tự động hoá', muc: 95 },
+    { ten: 'Google Apps Script',                          nhom: 'Tự động hoá', muc: 90 },
+    { ten: 'Xây dựng ứng dụng desktop (HTML → EXE)',     nhom: 'Tự động hoá', muc: 88 },
+    { ten: 'Bản vẽ kỹ thuật (AutoCAD · Visio)',          nhom: 'Kỹ thuật',   muc: 88 },
+    { ten: 'Ứng dụng AI vào công việc hằng ngày',        nhom: 'Kỹ thuật',   muc: 85 }
+  ],
+
+  /* ═══════════ 5. KHO ỨNG DỤNG (Sheet: UngDung) ═══════════ */
+  ungDung: [
+    {
+      id: 'auto-rd',
+      ten: 'Auto RD',
+      phienBan: 'V12',
+      nhom: 'rd',
+      icon: '🧬',
+      phuDe: 'Từ ý tưởng công thức tới bộ hồ sơ nộp',
+      anh: 'images/autord.png',
+      tomTat: 'Phần mềm R&D cho thực phẩm, mỹ phẩm và hoá mỹ phẩm, gói trong 14 phân hệ nối liền nhau. Một công thức khai đúng một lần rồi tự chảy qua tính dinh dưỡng, tính giá, soi pháp lý, quy trình sản xuất, hồ sơ lô GMP và hồ sơ công bố — không phải gõ lại ở bất kỳ bước nào. Chạy hoàn toàn offline trên máy người dùng.',
+      diemChinh: 'Chuẩn hoá công thức về 100% và quy đổi theo cỡ lô thật|Tính dinh dưỡng, %RNI và Kcal theo 5 chuẩn, cảnh báo ngưỡng UL|Soi pháp lý tự động theo Codex CXS 192-1995 và Annex EC 1223/2009|Xuất hồ sơ công bố ASEAN và PIF ra PDF · Word · ZIP',
+      trangThai: 'Đã triển khai',
+      mauNhan: 'xanh',
+      linkTai: 'https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ',
+      chuThichTai: 'RAR · 92,9 MB · bản dùng thử V11.1'
+    },
+    {
+      id: 'auto-khvt',
+      ten: 'Auto KHVT',
+      phienBan: 'V5',
+      nhom: 'nhamay',
+      icon: '📦',
+      phuDe: 'Kế hoạch vật tư, kho theo lô & báo giá sản xuất',
+      anh: 'images/autokhvt.png',
+      tomTat: 'Quản trị kế hoạch vật tư, kho theo lô và tính giá báo giá sản xuất, gói trong 10 phân hệ. Nhận thẳng định mức BOM từ Auto RD, bung ra lượng nguyên liệu và bao bì cần mua theo đúng cỡ lô, quản tồn theo lô nội bộ với nguyên tắc FEFO, rồi dựng báo giá tách bạch tới từng khoản chi phí công đoạn.',
+      diemChinh: 'Dự trù NVL và bao bì theo cỡ lô, đã cộng tỷ lệ hao hụt|Xuất kho FEFO, chặn lô quá hạn và lô chưa đạt kiểm nghiệm|Báo giá 10 bước, so sánh bậc giá theo 3–5 cỡ lô|Thẩm tra giá tự động: thiếu giá, lệch giá kho, lãi thấp',
+      trangThai: 'Đang triển khai',
+      mauNhan: 'cam',
+      linkTai: '',
+      chuThichTai: 'Bản dùng thử đang được chuẩn bị'
+    },
+    {
+      id: 'auto-qaqc',
+      ten: 'Auto QA-QC',
+      phienBan: 'V3',
+      nhom: 'nhamay',
+      icon: '🔬',
+      phuDe: 'Trung tâm chất lượng — eQMS & LIMS',
+      anh: 'images/autoqc.png',
+      tomTat: 'Trung tâm chất lượng của cả hệ sinh thái, gồm 19 phân hệ chạy từ kiểm nguyên liệu đầu vào cho tới lúc ký số nhả lô. Một chỉ tiêu không đạt sẽ tự mở hồ sơ điều tra OOS; lô hàng chỉ được nhả khi hội đủ ba điều kiện. Mọi thao tác ghi vào nhật ký kiểm toán không có chức năng xoá.',
+      diemChinh: 'Phiếu kiểm nghiệm tự nạp tiêu chuẩn và tự chấm Đạt / Không đạt|Chỉ tiêu FAIL tự mở hồ sơ OOS, đóng hết CAPA mới khép sự cố|Nhả lô chỉ mở khi đủ 3 điều kiện: KN đạt · hết OOS · hết CAPA|Truy xuất lô 360° và nhật ký kiểm toán chuẩn 21 CFR Part 11',
+      trangThai: 'Đang triển khai',
+      mauNhan: 'cam',
+      linkTai: '',
+      chuThichTai: 'Bản dùng thử đang được chuẩn bị'
+    },
+    {
+      id: 'auto-box',
+      ten: 'Auto Box Plus',
+      phienBan: 'V16.0',
+      nhom: 'nhamay',
+      icon: '🚚',
+      phuDe: 'Xếp hộp, xếp thùng, xếp cả đội xe',
+      anh: 'images/autobox.png',
+      tomTat: 'Bài toán đóng gói và điều xe giải bằng thuật toán xếp khối 3D, chia thành 7 mô-đun đi từ hộp sản phẩm lên tới cả đội xe. Kết quả không dừng ở con số mà là mô hình 3D xoay được, bóc xem từng lớp, kèm bản in sơ đồ bốc xếp A4 đưa thẳng cho công nhân kho.',
+      diemChinh: 'Xếp tối đa hộp vào thùng, tự xoay đứng – nằm – ngang|Đề xuất kích thước thùng carton mới vừa khít lô hàng|Điều phối container 20ft · 40ft · 40HC và xe tải, cảnh báo quá tải|Ghép nhiều loại thùng lên một xe, phân bổ trọng tâm cân bằng',
+      trangThai: 'Đã triển khai',
+      mauNhan: 'tim',
+      linkTai: 'https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ',
+      chuThichTai: 'RAR · 73 MB · dùng thử 7 ngày'
+    },
+    {
+      id: 'autofile',
+      ten: 'Autofile',
+      phienBan: 'V23',
+      nhom: 'vanphong',
+      icon: '🗂️',
+      phuDe: 'Chuẩn hoá, tìm kiếm & trích xuất hồ sơ',
+      anh: 'images/autofile.png',
+      tomTat: 'Một file EXE chạy thẳng, không cần cài đặt, gồm 9 phân hệ. Bạn tự định nghĩa biến trong ngoặc nhọn rồi dùng chung bộ biến đó cho cả tên file lẫn đường dẫn lưu — điền một lần, phần mềm sinh tên chuẩn và tự tạo đúng cây thư mục. Toàn bộ xử lý chạy tại chỗ, tài liệu không rời khỏi máy.',
+      diemChinh: 'Biến tự đặt dùng chung cho tên file và đường dẫn lưu|Trích xuất nội dung Word · Excel · PDF ra bảng tổng hợp|Tìm gần giống bằng thuật toán Levenshtein, gõ sai vẫn ra|Chuyển font tiếng Việt đời cũ VNI · TCVN3 sang Unicode',
+      trangThai: 'Đã triển khai',
+      mauNhan: 'tim',
+      linkTai: 'https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg',
+      chuThichTai: 'RAR · 1,2 MB · dùng thử 7 ngày'
+    },
+    {
+      id: 'auto-sx',
+      ten: 'Auto SX',
+      phienBan: 'V5',
+      nhom: 'nhamay',
+      icon: '🏭',
+      phuDe: 'Điều phối & kế hoạch sản xuất',
+      anh: '',
+      tomTat: 'Nhận lệnh sản xuất từ Auto KHVT rồi xếp thành lịch chạy cho từng tổ: pha chế, định liều, dập viên, đóng gói. Theo dõi công suất máy, ghi nhận hao hụt thực tế theo lô và đo hiệu suất thiết bị tổng thể (OEE) để biết dây chuyền đang mất giờ ở đâu.',
+      diemChinh: 'Lập lịch cho từng tổ theo lệnh sản xuất|Quản lý định mức hao hụt và cảnh báo vượt|Theo dõi năng suất thực tế theo giờ|Đo hiệu suất thiết bị tổng thể (OEE)',
+      trangThai: 'Đang phát triển',
+      mauNhan: 'xam',
+      linkTai: '',
+      chuThichTai: 'Đang phát triển, chưa có bản dùng thử'
+    }
+  ],
+
+  /* ═══════════ 6. BÀI VIẾT TỪNG ỨNG DỤNG (Sheet: BaiViet) ═══════════
+     Mỗi dòng = một đoạn của bài. Muốn thêm đoạn thì thêm dòng.        */
+  baiViet: [
+
+    /* ---------- AUTO RD ---------- */
+    { maApp: 'auto-rd', thuTu: 1, tieuDe: 'Vấn đề gốc: một công thức bị chép lại quá nhiều lần',
+      noiDung: 'Một công thức đi từ bàn thí nghiệm ra tới hồ sơ nộp phải qua rất nhiều lần chép: chép sang bảng tính giá, chép sang bảng dinh dưỡng, chép sang quy trình sản xuất, chép sang tiêu chuẩn cơ sở, rồi chép sang hồ sơ công bố. Mỗi lần chép là một cơ hội sai. Tôi từng mất cả buổi để tìm ra vì sao bảng giá và bảng định mức lệch nhau — hoá ra một nguyên liệu đã đổi tỷ lệ ở file này mà chưa đổi ở file kia. Auto RD sinh ra để cắt đứt vòng chép tay đó.' },
+    { maApp: 'auto-rd', thuTu: 2, tieuDe: 'Mười bốn phân hệ, một dòng số liệu duy nhất',
+      noiDung: 'Nguyên tắc thiết kế xuyên suốt: mỗi số chỉ được nhập đúng một lần, tại đúng nơi nó phát sinh. Công thức khai ở phân hệ Nghiên cứu sẽ tự chảy sang Tính giá, sang Dinh dưỡng – RNI, sang Quy trình sản xuất và hồ sơ lô GMP, sang Soi pháp lý, sang hồ sơ công bố và PIF. Đổi một nguyên liệu ở gốc thì mười bốn phân hệ cùng cập nhật. Câu hỏi quen thuộc nhất của phòng R&D — "bản nào mới nhất" — gần như biến mất, vì chỉ còn đúng một bản.' },
+    { maApp: 'auto-rd', thuTu: 3, tieuDe: 'Dinh dưỡng: năm chuẩn tính và một ngưỡng không được vượt',
+      noiDung: 'Giá trị dinh dưỡng không có một cách tính duy nhất. Cùng một công thức, đối chiếu theo bảng nhu cầu khuyến nghị của Việt Nam sẽ ra %RNI khác với đối chiếu theo Codex, FAO hay quy định của EU — mà hồ sơ nộp ở mỗi thị trường lại đòi một chuẩn riêng. Auto RD tính song song cả năm cách và cho chọn chuẩn khi xuất hồ sơ. Quan trọng hơn: khi một vi chất chạm hoặc vượt ngưỡng tiêu thụ tối đa an toàn (UL), phần mềm báo đỏ ngay lúc đang dựng công thức — chứ không phải đợi tới lúc hồ sơ bị trả lại.' },
+    { maApp: 'auto-rd', thuTu: 4, tieuDe: 'Chỗ dễ sai nhất vẫn là đơn vị',
+      noiDung: 'Sai đơn vị là loại lỗi nguy hiểm nhất trong phần mềm R&D, vì số vẫn chạy bình thường và không có gì báo động. Nhầm kg/m³ với kg/L là sai một nghìn lần. Vitamin A dạng retinyl acetate và retinyl palmitate có hệ số quy đổi IU khác nhau; vitamin E tự nhiên khác vitamin E tổng hợp. Vì vậy Auto RD bắt buộc nguyên liệu lỏng phải khai tỷ trọng thật thay vì mặc định bằng 1, và quy đổi IU theo đúng dạng hoá học — thiếu dữ liệu thì báo thiếu, không đoán bừa. Kèm theo là bộ công cụ tính sẵn trong app: pha loãng C₁V₁ = C₂V₂, quy đổi %w/w ↔ ppm, °Brix ↔ tỷ trọng, scale cỡ lô và kiểm soát khối lượng đóng gói theo ĐLVN 275.' },
+    { maApp: 'auto-rd', thuTu: 5, tieuDe: 'Soi pháp lý bằng máy thay vì bằng trí nhớ',
+      noiDung: 'Một chuyên viên giỏi vẫn không thể thuộc lòng toàn bộ danh mục phụ gia được phép cùng mức dùng tối đa của từng chất trong từng nhóm thực phẩm. Auto RD bung nguyên công thức ra rồi đối chiếu tự động: thực phẩm soi theo Codex CXS 192-1995, mỹ phẩm soi theo Annex của EC 1223/2009. Chất bị cấm thì báo đỏ chặn lại; chất vượt mức tối đa cho phép thì chỉ rõ ngưỡng để hạ tỷ lệ. Kiểm tra này chạy ngay từ lúc còn đang thử nghiệm — rẻ hơn rất nhiều so với phát hiện sau khi đã sản xuất.' },
+    { maApp: 'auto-rd', thuTu: 6, tieuDe: 'Từ công thức tới bộ hồ sơ nộp được',
+      noiDung: 'Phần mềm R&D chỉ thực sự có ích khi kết quả in ra nộp được luôn. Auto RD dựng quy trình sản xuất theo mười bước mẫu chia ba công đoạn — pha chế, đóng gói cấp 1, đóng gói cấp 2 — rồi xuất biểu mẫu trống cho ba tổ ký ở ba thời điểm, đúng cách hồ sơ lô GMP vận hành ngoài xưởng. Hồ sơ công bố mỹ phẩm ASEAN và bộ PIF được điền tự động từ chính công thức đó, có sẵn cả bản theo chuẩn áp dụng từ 01/01/2029, xuất ra PDF, Word hoặc gói ZIP. Song song, kế hoạch theo dõi độ ổn định tự lên mốc 1–3–6–9 cho tới 36 tháng, tự soạn phiếu yêu cầu gửi phòng Lab đúng hạn và tự chấm đạt hay không khi kết quả trả về.' },
+    { maApp: 'auto-rd', thuTu: 7, tieuDe: 'Điều tôi rút ra',
+      noiDung: 'Bài học lớn nhất từ Auto RD: đừng số hoá một quy trình mình chưa từng tự tay làm. Rất nhiều chi tiết chỉ lộ ra khi ngồi làm thật — người ta hay ghi định mức theo mẻ chứ không theo kilogram; một nguyên liệu có thể mang hai tên gọi ở hai bộ phận; công thức hiếm khi đủ 100% ngay lần đầu mà thường chỉnh vài hoạt chất rồi lấy dung môi bù phần còn lại. Phần mềm bỏ qua những chi tiết đó thì dù tính đúng vẫn không ai dùng.' },
+
+    /* ---------- AUTO KHVT ---------- */
+    { maApp: 'auto-khvt', thuTu: 1, tieuDe: 'Bài toán: vật tư sống trong một chùm file Excel',
+      noiDung: 'Ở phần lớn nhà máy vừa và nhỏ, kế hoạch vật tư nằm rải trong một chùm file: một file đơn hàng, một file dự trù, một file theo dõi mua, một file tồn kho, thêm vài file riêng của từng người. Chúng đúng ở thời điểm lập và bắt đầu lệch nhau từ hôm sau. Hậu quả quen thuộc là mua thừa thứ đang tồn, thiếu đúng thứ cần cho lô tuần này, và một tủ nguyên liệu hết hạn không ai kịp phát hiện.' },
+    { maApp: 'auto-khvt', thuTu: 2, tieuDe: 'Đơn hàng là chứng từ gốc',
+      noiDung: 'Auto KHVT chọn một điểm neo duy nhất: đơn hàng. Từ đơn hàng bung ra dự trù nguyên vật liệu và bao bì dựa trên định mức BOM nhận thẳng từ Auto RD, đã cộng sẵn tỷ lệ hao hụt và quy theo đúng cỡ lô sắp chạy; từ dự trù so với tồn thực tế ra đơn đề nghị mua; rồi nhập kho, lệnh sản xuất, nhập thành phẩm, xuất giao hàng. Bảy bước là một dòng chảy có thứ tự, và bất kỳ chứng từ nào cũng truy ngược được về đúng đơn hàng sinh ra nó.' },
+    { maApp: 'auto-khvt', thuTu: 3, tieuDe: 'Tồn kho phải quản theo lô, không thể quản theo tổng',
+      noiDung: 'Với ngành dược và thực phẩm, con số "tồn 500 kg" gần như vô nghĩa nếu không biết 500 kg đó gồm những lô nào và hạn dùng tới đâu. Mỗi lần nhập, Auto KHVT sinh một mã lô nội bộ theo cấu trúc thống nhất, gắn kèm lô nhà cung cấp và hạn dùng, quản song song nhiều kho khác nhau. Xuất kho mặc định chọn lô gần hết hạn trước theo nguyên tắc FEFO, nổi cảnh báo với lô cận hạn dưới 30 ngày, và chặn thẳng thao tác nếu lô đó chưa được phòng chất lượng duyệt đạt. Chặn ngay tại chỗ như vậy hiệu quả hơn nhiều so với một quy định dán trên tường.' },
+    { maApp: 'auto-khvt', thuTu: 4, tieuDe: 'Báo giá mười bước — chỗ Excel đuối nhất',
+      noiDung: 'Tính giá nguyên liệu thì Excel làm được. Nhưng một báo giá sản xuất tử tế còn phải tách bạch bao bì cấp 1, bao bì cấp 2, và chi phí công đoạn — thứ phụ thuộc vào năng suất người trên ca, số giờ công và khấu hao máy, nên thay đổi theo cỡ lô. Đây là chỗ bảng tính bắt đầu rối. Auto KHVT tính chi phí công đoạn bung thẳng từ tuyến sản xuất đã khai, rồi xuất bảng so sánh bậc giá theo ba tới năm cỡ lô — nhìn một lần là thấy lô càng lớn giá trên đơn vị càng giảm bao nhiêu. Đó là con số cần có khi ngồi thương lượng với khách, không phải con số ước lượng.' },
+    { maApp: 'auto-khvt', thuTu: 5, tieuDe: 'Thẩm tra giá: để phần mềm bắt lỗi thay người',
+      noiDung: 'Sai sót trong báo giá thường không đến từ phép tính mà từ dữ liệu đầu vào: một nguyên liệu mới chưa khai giá, một đơn giá nhập từ năm ngoái chưa cập nhật, một đơn hàng vô tình báo dưới giá vốn. Auto KHVT rà ba nhóm cảnh báo trước khi cho xuất phiếu: thiếu đơn giá, đơn giá lệch quá 5% so với giá nhập bình quân đang có trong kho, và tỷ lệ lãi rơi dưới ngưỡng an toàn đã cài. Mỗi cảnh báo có nút nhảy thẳng tới ô dữ liệu cần sửa — vì một cảnh báo mà không chỉ được chỗ sửa thì người ta sẽ bỏ qua nó.' },
+    { maApp: 'auto-khvt', thuTu: 6, tieuDe: 'Tôn trọng thói quen của người đang dùng Excel',
+      noiDung: 'Một quyết định thiết kế tôi cho là quan trọng: không bắt người dùng bỏ Excel ngay ngày đầu. Auto KHVT cho dán thẳng bảng từ Excel và tự khớp cột theo tiêu đề, nhập được CSV, gợi ý mã khi gõ, giữ các phím tắt quen tay. Chứng từ in ra theo mẫu quen thuộc của kế toán kho. Ứng dụng chạy offline trên một máy hoặc đặt trên ổ mạng nội bộ cho nhiều người cùng dùng, phân quyền riêng cho thủ kho, người lập kế hoạch và người tính giá. Phần mềm bắt người ta đổi thói quen quá nhiều thì thường chết yểu, dù chức năng có hay tới đâu.' },
+
+    /* ---------- AUTO QA-QC ---------- */
+    { maApp: 'auto-qaqc', thuTu: 1, tieuDe: 'Chất lượng không nằm ở tờ giấy cuối cùng',
+      noiDung: 'Hệ thống chất lượng trên giấy thường trông rất đầy đủ, nhưng khi cần tra ngược một lô có vấn đề thì mọi thứ chậm lại: phiếu kiểm nghiệm ở một tủ, hồ sơ lô ở tủ khác, biên bản xử lý sự cố nằm trong máy của ai đó đã nghỉ. Auto QA-QC gộp cả chuỗi thành một nền tảng 19 phân hệ, chạy liền từ kiểm nguyên liệu đầu vào, kiểm trên dòng sản xuất, kiểm thành phẩm, cho tới lúc ký số nhả lô ra thị trường.' },
+    { maApp: 'auto-qaqc', thuTu: 2, tieuDe: 'Máy so tiêu chuẩn thay cho mắt người',
+      noiDung: 'Kiểm nghiệm viên chỉ nhập số đo; việc đối chiếu với tiêu chuẩn và kết luận đạt hay không do hệ thống làm, dựa trên bộ chỉ tiêu đồng bộ thẳng từ Auto RD nên luôn là phiên bản mới nhất. Nghe đơn giản, nhưng đây là chỗ loại được một nhóm sai sót rất khó phát hiện: đọc nhầm cột tiêu chuẩn, dùng nhầm bản tiêu chuẩn cũ, hoặc kết quả nằm sát ngưỡng mà người đọc vô thức cho qua. Loại sai sót này không ai cố ý, và cũng không cách nào bắt được bằng cách nhắc nhau cẩn thận.' },
+    { maApp: 'auto-qaqc', thuTu: 3, tieuDe: 'Một chỉ tiêu không đạt tự mở hồ sơ điều tra',
+      noiDung: 'Điểm rò rỉ lớn nhất của hệ thống chất lượng thủ công nằm ở khoảng giữa: kết quả không đạt đã có, nhưng hồ sơ điều tra thì chưa ai lập. Auto QA-QC bịt khoảng đó bằng cách tự động — khi trưởng phòng ký duyệt một phiếu kiểm nghiệm có chỉ tiêu không đạt, hồ sơ sự cố và điều tra ngoài tiêu chuẩn mở ra ngay theo đúng quy trình đã ban hành, không cần ai nhớ để tạo. Từ đó sinh các hành động khắc phục và phòng ngừa, gán cho người phụ trách kèm hạn hoàn thành. Sự cố chỉ tự khép lại khi toàn bộ hành động thành phần đã đóng — quá hạn cái nào là hiện đỏ trên bảng điều khiển.' },
+    { maApp: 'auto-qaqc', thuTu: 4, tieuDe: 'Ba điều kiện trước khi một lô được nhả',
+      noiDung: 'Nhả lô là quyết định tốn kém nhất của phòng chất lượng: sai một lần là thu hồi. Vì vậy nút ký số ở màn hình nhả lô chỉ mở khi hệ thống tự kiểm đủ ba điều kiện — phiếu kiểm nghiệm thành phẩm đã duyệt đạt, không còn sự cố ngoài tiêu chuẩn nào đang mở, và toàn bộ hành động khắc phục liên quan đã hoàn tất. Thiếu bất kỳ điều nào thì nút không sáng, kèm dòng chỉ rõ đang vướng ở đâu. Đây không phải rào cản cho vui: nó biến một nguyên tắc vốn phụ thuộc trí nhớ và áp lực tiến độ thành một điều kiện kỹ thuật không thương lượng được.' },
+    { maApp: 'auto-qaqc', thuTu: 5, tieuDe: 'Truy xuất 360° và nhật ký không xoá được',
+      noiDung: 'Gõ một số lô, hệ thống bung ra cả cây lịch sử: nhà cung cấp, ngày nhập, phiếu kiểm đầu vào, lệnh sản xuất, phiếu kiểm trên dòng và thành phẩm, các sự cố liên quan. Chuỗi này phải đứng vững cả khi bị hỏi ngược lại — một lô nguyên liệu có vấn đề thì đã đi vào những lô thành phẩm nào, đã giao cho ai. Song song, mọi thao tác ghi vào nhật ký kiểm toán theo tinh thần 21 CFR Part 11: ai làm gì, lúc nào, sửa từ giá trị nào sang giá trị nào — và không có chức năng xoá log. Chính chỗ "không xoá được" mới là thứ khiến hồ sơ điện tử đứng vững trước đoàn thanh tra, và cũng là chỗ dễ bị làm hời hợt nhất nếu người viết phần mềm không hiểu vì sao nó tồn tại.' },
+    { maApp: 'auto-qaqc', thuTu: 6, tieuDe: 'Phòng Lab cũng cần được quản',
+      noiDung: 'Một kết quả kiểm nghiệm chỉ đáng tin khi thiết bị còn hiệu chuẩn, chất chuẩn còn hạn và phương pháp thử đã được thẩm định. Vì vậy trong Auto QA-QC có sẵn phần quản lý phòng Lab: vị trí và số lượng mẫu lưu kèm nhật ký huỷ mẫu, hạn dùng hoá chất và chất chuẩn, lịch hiệu chuẩn và bảo trì thiết bị, tất cả đều cảnh báo trước khi tới hạn. Kèm theo là phần thẩm định IQ/OQ/PQ cho thiết bị, quy trình, phương pháp thử và vệ sinh — chưa đủ ba giai đoạn đạt thì hệ thống không cho phê duyệt. Đây là phần ít được nhắc tới nhưng là nền của mọi con số phía trên.' },
+
+    /* ---------- AUTO BOX ---------- */
+    { maApp: 'auto-box', thuTu: 1, tieuDe: 'Một bài toán tưởng nhỏ mà tốn tiền thật',
+      noiDung: 'Chọn sai kích thước thùng carton là khoản lãng phí âm thầm nhất trong khâu đóng gói: thùng rộng hơn cần thiết vài centimet thì tốn giấy, tốn chèn lót, tốn thể tích xe và tốn cả diện tích kho. Nhân với vài chục nghìn thùng một năm, con số không còn nhỏ. Ở phía vận chuyển cũng vậy — mỗi phần trăm thể tích container bỏ trống là tiền cước trả cho không khí. Trước đây việc này chủ yếu dựa vào kinh nghiệm và thử bằng tay, mỗi lần ra sản phẩm mới lại thử lại từ đầu.' },
+    { maApp: 'auto-box', thuTu: 2, tieuDe: 'Ba tầng bài toán: hộp → thùng → xe',
+      noiDung: 'Auto Box giải liên tiếp ba tầng. Tầng một: xếp tối đa số hộp sản phẩm vào một thùng carton, tự thử các phương án xoay đứng, nằm và ngang; hoặc làm ngược lại — cho trước số hộp cần đóng rồi đề xuất ba kích thước thùng vừa khít nhất, đây là chỗ tiết kiệm tiền vỏ thùng rõ nhất. Tầng hai: xếp các thùng đó vào container 20ft, 40ft, 40HC hoặc xe tải, tính ngay thể tích an toàn và tổng tải trọng, vượt ngưỡng là cảnh báo đỏ. Tầng ba: chia cả lô hàng nhiều chủng loại lên đội xe, giới hạn được số loại xe huy động và phân bổ sao cho trọng tâm cân bằng.' },
+    { maApp: 'auto-box', thuTu: 3, tieuDe: 'Xếp cho vừa chưa đủ, phải xếp cho vững',
+      noiDung: 'Đây là chỗ tôi thấy nhiều công cụ tính xếp hàng bỏ sót. Một phương án tối ưu tuyệt đối về thể tích có thể hoàn toàn bất khả thi ngoài thực tế: lớp thưa nằm dưới, lớp dày đè lên trên, xe chạy vài chục cây số là móp hàng. Auto Box dùng quy tắc xếp lớp nhiều hàng xuống dưới, lớp lẻ và thưa lên trên — giữ nguyên sức chứa nhưng khối hàng đứng vững, chịu được rung lắc đường bộ và đường biển. Bài toán ở đây không thuần là hình học, mà là hình học cộng với điều kiện cơ học của hàng thật.' },
+    { maApp: 'auto-box', thuTu: 4, tieuDe: 'Mô phỏng 3D để nhìn trước khi làm thật',
+      noiDung: 'Kết quả thuật toán xếp khối nếu chỉ hiện ra dưới dạng bảng số thì rất khó tin và khó kiểm tra. Vì vậy Auto Box dựng mô phỏng 3D xoay 360° được, phóng to được, kèm thanh trượt bóc xem từng lớp từ đáy lên. Người điều phối nhìn thấy chính xác lớp dưới đặt hàng gì, lớp trên đặt hàng gì, còn khoảng trống ở đâu. Đây cũng là cách nhanh nhất để một người có kinh nghiệm kho phát hiện phương án nào nghe thì hợp lý mà làm thì không nổi.' },
+    { maApp: 'auto-box', thuTu: 5, tieuDe: 'Từ màn hình ra tới bãi xe',
+      noiDung: 'Phương án xếp chỉ có giá trị khi tới được tay người bốc hàng. Auto Box in sơ đồ bốc xếp khổ A4 kèm hình 3D, số lượng hộp và thùng, thể tích, tải trọng và thứ tự xếp từng lớp — công nhân kho nhìn hình là làm được, không phải suy đoán. Bản in đó cũng xuất PDF gửi cho tài xế và cho khách. Danh mục hộp, thùng, phương tiện nhập xuất bằng Excel, có sao lưu và khôi phục; ứng dụng chạy dạng portable, cắm USB là chạy, không cần cài đặt.' },
+
+    /* ---------- AUTOFILE ---------- */
+    { maApp: 'autofile', thuTu: 1, tieuDe: 'Hồ sơ nhiều tới mức tìm lại còn lâu hơn làm mới',
+      noiDung: 'Một nhà máy có hệ thống chất lượng chạy đủ sẽ sinh ra lượng hồ sơ khổng lồ: phiếu kiểm nghiệm, hồ sơ lô, COA, hợp đồng, bản công bố, tiêu chuẩn cơ sở. Vấn đề hiếm khi là chỗ lưu — vấn đề là mỗi người đặt tên một kiểu và cất một nơi. Đến lúc thanh tra hỏi một hồ sơ cụ thể thì cả phòng cùng đi tìm. Autofile dẹp phần hỗn loạn đó ngay từ lúc tài liệu được đưa vào, thay vì đi dọn khi đã muộn.' },
+    { maApp: 'autofile', thuTu: 2, tieuDe: 'Biến do người dùng tự đặt — chỗ tôi tâm đắc nhất',
+      noiDung: 'Thay vì áp một quy tắc đặt tên cứng, Autofile cho người dùng tự định nghĩa biến trong ngoặc nhọn, đặt tên gì cũng được. Điểm mấu chốt: cùng một bộ biến dùng đồng thời cho cú pháp tên file và cho cấu trúc đường dẫn lưu. Khai {MaSP}_{Lo}_{Ngay} thì được tên chuẩn; khai đường dẫn có {MaSP} thì tài liệu tự vào đúng thư mục của mã sản phẩm đó, thư mục chưa có thì tự tạo. Điền một lần, phần mềm lo cả tên lẫn chỗ cất, và mỗi loại hồ sơ có thể mang một bộ quy tắc riêng. Ý tưởng này đến từ chính việc phải viết quy định đặt tên file cho cả phòng — viết ra thì dễ, bắt mọi người làm đúng mới khó.' },
+    { maApp: 'autofile', thuTu: 3, tieuDe: 'Tìm được cả khi nhớ sai',
+      noiDung: 'Người đi tìm hồ sơ thường chỉ nhớ mang máng: thiếu dấu, sai chính tả, đảo thứ tự chữ, nhớ nhầm mã. Autofile có nhiều chế độ tìm, trong đó chế độ tìm gần giống dựa trên thuật toán đo khoảng cách Levenshtein giữa hai chuỗi, nên không cần gõ đúng tuyệt đối vẫn ra kết quả. Ngoài tìm theo tên, phần mềm còn tìm được từ khoá nằm sâu bên trong nội dung tài liệu — thứ quyết định khi bạn chỉ nhớ nội dung mà quên hẳn tên file.' },
+    { maApp: 'autofile', thuTu: 4, tieuDe: 'Đọc được bên trong file, không chỉ đọc tên file',
+      noiDung: 'Phần tôi dùng nhiều nhất lại là trích xuất hàng loạt. Nạp vào vài trăm file Word, Excel hoặc PDF — hợp đồng, phiếu kết quả, biên bản — phần mềm đọc sâu vào nội dung, bóc ra các trường cần thiết như số hiệu, ngày ký, giá trị, chỉ tiêu, rồi trả về một bảng Excel tổng hợp. Việc trước đây phải mở từng file để chép tay giờ còn vài phút. Đây cũng là bước biến một đống tài liệu chết thành dữ liệu tra cứu và thống kê được.' },
+    { maApp: 'autofile', thuTu: 5, tieuDe: 'Hai chi tiết nhỏ cứu được rất nhiều giờ',
+      noiDung: 'Thứ nhất là font tiếng Việt đời cũ. Kho tài liệu của nhiều đơn vị vẫn còn hàng nghìn file gõ bằng VNI-Times hay TCVN3 — mở ra là chữ loạn, đọc không nổi, bỏ thì tiếc. Autofile nhận diện và chuyển mã hàng loạt sang Unicode mà không phá định dạng. Thứ hai là thao tác PDF ngay trong app: xem trước một chạm, ghép nhiều phiếu COA và tiêu chuẩn thành một bộ hồ sơ hoàn chỉnh, hoặc tách một file dày thành từng trang. Hai việc nhỏ, nhưng là hai việc người làm hồ sơ phải làm mỗi ngày.' },
+    { maApp: 'autofile', thuTu: 6, tieuDe: 'Dữ liệu không rời khỏi máy',
+      noiDung: 'Autofile là một file EXE chạy thẳng, không cần cài đặt, dùng được trên Windows 10 và 11. Toàn bộ xử lý diễn ra tại chỗ: không tải tài liệu lên đám mây, không cần Internet. Với hồ sơ chất lượng, hợp đồng và tài liệu công bố, đây không phải tính năng cộng thêm mà là điều kiện bắt buộc — nhiều đơn vị đơn giản là không được phép đưa loại tài liệu này ra khỏi mạng nội bộ.' },
+
+    /* ---------- AUTO SX ---------- */
+    { maApp: 'auto-sx', thuTu: 1, tieuDe: 'Mắt xích còn thiếu giữa kế hoạch và nhà xưởng',
+      noiDung: 'Auto KHVT trả lời câu hỏi "cần mua gì, còn tồn gì", nhưng chưa trả lời "khi nào tổ nào chạy cái gì". Đó là khoảng trống Auto SX lấp vào: nhận lệnh sản xuất và xếp thành lịch chạy cụ thể cho từng tổ — pha chế, định liều, dập viên, đóng gói — dựa trên công suất máy và nhân sự đang có.' },
+    { maApp: 'auto-sx', thuTu: 2, tieuDe: 'Đo cái thực sự mất, không đo cái dễ đo',
+      noiDung: 'Hao hụt và thời gian chết là hai khoản mà nhà máy hay ước lượng hơn là đo. Auto SX ghi nhận hao hụt thực tế theo từng lô và cảnh báo khi vượt định mức, đồng thời tính hiệu suất thiết bị tổng thể (OEE) — chỉ số ghép cả ba yếu tố sẵn sàng, tốc độ và chất lượng. Biết dây chuyền mất giờ ở đâu thường có giá trị hơn là biết tổng sản lượng tháng.' },
+    { maApp: 'auto-sx', thuTu: 3, tieuDe: 'Đang phát triển',
+      noiDung: 'Đây là ứng dụng non nhất trong nhóm sáu, hiện đang được dựng phần khung. Tôi chủ ý làm chậm phần này, vì lập lịch sản xuất là bài toán rất dễ viết ra một phần mềm chạy đúng trên lý thuyết nhưng không ai ngoài xưởng dùng nổi. Trước khi viết tiếp, tôi cần thêm thời gian đứng ở chuyền để hiểu cách các tổ thực sự đổi ca và xử lý khi lệch kế hoạch.' }
+  ],
+
+  /* ═══════════ 7. THƯ VIỆN TÀI LIỆU (Sheet: TaiLieu) ═══════════ */
+  /* Link lấy trực tiếp từ thư mục Drive "20.Sharing" — đúng cấu trúc 3 nhóm.
+     Thư mục:  .../drive/folders/<ID>      File đơn:  .../file/d/<ID>/view      */
+  taiLieu: [
+
+    /* ═══ 1. VĂN BẢN PHÁP LUẬT — trỏ vào từng nhóm trong kho VBPL 2026 ═══ */
+    { id: 'pl-attp', tieuDe: 'Văn bản An toàn thực phẩm', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Nghị định, thông tư và hướng dẫn về điều kiện sản xuất, công bố và ghi nhãn thực phẩm.',
+      link: 'https://drive.google.com/drive/folders/1vYagdiGQlMobSuPWeRce-E1PNYpitJVr' },
+    { id: 'pl-mypham', tieuDe: 'Văn bản Mỹ phẩm', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Quy định quản lý mỹ phẩm, công bố sản phẩm, hồ sơ thông tin sản phẩm và CGMP ASEAN.',
+      link: 'https://drive.google.com/drive/folders/1WW0sK4cFW_Zq5JQzmmIyvhy1JjGW4ZTW' },
+    { id: 'pl-duoc', tieuDe: 'Văn bản Dược', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Luật Dược và các văn bản hướng dẫn về sản xuất, đăng ký và lưu hành thuốc.',
+      link: 'https://drive.google.com/drive/folders/1YU-_MC-gP0tgNVr7dt902peL3MO9AZdF' },
+    { id: 'pl-qcvn', tieuDe: 'Quy chuẩn kỹ thuật quốc gia (QCVN)', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Bộ QCVN áp dụng cho thực phẩm, phụ gia, giới hạn ô nhiễm và bao bì tiếp xúc.',
+      link: 'https://drive.google.com/drive/folders/1Si3dTeGVFRMt_HabUrLlSdB29SSSsL8a' },
+    { id: 'pl-tcvn', tieuDe: 'Tiêu chuẩn quốc gia (TCVN)', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Tiêu chuẩn Việt Nam dùng khi xây dựng tiêu chuẩn cơ sở và phương pháp thử.',
+      link: 'https://drive.google.com/drive/folders/177LOCLCkM9tVWDaImhUEgLPUCCpDG2M5' },
+    { id: 'pl-codex', tieuDe: 'Tiêu chuẩn CODEX', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Bộ tiêu chuẩn quốc tế CODEX, gồm danh mục phụ gia và mức sử dụng tối đa theo nhóm thực phẩm.',
+      link: 'https://drive.google.com/drive/folders/1gNWyw2rZFHCxa3mP8rMK-5YBDz0sfnMJ' },
+    { id: 'pl-iso', tieuDe: 'Bộ tiêu chuẩn ISO', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Tài liệu ISO phục vụ xây dựng và duy trì hệ thống quản lý chất lượng trong nhà máy.',
+      link: 'https://drive.google.com/drive/folders/1l-0YxVbGL_F59Y5Qef-O5jaQcZCFtkJR' },
+    { id: 'pl-hoachat', tieuDe: 'Luật Hoá chất và văn bản hướng dẫn', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Quy định về khai báo, bảo quản và sử dụng hoá chất trong sản xuất công nghiệp.',
+      link: 'https://drive.google.com/drive/folders/1eDJWgsKE4nuD37IQfa-T_qeeEER_pvar' },
+    { id: 'pl-moitruong', tieuDe: 'Văn bản Môi trường', nhom: 'phapluat', dinhDang: 'VB', dungLuong: 'thư mục',
+      moTa: 'Quy định về xả thải, quản lý chất thải và hồ sơ môi trường của cơ sở sản xuất.',
+      link: 'https://drive.google.com/drive/folders/1uJelTCwI8pmQlhquU9Dj0QQXDYvf2rli' },
+
+    /* ═══ 2. APP DÙNG THỬ ═══ */
+    { id: 'app-rd', tieuDe: 'Auto RD — bản dùng thử (V11.1)', nhom: 'appdungthu', dinhDang: 'RAR', dungLuong: '92,9 MB',
+      moTa: 'Bản dùng thử đầy đủ tính năng, có sẵn dữ liệu mẫu để hình dung ngay. Chạy trên Windows 10 / 11, không cần Internet. Trong thư mục có kèm bộ poster sơ đồ tính năng và hướng dẫn cài đặt.',
+      link: 'https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ' },
+    { id: 'app-box', tieuDe: 'Auto Box Plus V16.0 — bản dùng thử', nhom: 'appdungthu', dinhDang: 'RAR', dungLuong: '73 MB',
+      moTa: 'Bản portable, giải nén là chạy, không cần cài đặt. Dùng thử 7 ngày đầy đủ tính năng xếp hộp – thùng – xe kèm mô phỏng 3D.',
+      link: 'https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ' },
+    { id: 'app-file', tieuDe: 'Autofile V23 — bản dùng thử', nhom: 'appdungthu', dinhDang: 'RAR', dungLuong: '1,2 MB',
+      moTa: 'Một file EXE duy nhất, không cần cài đặt. Dùng thử 7 ngày toàn bộ chức năng đặt tên, tìm kiếm và trích xuất hồ sơ.',
+      link: 'https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg' },
+
+    /* ═══ 3. TÀI LIỆU NGHIÊN CỨU ═══ */
+    { id: 'nc-excipients', tieuDe: 'Handbook of Pharmaceutical Excipients (6th ed.)', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Cẩm nang tra cứu tá dược: chức năng, mức dùng thông thường, tương kỵ và độ ổn định — tài liệu tôi mở nhiều nhất khi dựng công thức mới.',
+      link: 'https://drive.google.com/file/d/1Zh0l8mP7nlXFFq2yWOHPUWmf_68DE9dy/view' },
+    { id: 'nc-formulations', tieuDe: 'Handbook of Pharmaceutical Manufacturing Formulations — trọn bộ 6 tập', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '6 tập',
+      moTa: 'Công thức mẫu cho viên nén, thuốc bột, dạng lỏng, bán rắn, OTC và sản phẩm vô trùng. Dùng để tham chiếu khi bắt đầu một dạng bào chế chưa từng làm.',
+      link: 'https://drive.google.com/drive/folders/1GdR9spFqVRZAA_s4iz_eoY1tHH12UXvr' },
+    { id: 'nc-granulation', tieuDe: 'Handbook of Pharmaceutical Granulation Technology', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Kỹ thuật tạo hạt: xát hạt ướt, tạo hạt khô, sấy tầng sôi và các yếu tố ảnh hưởng tới độ đồng đều hàm lượng.',
+      link: 'https://drive.google.com/file/d/1eW6XFzGJrUZ5j4ygiR6C4mmlLRE15Cwl/view' },
+    { id: 'nc-coating', tieuDe: 'Coating of Pharmaceutical Solid Dosage Forms', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '3,1 MB',
+      moTa: 'Kỹ thuật bao phim viên nén: lựa chọn polymer, thông số bao, và các lỗi bề mặt thường gặp cùng cách khắc phục.',
+      link: 'https://drive.google.com/file/d/1L8SieN4pjcjNrvFCHVC53Z5YAsspHyfH/view' },
+    { id: 'nc-stability', tieuDe: 'Handbook of Stability Testing in Pharmaceutical Development', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Thiết kế nghiên cứu độ ổn định, chọn điều kiện bảo quản và diễn giải số liệu để xác định hạn dùng.',
+      link: 'https://drive.google.com/file/d/16kR2i-U_BhetnZnpQ2plby4auv2IBir6/view' },
+    { id: 'nc-stability-who', tieuDe: 'Stability testing of API and finished products (01/2017)', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Hướng dẫn thử độ ổn định cho hoạt chất và thành phẩm — bản cập nhật tháng 01/2017, dùng khi xây dựng đề cương theo dõi.',
+      link: 'https://drive.google.com/file/d/1cC0CsvJMVebfWNJDxaFQdTIwqQw9Pr7l/view' },
+    { id: 'nc-skincare', tieuDe: 'Cosmetic Formulation of Skin Care Products', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '4,3 MB',
+      moTa: 'Nguyên lý xây dựng công thức skincare: hệ nhũ tương, chất làm mềm, hoạt chất và cảm quan sản phẩm.',
+      link: 'https://drive.google.com/file/d/1DREPH3fWDjSDt-bRpPHOpBrxkQqGoLpG/view' },
+    { id: 'nc-preservation', tieuDe: 'Cosmetics Preservation — A Review on Present Strategies', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Tổng quan các hệ bảo quản mỹ phẩm hiện hành, phổ tác dụng và xu hướng thay thế paraben.',
+      link: 'https://drive.google.com/file/d/1SylZbSZiRlpMkrlb5tMuPTvdj-O3QYaH/view' },
+    { id: 'nc-microbio', tieuDe: 'Cosmetic Microbiology — A Practical Approach (2nd ed.)', nhom: 'nghiencuu', dinhDang: 'PDF', dungLuong: '',
+      moTa: 'Kiểm soát vi sinh trong sản xuất mỹ phẩm: nguồn nhiễm, phương pháp thử và thử thách hệ bảo quản.',
+      link: 'https://drive.google.com/file/d/1V0Qddwl5CP1N4IN2cCVRmMoxkYS91toL/view' }
+  ],
+
+  /* ═══════════ 8. NHÓM LỌC (Sheet: NhomLoc) ═══════════ */
+  nhomUngDung: [
+    { ma: 'all',      ten: 'Tất cả' },
+    { ma: 'rd',       ten: 'Nghiên cứu & phát triển' },
+    { ma: 'nhamay',   ten: 'Vận hành nhà máy' },
+    { ma: 'vanphong', ten: 'Hồ sơ & văn phòng' }
+  ],
+  nhomTaiLieu: [
+    { ma: 'all',        ten: 'Tất cả danh mục' },
+    { ma: 'phapluat',   ten: '1. Văn bản pháp luật' },
+    { ma: 'appdungthu', ten: '2. App dùng thử' },
+    { ma: 'nghiencuu',  ten: '3. Tài liệu nghiên cứu' }
+  ]
+};

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" id="meta-mota" content="Hồ sơ năng lực kỹ sư R&D và tự động hoá quy trình.">
+<title>Kỹ sư R&D & Tự động hoá</title>
+
+<!-- Icon tab trình duyệt — cùng một logo, nhúng thẳng nên không cần file ảnh -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563EB'/%3E%3Cstop offset='1' stop-color='%2322D3EE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='40' height='40' rx='11' fill='url(%23g)'/%3E%3Cpath d='M13.09 25.2H26.91L27.2 25.8C28.4 28.4 26.7 30.6 24.1 30.6H15.9C13.3 30.6 11.6 28.4 12.8 25.8Z' fill='%23fff' opacity='.5'/%3E%3Cpath d='M16 9.5H24M17.5 9.5V16.2L12.8 25.8C11.6 28.4 13.3 30.6 15.9 30.6H24.1C26.7 30.6 28.4 28.4 27.2 25.8L22.5 16.2V9.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=2.1">
+</head>
+<body>
+
+<a href="#noi-dung-chinh" class="bo-qua">Bỏ qua tới nội dung</a>
+
+<!-- ══════════ ĐẦU TRANG ══════════ -->
+<header class="dau-trang" id="dau-trang">
+  <div class="khung dau-trang__trong">
+
+    <a href="#/" class="hieu" aria-label="Về trang chủ">
+      <!-- Logo: khối bo góc như icon ứng dụng · bình R&D căn giữa quang học -->
+      <svg class="hieu__bieu" viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-hieu" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="var(--logo-1, #2563EB)"/>
+            <stop offset="100%" stop-color="var(--logo-2, #22D3EE)"/>
+          </linearGradient>
+        </defs>
+
+        <rect width="40" height="40" rx="11" fill="url(#g-hieu)"/>
+
+        <!-- mức dung dịch trong bầu bình -->
+        <path d="M13.09 25.2 H26.91 L27.2 25.8 C28.4 28.4 26.7 30.6 24.1 30.6 H15.9 C13.3 30.6 11.6 28.4 12.8 25.8 Z"
+              fill="#fff" opacity=".5"/>
+
+        <!-- thân bình: cổ 9.5 → đáy 30.6, tâm đúng giữa khối 40×40 -->
+        <path d="M16 9.5 H24 M17.5 9.5 V16.2 L12.8 25.8 C11.6 28.4 13.3 30.6 15.9 30.6 H24.1 C26.7 30.6 28.4 28.4 27.2 25.8 L22.5 16.2 V9.5"
+              fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="hieu__chu" id="hieu-chu">rd.newlab</span>
+    </a>
+
+    <nav class="dieu-huong" id="dieu-huong" aria-label="Điều hướng chính">
+      <ul>
+        <li><a href="#gioi-thieu" class="dh-link">Giới thiệu</a></li>
+        <li><a href="#dinh-huong" class="dh-link">Định hướng</a></li>
+        <li><a href="#chuyen-mon" class="dh-link">Chuyên môn</a></li>
+        <li><a href="#ung-dung"  class="dh-link">Ứng dụng</a></li>
+        <li><a href="#thu-vien"  class="dh-link">Tài liệu</a></li>
+        <li><a href="#lien-he"   class="dh-link dh-link--nut">Liên hệ</a></li>
+      </ul>
+    </nav>
+
+    <div class="dau-trang__cong-cu">
+      <button class="nut-icon" id="nut-chu-de" aria-label="Đổi nền sáng / tối" title="Đổi nền sáng / tối">
+        <span class="ico-sang" aria-hidden="true">☀</span>
+        <span class="ico-toi"  aria-hidden="true">☾</span>
+      </button>
+      <button class="nut-icon nut-menu" id="nut-menu" aria-label="Mở menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="noi-dung-chinh">
+
+<!-- ══════════════════════════════════════════════════════════
+     MÀN HÌNH 1 — TRANG CHỦ
+     ══════════════════════════════════════════════════════════ -->
+<div id="man-chu">
+
+  <!-- ── Mở đầu ── -->
+  <section class="mo-dau" id="gioi-thieu">
+    <div class="khung mo-dau__luoi">
+
+      <div class="mo-dau__chu">
+        <p class="nhan-nho" id="hero-chuc-danh">R&D · Automation</p>
+        <h1 class="tieu-de-lon">
+          <span id="hero-dong-1">Nghiên cứu công thức</span><br>
+          <span class="chu-nhan" id="hero-dong-2">và tự động hoá quy trình</span>
+        </h1>
+        <p class="dan-nhap" id="hero-tom-tat"></p>
+
+        <div class="hang-nut">
+          <a href="#ung-dung" class="nut nut--chinh" id="hero-cta-1">Xem các ứng dụng</a>
+          <a href="#thu-vien" class="nut nut--vien" id="hero-cta-2">Thư viện tài liệu</a>
+        </div>
+
+        <dl class="so-lieu" id="so-lieu"></dl>
+      </div>
+
+      <aside class="the-ho-so" aria-label="Thẻ hồ sơ">
+        <div class="the-ho-so__dinh">
+          <span class="cham cham--song"></span>
+          <span id="the-trang-thai">Sẵn sàng nhận dự án mới</span>
+        </div>
+        <div class="the-ho-so__than">
+          <p class="the-ho-so__ten" id="the-ten">rd.newlab</p>
+          <p class="the-ho-so__viec" id="the-viec">Kỹ sư R&D & Tự động hoá</p>
+          <ul class="the-ho-so__ds" id="the-danh-sach"></ul>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ── Định hướng ── -->
+  <section class="muc" id="dinh-huong">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Định hướng</p>
+        <h2 class="tieu-de-muc">Điều tôi đang tìm ở dự án tiếp theo</h2>
+        <p class="mo-ta-muc">Tôi không tìm chỗ để chứng minh mình biết gì. Tôi tìm dự án đủ khó để học thêm, và đủ rõ ràng để phần năng lực mình đang có góp được ngay từ đầu.</p>
+      </header>
+      <div class="luoi-4" id="luoi-dinh-huong"></div>
+    </div>
+  </section>
+
+  <!-- ── Chuyên môn ── -->
+  <section class="muc muc--nen" id="chuyen-mon">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Chuyên môn</p>
+        <h2 class="tieu-de-muc">Lĩnh vực chuyên môn và năng lực triển khai</h2>
+        <p class="mo-ta-muc">Hơn mười năm tôi đi gần hết một nhà máy: từ bàn thí nghiệm R&amp;D, sang phòng kiểm nghiệm QC, lên hệ thống chất lượng QA, qua kế hoạch vật tư và kho, rồi ra tận chuyền sản xuất — ở cả vị trí trực tiếp làm lẫn vị trí quản lý. Vốn đó cho tôi một thứ khó có được nếu chỉ đứng yên ở một chỗ: nhìn một bài toán là thấy ngay nó chạm vào những phòng nào, và ai sẽ là người phải gánh phần khó. Bảy mảng dưới đây đều là phần tôi tự tay dựng rồi tự tay vận hành, không phải kiến thức đọc trong sách.</p>
+      </header>
+      <div class="luoi-4" id="luoi-linh-vuc"></div>
+
+      <div class="nang-luc">
+        <h3 class="tieu-de-nho">Chỉ số năng lực tự đánh giá</h3>
+        <div class="nang-luc__luoi" id="luoi-nang-luc"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Kho ứng dụng ── -->
+  <section class="muc" id="ung-dung">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Sản phẩm</p>
+        <h2 class="tieu-de-muc">Những ứng dụng tôi đã triển khai và đang triển khai</h2>
+        <p class="mo-ta-muc">Mỗi ứng dụng sinh ra từ một việc có thật phải làm mỗi ngày trong nhà máy. Ba ứng dụng lõi — nghiên cứu, vật tư và chất lượng — nối dữ liệu thẳng với nhau, một số liệu khai một lần là dùng được cho cả chuỗi. Bấm vào từng ứng dụng để đọc bài viết chi tiết.</p>
+      </header>
+
+      <div class="bo-loc" id="bo-loc-ung-dung" role="group" aria-label="Lọc theo nhóm"></div>
+      <div class="luoi-ung-dung" id="luoi-ung-dung"></div>
+    </div>
+  </section>
+
+  <!-- ── Thư viện ── -->
+  <section class="muc muc--nen" id="thu-vien">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Chia sẻ</p>
+        <h2 class="tieu-de-muc">Thư viện tài liệu</h2>
+        <p class="mo-ta-muc">Ba nhóm chia sẻ: văn bản pháp luật, bản dùng thử các ứng dụng, và tài liệu nghiên cứu. Toàn bộ đặt chung trên một thư mục Google Drive — bấm vào từng mục để mở đúng file.</p>
+      </header>
+
+      <div class="thanh-tim">
+        <div class="o-tim">
+          <span class="o-tim__ico" aria-hidden="true">⌕</span>
+          <input type="search" id="o-tim-tai-lieu" placeholder="Tìm theo tên tài liệu, định dạng…" aria-label="Tìm tài liệu">
+        </div>
+        <select id="chon-nhom-tai-lieu" aria-label="Lọc theo danh mục"></select>
+        <a href="#" class="nut nut--vien nut--nho" id="nut-drive" target="_blank" rel="noopener">Mở thư mục Drive</a>
+      </div>
+
+      <div class="luoi-tai-lieu" id="luoi-tai-lieu"></div>
+      <p class="trong-rong an" id="tai-lieu-trong">Không tìm thấy tài liệu nào khớp với từ khoá.</p>
+    </div>
+  </section>
+
+  <!-- ── Liên hệ ── -->
+  <section class="muc" id="lien-he">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Liên hệ</p>
+        <h2 class="tieu-de-muc">Trao đổi về dự án</h2>
+      </header>
+
+      <div class="lien-he__luoi">
+
+        <div class="the-lien-he">
+          <p class="the-lien-he__dan">Nếu anh/chị có một bài toán vận hành đang muốn số hoá, hoặc một dự án cần người hiểu cả nghiệp vụ lẫn phần mềm — rất mong được nghe.</p>
+          <ul class="ds-lien-he" id="ds-lien-he"></ul>
+          <div class="mang-xa-hoi" id="mang-xa-hoi"></div>
+        </div>
+
+        <form class="mau-gui" id="mau-gui" novalidate>
+          <div class="hang-2">
+            <div class="o-nhap">
+              <label for="ip-ten">Họ và tên <span class="bat-buoc">*</span></label>
+              <input type="text" id="ip-ten" name="name" required autocomplete="name" placeholder="Tên của anh/chị">
+            </div>
+            <div class="o-nhap">
+              <label for="ip-email">Email <span class="bat-buoc">*</span></label>
+              <input type="email" id="ip-email" name="email" required autocomplete="email" placeholder="ten@congty.com">
+            </div>
+          </div>
+          <div class="o-nhap">
+            <label for="ip-chu-de">Chủ đề</label>
+            <input type="text" id="ip-chu-de" name="subject" placeholder="Ví dụ: tư vấn số hoá kho vật tư">
+          </div>
+          <div class="o-nhap">
+            <label for="ip-noi-dung">Nội dung <span class="bat-buoc">*</span></label>
+            <textarea id="ip-noi-dung" name="message" rows="5" required placeholder="Mô tả ngắn bài toán anh/chị đang gặp…"></textarea>
+          </div>
+          <!-- Ô mồi chống bot: người thật không nhìn thấy, chỉ máy tự điền mới chạm vào -->
+          <div class="o-moi" aria-hidden="true">
+            <label for="ip-website">Để trống ô này</label>
+            <input type="text" id="ip-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="nut nut--chinh nut--rong" id="nut-gui">Gửi liên hệ</button>
+          <p class="bao-mau" id="bao-mau" role="status" aria-live="polite"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- /man-chu -->
+
+<!-- ══════════════════════════════════════════════════════════
+     MÀN HÌNH 2 — BÀI VIẾT CHI TIẾT TỪNG ỨNG DỤNG
+     ══════════════════════════════════════════════════════════ -->
+<div id="man-bai-viet" class="an">
+  <article class="bai-viet" id="noi-dung-bai-viet"></article>
+</div>
+
+</main>
+
+<!-- ══════════ CHÂN TRANG ══════════ -->
+<footer class="chan-trang">
+  <div class="khung chan-trang__trong">
+    <span class="chan-trang__hieu" id="chan-hieu">rd.newlab</span>
+    <span class="chan-trang__chu" id="chan-chu"></span>
+    <span class="chan-trang__nam" id="chan-nam"></span>
+  </div>
+</footer>
+
+<!-- Scripts — thứ tự bắt buộc: cấu hình → dự phòng → api → hiển thị → khởi động -->
+<script src="js/config.js?v=2.1"></script>
+<script src="js/fallback.js?v=2.1"></script>
+<script src="js/thongke.js?v=2.1"></script>
+<script src="js/api.js?v=2.1"></script>
+<script src="js/render.js?v=2.1"></script>
+<script src="js/main.js?v=2.1"></script>
+</body>
+</html>
