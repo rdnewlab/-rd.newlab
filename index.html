@@ -11,8 +11,12 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Bắt tay sớm với các máy chủ sẽ gọi tới — tiết kiệm 100–300ms mỗi kết nối -->
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2.3">
+<link rel="stylesheet" href="css/style.css?v=2.5">
 </head>
 <body>
 
@@ -51,6 +55,7 @@
         <li><a href="#dinh-huong" class="dh-link">Định hướng</a></li>
         <li><a href="#chuyen-mon" class="dh-link">Chuyên môn</a></li>
         <li><a href="#ung-dung"  class="dh-link">Ứng dụng</a></li>
+        <li><a href="#video"     class="dh-link">Video</a></li>
         <li><a href="#thu-vien"  class="dh-link">Tài liệu</a></li>
         <li><a href="#lien-he"   class="dh-link dh-link--nut">Liên hệ</a></li>
       </ul>
@@ -117,7 +122,7 @@
       <header class="muc__dau">
         <p class="nhan-nho">Định hướng</p>
         <h2 class="tieu-de-muc">Điều tôi đang tìm ở dự án tiếp theo</h2>
-        <p class="mo-ta-muc">Tôi không tìm chỗ để chứng minh mình biết gì. Tôi tìm dự án đủ khó để học thêm, và đủ rõ ràng để phần năng lực mình đang có góp được ngay từ đầu.</p>
+        <p class="mo-ta-muc">Tôi không tìm chỗ để chứng minh mình biết gì. Tôi tìm dự án đủ khó để học thêm, đủ rõ ràng để phần năng lực mình đang có góp được ngay từ đầu. Và hơn cả dự án, tôi mong được kết nối — với những người anh, người bạn, những đồng nghiệp cùng làm nghiên cứu, và may mắn nhất là gặp được những người thầy dẫn dắt mình đi xa hơn.</p>
       </header>
       <div class="luoi-4" id="luoi-dinh-huong"></div>
     </div>
@@ -151,6 +156,25 @@
 
       <div class="bo-loc" id="bo-loc-ung-dung" role="group" aria-label="Lọc theo nhóm"></div>
       <div class="luoi-ung-dung" id="luoi-ung-dung"></div>
+    </div>
+  </section>
+
+  <!-- ── Video hướng dẫn ── -->
+  <section class="muc" id="video">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Video</p>
+        <h2 class="tieu-de-muc">Video hướng dẫn</h2>
+        <p class="mo-ta-muc">Hướng dẫn cài đặt và sử dụng các ứng dụng. Video mới đăng trên kênh YouTube sẽ tự động hiện ở đây.</p>
+      </header>
+
+      <div class="luoi-video" id="luoi-video"></div>
+      <p class="trong-rong" id="video-trong">Các video hướng dẫn đang được đăng dần lên kênh — bấm nút dưới để xem trực tiếp.</p>
+
+      <div class="video__chan">
+        <a href="#" id="nut-kenh" class="nut nut--vien" target="_blank" rel="noopener"
+           data-tk-loai="bam_tai_lieu" data-tk-muc="Video · mở kênh YouTube">▶ Xem tất cả trên YouTube</a>
+      </div>
     </div>
   </section>
 
@@ -248,10 +272,10 @@
 
 <!-- Scripts — thứ tự bắt buộc: cấu hình → dự phòng → api → hiển thị → khởi động -->
 <script src="js/config.js?v=2.1"></script>
-<script src="js/fallback.js?v=2.1"></script>
+<script src="js/fallback.js?v=2.4"></script>
 <script src="js/thongke.js?v=2.1"></script>
-<script src="js/api.js?v=2.1"></script>
-<script src="js/render.js?v=2.1"></script>
-<script src="js/main.js?v=2.1"></script>
+<script src="js/api.js?v=2.4"></script>
+<script src="js/render.js?v=2.5"></script>
+<script src="js/main.js?v=2.5"></script>
 </body>
 </html>
