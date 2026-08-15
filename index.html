@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2.5">
+<link rel="stylesheet" href="css/style.css?v=2.8">
 </head>
 <body>
 
@@ -96,6 +96,14 @@
         <div class="hang-nut">
           <a href="#ung-dung" class="nut nut--chinh" id="hero-cta-1">Xem các ứng dụng</a>
           <a href="#thu-vien" class="nut nut--vien" id="hero-cta-2">Thư viện tài liệu</a>
+          <a href="#video"    class="nut nut--vien">▶ Video hướng dẫn</a>
+        </div>
+
+        <!-- Dải huy hiệu các nhóm cộng đồng — mỗi nhóm một màu, đổ từ tab CongDong -->
+        <div class="hero-cd an" id="hero-cd">
+          <span class="hero-cd__nhan">Điều hành cộng đồng ngành</span>
+          <div class="hero-cd__ds" id="hero-cd-ds"></div>
+          <a class="hero-cd__xem" href="#cong-dong">Xem các nhóm <span aria-hidden="true">→</span></a>
         </div>
 
         <dl class="so-lieu" id="so-lieu"></dl>
@@ -201,8 +209,20 @@
     </div>
   </section>
 
+  <!-- ── Cộng đồng ── -->
+  <section class="muc" id="cong-dong">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Cộng đồng</p>
+        <h2 class="tieu-de-muc">Nhóm ngành tôi lập và điều hành</h2>
+        <p class="mo-ta-muc">Bốn nhóm Facebook đi theo đúng chuỗi của ngành — nghiên cứu, nguyên liệu, sản xuất, kinh doanh — cùng một nhóm Zalo trao đổi nhanh. Mỗi nhóm một chủ đề, anh chị cùng ngành cứ tự nhiên vào.</p>
+      </header>
+      <div class="luoi-4" id="luoi-cong-dong"></div>
+    </div>
+  </section>
+
   <!-- ── Liên hệ ── -->
-  <section class="muc" id="lien-he">
+  <section class="muc muc--nen" id="lien-he">
     <div class="khung">
       <header class="muc__dau">
         <p class="nhan-nho">Liên hệ</p>
@@ -215,6 +235,12 @@
           <p class="the-lien-he__dan">Nếu anh/chị có một bài toán vận hành đang muốn số hoá, hoặc một dự án cần người hiểu cả nghiệp vụ lẫn phần mềm — rất mong được nghe.</p>
           <ul class="ds-lien-he" id="ds-lien-he"></ul>
           <div class="mang-xa-hoi" id="mang-xa-hoi"></div>
+
+          <!-- Lối vào nhanh các nhóm cộng đồng ngay trong khung liên hệ -->
+          <div class="nhom-lien-he an" id="khoi-nhom-lien-he">
+            <p class="nhom-lien-he__tieu-de">Tham gia cộng đồng</p>
+            <div class="nhom-lien-he__ds" id="nhom-lien-he"></div>
+          </div>
         </div>
 
         <form class="mau-gui" id="mau-gui" novalidate>
@@ -272,10 +298,10 @@
 
 <!-- Scripts — thứ tự bắt buộc: cấu hình → dự phòng → api → hiển thị → khởi động -->
 <script src="js/config.js?v=2.1"></script>
-<script src="js/fallback.js?v=2.4"></script>
+<script src="js/fallback.js?v=2.8"></script>
 <script src="js/thongke.js?v=2.1"></script>
-<script src="js/api.js?v=2.4"></script>
-<script src="js/render.js?v=2.5"></script>
-<script src="js/main.js?v=2.5"></script>
+<script src="js/api.js?v=2.7"></script>
+<script src="js/render.js?v=2.8"></script>
+<script src="js/main.js?v=2.7"></script>
 </body>
 </html>
