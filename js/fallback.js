@@ -424,6 +424,41 @@ const NOI_DUNG_DU_PHONG = {
       link: 'https://drive.google.com/file/d/1V0Qddwl5CP1N4IN2cCVRmMoxkYS91toL/view' }
   ],
 
+  /* ═══════════ 7b. CỘNG ĐỒNG (Sheet: CongDong) ═══════════
+     Các nhóm Facebook / Zalo do chủ web lập và điều hành.               */
+  congDong: [
+    {
+      id: 'fb-nghiencuu', nen: 'facebook', mau: '#8B5CF6',
+      ten: 'Nghiên cứu phát triển TPCN, Mỹ phẩm, Dược phẩm GMP, Hoá phẩm gia dụng',
+      moTa: 'Trao đổi công thức, quy trình và tiêu chuẩn giữa những người trực tiếp làm R&D.',
+      link: 'https://www.facebook.com/groups/143844272053220/'
+    },
+    {
+      id: 'fb-nguyenlieu', nen: 'facebook', mau: '#10B981',
+      ten: 'Nguyên liệu — Dược phẩm, Mỹ phẩm, TPCN',
+      moTa: 'Hỏi đáp và giới thiệu nguồn nguyên liệu: hoạt chất, tá dược, phụ gia, bao bì.',
+      link: 'https://www.facebook.com/share/g/197HdU24Xw/'
+    },
+    {
+      id: 'fb-sanxuat', nen: 'facebook', mau: '#F59E0B',
+      ten: 'Sản xuất TPCN, Mỹ phẩm, Dược phẩm GMP',
+      moTa: 'Chuyện nhà xưởng: thiết bị, cỡ lô, GMP và vận hành sản xuất hằng ngày.',
+      link: 'https://www.facebook.com/share/g/1BxQStptdV/'
+    },
+    {
+      id: 'fb-kinhdoanh', nen: 'facebook', mau: '#EC4899',
+      ten: 'Kinh doanh TPCN, Mỹ phẩm, Dược phẩm GMP',
+      moTa: 'Thị trường, công bố, phân phối và câu chuyện bán hàng ngành hàng sức khoẻ.',
+      link: 'https://www.facebook.com/share/g/1FBQtQGLkH/'
+    },
+    {
+      id: 'zalo-nhom', nen: 'zalo', mau: '#0068FF',
+      ten: 'Nhóm Zalo trao đổi trực tiếp',
+      moTa: 'Hỏi nhanh đáp nhanh với tôi và anh em trong ngành, ngay trên Zalo.',
+      link: 'https://zalo.me/g/kntqdg821'
+    }
+  ],
+
   /* ═══════════ 8. VIDEO HƯỚNG DẪN ═══════════
      Danh sách video do Apps Script tự đọc từ kênh YouTube (RSS chính thức).
      Ở chế độ dự phòng chưa có danh sách — web chỉ hiện nút mở kênh.        */

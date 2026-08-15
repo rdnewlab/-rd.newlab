@@ -162,7 +162,8 @@ function veUngDung(ds, nhomLoc) {
   const loc = (!nhomLoc || nhomLoc === 'all') ? ds : ds.filter(u => u.nhom === nhomLoc);
 
   $('#luoi-ung-dung').innerHTML = loc.map(u => {
-    const diem = tachDanh(u.diemChinh).slice(0, 4)
+    // Thẻ chỉ nhá 3 điểm — đủ mồi, bản đủ 4 điểm nằm trong bài viết
+    const diem = tachDanh(u.diemChinh).slice(0, 3)
       .map(d => `<li>${dinhDang(d)}</li>`).join('');
     const anh = locLink(u.anh);
     const khoiAnh = anh
@@ -289,6 +290,80 @@ function nutVideoBai(ud) {
   if (!link) return '';
   return `<a class="nut nut--vien" href="${link}" target="_blank" rel="noopener"
              data-tk-loai="bam_tai_lieu" data-tk-muc="Video · ${locHtml(ud.ten)}">▶ Video hướng dẫn</a>`;
+}
+
+/* ═══════════ 7c. CỘNG ĐỒNG — nhóm Facebook / Zalo ═══════════ */
+function huyHieuNen(nen) {
+  if (nen === 'zalo') {
+    return { lop: 'cd__nen--zalo', chu: 'Z', loai: 'Nhóm Zalo', hanhDong: 'Vào nhóm Zalo' };
+  }
+  return { lop: 'cd__nen--facebook', chu: 'f', loai: 'Nhóm Facebook', hanhDong: 'Tham gia nhóm' };
+}
+
+/* Màu huy hiệu riêng từng nhóm (cột Mau trên Sheet) — chỉ nhận mã hex hợp lệ */
+function mauHuyHieu(mau) {
+  const m = String(mau || '').trim();
+  return /^#[0-9A-Fa-f]{3,8}$/.test(m) ? ` style="background:${m}"` : '';
+}
+
+function veCongDong(ds) {
+  ds = Array.isArray(ds) ? ds : [];
+  const muc = document.getElementById('cong-dong');
+  const khoiChip = document.getElementById('khoi-nhom-lien-he');
+  const heroCd = document.getElementById('hero-cd');
+  if (!ds.length) {                       // Sheet ẩn hết nhóm → cả 3 chỗ tự biến mất
+    if (muc) muc.classList.add('an');
+    if (khoiChip) khoiChip.classList.add('an');
+    if (heroCd) heroCd.classList.add('an');
+    return;
+  }
+  if (muc) muc.classList.remove('an');
+
+  /* Dải huy hiệu nhỏ ở đầu trang, cạnh khu con số — bấm là vào thẳng nhóm */
+  if (heroCd) {
+    heroCd.classList.remove('an');
+    $('#hero-cd-ds').innerHTML = ds.map(n => {
+      const link = locLink(n.link);
+      if (!link) return '';
+      const h = huyHieuNen(n.nen);
+      return `<a class="hero-cd__nut ${h.lop}"${mauHuyHieu(n.mau)} href="${link}" target="_blank" rel="noopener"
+                 title="${locHtml(n.ten)}" aria-label="${locHtml(n.ten)}"
+                 data-tk-loai="bam_tai_lieu" data-tk-muc="Nhóm · ${locHtml(n.ten)}">${h.chu}</a>`;
+    }).join('');
+  }
+
+  /* Thẻ nhóm ở khu Cộng đồng */
+  $('#luoi-cong-dong').innerHTML = ds.map(n => {
+    const link = locLink(n.link);
+    if (!link) return '';
+    const h = huyHieuNen(n.nen);
+    return `
+    <article class="the the--cd">
+      <div class="cd__dau">
+        <span class="cd__nen ${h.lop}"${mauHuyHieu(n.mau)} aria-hidden="true">${h.chu}</span>
+        <span class="cd__loai">${h.loai}</span>
+      </div>
+      <h3 class="the__ten the__ten--cd">${locHtml(n.ten)}</h3>
+      <p class="the__mo-ta the__mo-ta--tu-do">${dinhDang(n.moTa)}</p>
+      <a class="lien-ket-doc" href="${link}" target="_blank" rel="noopener"
+         data-tk-loai="bam_tai_lieu" data-tk-muc="Nhóm · ${locHtml(n.ten)}">${h.hanhDong} <span aria-hidden="true">→</span></a>
+    </article>`;
+  }).join('');
+
+  /* Lối vào nhanh trong khung Liên hệ */
+  if (khoiChip) {
+    khoiChip.classList.remove('an');
+    $('#nhom-lien-he').innerHTML = ds.map(n => {
+      const link = locLink(n.link);
+      if (!link) return '';
+      const h = huyHieuNen(n.nen);
+      return `<a class="chip-nhom" href="${link}" target="_blank" rel="noopener"
+                 data-tk-loai="bam_tai_lieu" data-tk-muc="Nhóm · ${locHtml(n.ten)}">
+                <span class="cd__nen cd__nen--nho ${h.lop}"${mauHuyHieu(n.mau)} aria-hidden="true">${h.chu}</span>
+                <span class="chip-nhom__ten">${locHtml(n.ten)}</span>
+              </a>`;
+    }).join('');
+  }
 }
 
 /* ═══════════ 8. LIÊN HỆ ═══════════ */
