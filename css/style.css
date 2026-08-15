@@ -204,6 +204,9 @@ h1, h2, h3 {
 .nut--tat:hover { transform: none; }
 
 .hang-nut { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+/* Ba nút chia đều một hàng — cùng bề rộng với dải cộng đồng ngay dưới,
+   hai khối xếp thẳng mép nhau nhìn cân đối như một bộ.                  */
+.hang-nut .nut { flex: 1 1 auto; }
 
 /* ═══════════ 5. MỤC & TIÊU ĐỀ ═══════════ */
 .muc { padding-block: var(--khoang-muc); }
@@ -223,7 +226,10 @@ h1, h2, h3 {
 
 /* ═══════════ 6. PHẦN MỞ ĐẦU ═══════════ */
 .mo-dau {
-  padding-block: clamp(3.5rem, 8vw, 6.5rem) var(--khoang-muc);
+  /* Đáy hero để mỏng hơn các mục thường: cột chữ bên trái vốn đã dài,
+     cộng thêm padding đầy đủ của mục Định hướng phía dưới là thành
+     một khoảng đen rất rộng — nhìn như trang bị hụt nội dung.        */
+  padding-block: clamp(3.5rem, 8vw, 6.5rem) clamp(2.2rem, 4vw, 3.5rem);
   position: relative; overflow: hidden;
 }
 .mo-dau::before {
@@ -253,7 +259,7 @@ h1, h2, h3 {
 
 .so-lieu {
   display: flex; flex-wrap: wrap; gap: 2.4rem;
-  margin: 3rem 0 0; padding-top: 2rem; border-top: 1px solid var(--vien);
+  margin: 2.2rem 0 0; padding-top: 1.8rem; border-top: 1px solid var(--vien);
 }
 .so-lieu__o { margin: 0; }
 .so-lieu__so {
@@ -261,6 +267,45 @@ h1, h2, h3 {
   line-height: 1; color: var(--nhan-1);
 }
 .so-lieu__nhan { margin: .4rem 0 0; font-size: var(--fs-nhan); color: var(--chu-3); }
+
+/* Dải huy hiệu cộng đồng — nằm ngay dưới hàng nút chính, mỗi nhóm một màu.
+   width:100% + link đẩy sát mép phải → dải rộng ĐÚNG bằng hàng nút trên. */
+.hero-cd {
+  display: flex; align-items: center; flex-wrap: wrap; gap: .7rem 1rem;
+  margin-top: .75rem; padding: .85rem 1.25rem;
+  background: var(--nen-2); border: 1px solid var(--vien);
+  border-radius: 99px; width: 100%;
+}
+.hero-cd__xem { margin-left: auto; }
+.hero-cd__nhan {
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--chu-3);
+  white-space: nowrap;
+}
+.hero-cd__ds { display: flex; gap: .45rem; }
+.hero-cd__nut {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  color: #fff; font-weight: var(--fw-rat-dam); font-size: .92rem;
+  font-family: var(--font-doc);
+  border: 2px solid transparent;
+  transition: transform .18s var(--do-mo), box-shadow .18s;
+}
+.hero-cd__nut.cd__nen--zalo { font-size: .6rem; letter-spacing: .02em; }
+.hero-cd__nut:hover {
+  transform: translateY(-3px) scale(1.12);
+  box-shadow: 0 6px 14px -4px rgba(24, 119, 242, .55);
+}
+.hero-cd__xem {
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam); color: var(--nhan-1);
+  white-space: nowrap;
+}
+.hero-cd__xem span { transition: transform .2s; display: inline-block; }
+.hero-cd__xem:hover span { transform: translateX(3px); }
+
+@media (max-width: 760px) {
+  .hero-cd { border-radius: var(--bo-goc); width: 100%; }
+}
 
 /* Thẻ hồ sơ bên phải */
 .the-ho-so {
@@ -425,7 +470,7 @@ h1, h2, h3 {
 .the-ud:hover { transform: translateY(-4px); border-color: var(--vien-dam); box-shadow: var(--bong); }
 
 .the-ud__anh {
-  position: relative; display: block; aspect-ratio: 16 / 10;
+  position: relative; display: block; aspect-ratio: 16 / 9;
   background: var(--nen-3); overflow: hidden;
 }
 /* Dải tối mờ ở mép trên ảnh: nhãn trạng thái luôn đọc rõ, không đè lộn xộn
@@ -457,7 +502,7 @@ h1, h2, h3 {
 .nhan-tt--tim  { color: #C4B1FF; }
 .nhan-tt--xam  { color: #A8BCCB; }
 
-.the-ud__than { display: flex; flex-direction: column; flex: 1; padding: 1.4rem 1.4rem 1.5rem; }
+.the-ud__than { display: flex; flex-direction: column; flex: 1; padding: 1.15rem 1.4rem 1.25rem; }
 .the-ud__dinh { display: flex; align-items: baseline; gap: .6rem; }
 .the-ud__ten  { font-size: 1.3rem; }
 .the-ud__ten a:hover { color: var(--nhan-1); }
@@ -467,12 +512,22 @@ h1, h2, h3 {
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .the-ud__phu-de  { margin: .35rem 0 0; font-size: var(--fs-nho); color: var(--nhan-2); font-weight: var(--fw-vua); }
-.the-ud__tom-tat { margin: .9rem 0 0; font-size: var(--fs-nho); color: var(--chu-2); }
 
-.the-ud__diem { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .4rem; }
+/* Thẻ là CỬA DẪN vào bài viết, không phải bài viết:
+   tóm tắt tối đa 3 dòng, chi tiết đầy đủ nằm trong trang bài.
+   Nhờ vậy thẻ thấp gần một nửa — điện thoại đỡ phải kéo dài. */
+.the-ud__tom-tat {
+  margin: .9rem 0 0; font-size: var(--fs-nho); color: var(--chu-2);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.the-ud__diem { list-style: none; margin: .9rem 0 0; padding: 0; display: grid; gap: .35rem; }
 .the-ud__diem li {
   position: relative; padding-left: 1.15rem;
   font-size: var(--fs-nhan); color: var(--chu-2);
+  /* mỗi điểm chính gói trong MỘT dòng, dài quá thì cắt bằng … */
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .the-ud__diem li::before {
   content: '▸'; position: absolute; left: 0; color: var(--nhan-1);
@@ -480,7 +535,7 @@ h1, h2, h3 {
 
 /* Hàng cuối thẻ ứng dụng: đọc bài viết bên trái, nút tải bên phải */
 .the-ud__chan {
-  margin-top: auto; padding-top: 1.3rem;
+  margin-top: auto; padding-top: 1rem;
   display: flex; align-items: center; justify-content: space-between;
   gap: .6rem 1rem; flex-wrap: wrap;
 }
@@ -614,6 +669,49 @@ h1, h2, h3 {
   100% { transform: scaleX(1); background-position: 130% 0; opacity: .35; }
 }
 
+/* ═══════════ 11c2. CỘNG ĐỒNG — nhóm Facebook / Zalo ═══════════ */
+.cd__dau { display: flex; align-items: center; gap: .6rem; margin-bottom: .9rem; }
+.cd__nen {
+  display: grid; place-items: center; flex: none;
+  width: 34px; height: 34px; border-radius: 9px;
+  color: #fff; font-weight: var(--fw-rat-dam); font-size: 1.05rem;
+  font-family: var(--font-doc);
+}
+.cd__nen--facebook { background: #1877F2; }
+.cd__nen--zalo     { background: #0068FF; font-size: .82rem; letter-spacing: .02em; }
+.cd__nen--nho      { width: 24px; height: 24px; border-radius: 7px; font-size: .8rem; }
+.cd__nen--nho.cd__nen--zalo { font-size: .62rem; }
+.cd__loai { font-size: var(--fs-nhan); color: var(--chu-3); font-weight: var(--fw-dam);
+  letter-spacing: .08em; text-transform: uppercase; }
+
+.the__ten--cd { font-size: 1.06rem; font-family: var(--font-ui); font-weight: var(--fw-dam);
+  letter-spacing: 0; line-height: 1.4; margin-bottom: .5rem; }
+/* Mô tả nhóm ngắn — không cần rút gọn "Đọc tiếp" */
+.the__mo-ta--tu-do { max-height: none; }
+.the__mo-ta--tu-do::after { display: none; }
+.the--cd .lien-ket-doc { margin-top: auto; padding-top: 1.1rem; }
+
+/* Lối vào nhanh trong khung Liên hệ */
+.nhom-lien-he { margin-top: 1.6rem; padding-top: 1.5rem; border-top: 1px solid var(--vien); }
+.nhom-lien-he__tieu-de {
+  margin: 0 0 .8rem; font-size: var(--fs-nhan); font-weight: var(--fw-dam);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--chu-3);
+}
+/* minmax(0,1fr) + min-width:0 — bắt buộc, nếu không chữ dài không chịu co
+   và cả chip TRÀN RA NGOÀI mép khung (lỗi đã gặp thật trên máy người dùng) */
+.nhom-lien-he__ds { display: grid; grid-template-columns: minmax(0, 1fr); gap: .45rem; }
+.chip-nhom {
+  display: flex; align-items: center; gap: .6rem; min-width: 0;
+  padding: .5rem .65rem; border: 1px solid var(--vien); border-radius: var(--bo-goc-nho);
+  font-size: var(--fs-nhan); color: var(--chu-2);
+  transition: border-color .18s, color .18s, transform .18s var(--do-mo);
+}
+.chip-nhom:hover { border-color: var(--nhan-1); color: var(--chu); transform: translateX(3px); }
+.chip-nhom__ten {
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
 /* ═══════════ 11d. HIỆU ỨNG THEO CHUỘT — tạo chiều sâu ═══════════
    Chỉ hoạt động trên máy có chuột thật (hover + pointer fine).
    Điện thoại không tải gì thêm; "giảm chuyển động" thì tắt hẳn.      */
@@ -663,6 +761,8 @@ h1, h2, h3 {
   background: var(--nen-2); border: 1px solid var(--vien);
   border-radius: var(--bo-goc); padding: 1.8rem 1.6rem;
 }
+/* Khu Liên hệ nằm trên nền đậm → hai khung phải dùng nền thường để tách lớp */
+.muc--nen .the-lien-he, .muc--nen .mau-gui { background: var(--nen); }
 .the-lien-he__dan { margin: 0 0 1.8rem; font-size: var(--fs-nho); color: var(--chu-2); }
 
 .ds-lien-he { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.2rem; }
@@ -892,6 +992,7 @@ mark.noi-bat {
   .nut-doc-them:hover { text-decoration: none; }
   .the-video:hover .the-video__khung { transform: none; border-color: var(--vien); }
   .the-video:hover .the-video__nut { background: rgba(10,18,27,.72); color: #fff; transform: translate(-50%, -50%); }
+  .chip-nhom:hover { transform: none; border-color: var(--vien); color: var(--chu-2); }
 }
 
 /* ═══════════ 16. TÔN TRỌNG LỰA CHỌN GIẢM CHUYỂN ĐỘNG ═══════════ */
