@@ -31,7 +31,7 @@ function gapMenu(mo) {
 
 // Tô sáng mục đang xem khi cuộn trang
 function theoDoiCuon() {
-  const muc = ['gioi-thieu', 'dinh-huong', 'chuyen-mon', 'ung-dung', 'video', 'thu-vien', 'lien-he'];
+  const muc = ['gioi-thieu', 'dinh-huong', 'chuyen-mon', 'ung-dung', 'video', 'thu-vien', 'cong-dong', 'lien-he'];
   const quanSat = new IntersectionObserver((cacMuc) => {
     cacMuc.forEach(m => {
       if (!m.isIntersecting) return;
@@ -237,7 +237,10 @@ function ganHieuUngChuot() {
     if (!dangChay) { dangChay = true; requestAnimationFrame(troi); }
 
     // 2. Vệt sáng trên thẻ đang rê — ghi toạ độ chuột vào biến CSS của thẻ
-    const the = e.target.closest('.the, .the-ud, .the-tl, .the-video__khung, .the-lien-he, .mau-gui, .the-ho-so');
+    // (kiểm tra .closest tồn tại: sự kiện có thể phát sinh từ đối tượng không phải phần tử)
+    const the = (e.target && e.target.closest)
+      ? e.target.closest('.the, .the-ud, .the-tl, .the-video__khung, .the-lien-he, .mau-gui, .the-ho-so')
+      : null;
     if (the) {
       const b = the.getBoundingClientRect();
       the.style.setProperty('--mx', (e.clientX - b.left) + 'px');
@@ -284,6 +287,7 @@ function veTatCa() {
   veChonNhomTaiLieu(DU_LIEU.nhomTaiLieu);
   veTaiLieu(DU_LIEU.taiLieu, '', 'all');
   veVideo(DU_LIEU.videos);
+  veCongDong(DU_LIEU.congDong);
   veLienHe(DU_LIEU.caiDat);
   capNhatNutDocThem('luoi-dinh-huong');
   capNhatNutDocThem('luoi-linh-vuc');

@@ -75,6 +75,7 @@ function chuanHoa(tho) {
     taiLieu:      lay('taiLieu'),
     nhomUngDung:  lay('nhomUngDung'),
     nhomTaiLieu:  lay('nhomTaiLieu'),
+    congDong:     lay('congDong'),
     videos:       (tho.videos && typeof tho.videos === 'object') ? tho.videos : dp.videos,
     _nguon:       'sheet'
   };
