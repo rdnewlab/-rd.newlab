@@ -556,6 +556,103 @@ h1, h2, h3 {
 
 .trong-rong { text-align: center; color: var(--chu-3); padding: 2.5rem 0 0; }
 
+/* ═══════════ 11b. VIDEO HƯỚNG DẪN ═══════════ */
+.luoi-video {
+  display: grid; gap: 1.1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1080px) { .luoi-video { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px)  { .luoi-video { grid-template-columns: 1fr; } }
+
+.the-video { display: block; }
+.the-video__khung {
+  position: relative; display: block; aspect-ratio: 16 / 9;
+  border-radius: var(--bo-goc); overflow: hidden;
+  background: var(--nen-2); border: 1px solid var(--vien);
+  transition: border-color .2s, transform .22s var(--do-mo);
+}
+.the-video:hover .the-video__khung { border-color: var(--vien-dam); transform: translateY(-3px); }
+.the-video__khung img { width: 100%; height: 100%; object-fit: cover; }
+.the-video__nut {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(10, 18, 27, .72); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: #fff; font-size: 1.15rem; padding-left: 4px;
+  transition: background .2s, transform .2s;
+}
+.the-video:hover .the-video__nut { background: var(--nhan-1); color: #0A121B; transform: translate(-50%, -50%) scale(1.08); }
+.the-video__ten {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin-top: .8rem;
+  font-size: var(--fs-nho); font-weight: var(--fw-dam); color: var(--chu); line-height: 1.45;
+}
+.the-video__ngay { display: block; margin-top: .3rem; font-size: var(--fs-nhan); color: var(--chu-3); font-variant-numeric: tabular-nums; }
+.video__chan { margin-top: 2rem; text-align: center; }
+#video-trong { padding-top: 0; }
+
+/* ═══════════ 11c. HIỆU ỨNG HIỆN DẦN & THANH TẢI ═══════════ */
+.cho-hien {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .55s var(--do-mo), transform .55s var(--do-mo);
+}
+.cho-hien.hien-ra { opacity: 1; transform: none; }
+
+/* Vệt sáng mảnh trên đỉnh trang trong lúc chờ Google Sheet trả lời */
+.thanh-tai {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 90;
+  background: linear-gradient(90deg, var(--nhan-2), var(--nhan-1), var(--nhan-2));
+  background-size: 200% 100%;
+  transform-origin: left;
+  animation: tai-chay 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes tai-chay {
+  0%   { transform: scaleX(.05); background-position: 0% 0; }
+  55%  { transform: scaleX(.85); }
+  100% { transform: scaleX(1); background-position: 130% 0; opacity: .35; }
+}
+
+/* ═══════════ 11d. HIỆU ỨNG THEO CHUỘT — tạo chiều sâu ═══════════
+   Chỉ hoạt động trên máy có chuột thật (hover + pointer fine).
+   Điện thoại không tải gì thêm; "giảm chuyển động" thì tắt hẳn.      */
+
+/* Vầng sáng lớn trôi theo con trỏ — như ánh đèn rọi mềm trên nền tối */
+#vang-sang {
+  position: fixed; top: 0; left: 0;
+  width: 700px; height: 700px; border-radius: 50%;
+  pointer-events: none; z-index: 30;             /* dưới thanh đầu trang (40) */
+  background: radial-gradient(circle,
+    rgba(23, 168, 162, .10), rgba(240, 166, 43, .05) 40%, transparent 65%);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+:root[data-theme="light"] #vang-sang { mix-blend-mode: multiply; opacity: .3; }
+
+@media (hover: hover) and (pointer: fine) {
+  .the, .the-ud, .the-tl, .the-lien-he, .mau-gui, .the-ho-so { position: relative; }
+
+  /* Vệt sáng trên bề mặt thẻ, bám theo vị trí con trỏ (--mx/--my do JS ghi) */
+  .the::after, .the-ud::after, .the-tl::after,
+  .the-lien-he::after, .mau-gui::after, .the-ho-so::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: inherit; pointer-events: none;
+    opacity: 0; transition: opacity .35s;
+    background: radial-gradient(430px circle at var(--mx, 50%) var(--my, 40%),
+      rgba(240, 166, 43, .09), transparent 55%);
+  }
+  .the:hover::after, .the-ud:hover::after, .the-tl:hover::after,
+  .the-lien-he:hover::after, .mau-gui:hover::after, .the-ho-so:hover::after { opacity: 1; }
+
+  /* Thẻ hồ sơ nghiêng theo chuột — JS đặt transform, đây chỉ làm mượt */
+  .the-ho-so { transition: transform .25s var(--do-mo); will-change: transform; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #vang-sang { display: none; }
+}
+
 /* ═══════════ 12. LIÊN HỆ ═══════════ */
 .lien-he__luoi {
   display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr);
@@ -684,6 +781,18 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
 .bai-viet__doan { margin-bottom: 2.6rem; scroll-margin-top: 96px; }
 .bai-viet__doan h2 { font-size: 1.42rem; margin-bottom: .8rem; }
 .bai-viet__doan p  { margin: 0; font-size: 1.04rem; color: var(--chu-2); }
+/* Trong ô Sheet bấm Alt+Enter là tách đoạn — các đoạn cách nhau thoáng mắt */
+.bai-viet__doan p + p { margin-top: .9rem; }
+
+/* ── Định dạng chữ khai từ Sheet: **đậm** · *nghiêng* · ==nổi bật== ── */
+strong { font-weight: var(--fw-dam); color: var(--chu); }
+mark.noi-bat {
+  background: var(--nhan-nen);
+  color: var(--nhan-1);
+  border-radius: 4px;
+  padding: .05em .3em;
+  font-weight: var(--fw-vua);
+}
 
 .bai-viet__chan {
   margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--vien);
@@ -709,13 +818,14 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
   .bai-viet__ben  { position: static; }
 }
 
-@media (max-width: 760px) {
-  html { scroll-padding-top: 74px; }
+/* ── Menu gập ba gạch ─────────────────────────────────────────────
+   Bật từ 920px thay vì 760px: thanh ngang 7 mục không còn đủ chỗ
+   trên một hàng ở màn hẹp — để nguyên là chữ gãy xuống hai dòng.   */
+@media (max-width: 920px) {
   .nut-menu { display: flex; }
 
-  /* Trên điện thoại thanh điều hướng bị đưa ra khỏi dòng (position: fixed),
-     nên không còn gì đẩy hai nút công cụ sang phải. Phải tự đẩy bằng tay,
-     nếu không chúng dính sát vào logo và bỏ trống nửa màn hình bên phải.   */
+  /* Thanh điều hướng bị đưa ra khỏi dòng (position: fixed), nên không
+     còn gì đẩy hai nút công cụ sang phải — phải tự đẩy bằng tay.     */
   .dau-trang__cong-cu { margin-left: auto; }
 
   .dieu-huong {
@@ -723,10 +833,14 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
     background: var(--nen-2); border-bottom: 1px solid var(--vien);
     max-height: 0; overflow: hidden; transition: max-height .3s var(--do-mo);
   }
-  .dieu-huong.dang-mo { max-height: 420px; }
+  .dieu-huong.dang-mo { max-height: 460px; }
   .dieu-huong ul { flex-direction: column; align-items: stretch; gap: 0; padding: .6rem 1.25rem 1.2rem; }
   .dh-link { padding: .8rem .3rem; border-radius: 0; font-size: var(--fs-body); }
   .dh-link--nut { margin: .6rem 0 0; text-align: center; border-radius: 10px; }
+}
+
+@media (max-width: 760px) {
+  html { scroll-padding-top: 74px; }
 
   .hang-2 { grid-template-columns: 1fr; }
 
@@ -776,6 +890,8 @@ a.muc-lien-he__gt:hover { color: var(--nhan-1); }
   .the-ud:hover .the-ud__anh img { transform: none; }
   .lien-ket-doc:hover span { transform: none; }
   .nut-doc-them:hover { text-decoration: none; }
+  .the-video:hover .the-video__khung { transform: none; border-color: var(--vien); }
+  .the-video:hover .the-video__nut { background: rgba(10,18,27,.72); color: #fff; transform: translate(-50%, -50%); }
 }
 
 /* ═══════════ 16. TÔN TRỌNG LỰA CHỌN GIẢM CHUYỂN ĐỘNG ═══════════ */
