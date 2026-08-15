@@ -31,7 +31,7 @@ function gapMenu(mo) {
 
 // Tô sáng mục đang xem khi cuộn trang
 function theoDoiCuon() {
-  const muc = ['gioi-thieu', 'dinh-huong', 'chuyen-mon', 'ung-dung', 'thu-vien', 'lien-he'];
+  const muc = ['gioi-thieu', 'dinh-huong', 'chuyen-mon', 'ung-dung', 'video', 'thu-vien', 'lien-he'];
   const quanSat = new IntersectionObserver((cacMuc) => {
     cacMuc.forEach(m => {
       if (!m.isIntersecting) return;
@@ -182,13 +182,98 @@ function ganFormLienHe() {
   }
 }
 
-/* ═══════════ KHỐI: KHỞI ĐỘNG ═══════════ */
-async function khoiDong() {
-  khoiDongChuDe();
+/* ═══════════ KHỐI: HIỆU ỨNG HIỆN DẦN KHI CUỘN ═══════════
+   Thẻ trượt nhẹ lên và hiện dần khi cuộn tới — trang có nhịp thở hơn.
+   Trình duyệt cũ không hỗ trợ thì mọi thứ hiện bình thường, không mất gì. */
+let quanSatHien = null;
+function ganHieuUngHien() {
+  if (!('IntersectionObserver' in window)) return;
+  if (!quanSatHien) {
+    quanSatHien = new IntersectionObserver((cacThe) => {
+      cacThe.forEach(t => {
+        if (!t.isIntersecting) return;
+        t.target.classList.add('hien-ra');
+        quanSatHien.unobserve(t.target);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+  }
+  document.querySelectorAll('.the, .the-ud, .the-tl, .the-video, .thanh-nang-luc')
+    .forEach(el => {
+      if (el.classList.contains('cho-hien')) return;
+      el.classList.add('cho-hien');
+      quanSatHien.observe(el);
+    });
+}
 
-  DU_LIEU = await layNoiDung();
+/* ═══════════ KHỐI: HIỆU ỨNG THEO CHUỘT ═══════════
+   Ba lớp tạo chiều sâu — CHỈ bật trên máy có chuột thật:
+   1. Vầng sáng lớn trôi theo con trỏ (có độ trễ nên mềm như đèn rọi)
+   2. Vệt sáng trên bề mặt thẻ, bám đúng vị trí con trỏ đang rê
+   3. Thẻ hồ sơ đầu trang nghiêng nhẹ theo hướng chuột
+   Điện thoại và người chọn "giảm chuyển động" hoàn toàn không bị ảnh hưởng. */
+function ganHieuUngChuot() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Vẽ toàn bộ trang
+  // 1. Vầng sáng bám chuột — vẽ bằng transform nên không tốn sức máy
+  const vang = document.createElement('div');
+  vang.id = 'vang-sang';
+  vang.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(vang);
+
+  let mx = innerWidth / 2, my = innerHeight / 3;   // đích tới
+  let vx = mx, vy = my;                            // vị trí hiện tại
+  let dangChay = false;
+  function troi() {
+    vx += (mx - vx) * .08;
+    vy += (my - vy) * .08;
+    vang.style.transform = 'translate(' + (vx - 350) + 'px,' + (vy - 350) + 'px)';
+    if (Math.abs(mx - vx) > .5 || Math.abs(my - vy) > .5) requestAnimationFrame(troi);
+    else dangChay = false;
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    if (!dangChay) { dangChay = true; requestAnimationFrame(troi); }
+
+    // 2. Vệt sáng trên thẻ đang rê — ghi toạ độ chuột vào biến CSS của thẻ
+    const the = e.target.closest('.the, .the-ud, .the-tl, .the-video__khung, .the-lien-he, .mau-gui, .the-ho-so');
+    if (the) {
+      const b = the.getBoundingClientRect();
+      the.style.setProperty('--mx', (e.clientX - b.left) + 'px');
+      the.style.setProperty('--my', (e.clientY - b.top) + 'px');
+    }
+  }, { passive: true });
+
+  // 3. Thẻ hồ sơ nghiêng nhẹ theo chuột
+  const hs = document.querySelector('.the-ho-so');
+  if (hs) {
+    hs.addEventListener('mousemove', (e) => {
+      const b = hs.getBoundingClientRect();
+      const rx = ((e.clientY - b.top) / b.height - .5) * -6;   // tối đa ±3°
+      const ry = ((e.clientX - b.left) / b.width - .5) * 8;    // tối đa ±4°
+      hs.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+    });
+    hs.addEventListener('mouseleave', () => { hs.style.transform = ''; });
+  }
+}
+
+/* ═══════════ KHỐI: THANH BÁO ĐANG TẢI ═══════════
+   Vệt sáng mảnh chạy trên đỉnh trang trong lúc chờ Google Sheet trả lời. */
+function batThanhTai() {
+  if (document.getElementById('thanh-tai')) return;
+  const d = document.createElement('div');
+  d.id = 'thanh-tai';
+  d.className = 'thanh-tai';
+  document.body.appendChild(d);
+}
+function tatThanhTai() {
+  const d = document.getElementById('thanh-tai');
+  if (d) d.remove();
+}
+
+/* ═══════════ KHỐI: VẼ TOÀN TRANG ═══════════ */
+function veTatCa() {
   veCaiDat(DU_LIEU.caiDat);
   veTheHoSo(DU_LIEU);
   veDinhHuong(DU_LIEU.dinhHuong);
@@ -198,7 +283,25 @@ async function khoiDong() {
   veUngDung(DU_LIEU.ungDung, 'all');
   veChonNhomTaiLieu(DU_LIEU.nhomTaiLieu);
   veTaiLieu(DU_LIEU.taiLieu, '', 'all');
+  veVideo(DU_LIEU.videos);
   veLienHe(DU_LIEU.caiDat);
+  capNhatNutDocThem('luoi-dinh-huong');
+  capNhatNutDocThem('luoi-linh-vuc');
+  ganHieuUngHien();
+}
+
+/* ═══════════ KHỐI: KHỞI ĐỘNG ═══════════
+   Chiến lược hai nhịp để web mở NHANH:
+   Nhịp 1 — vẽ ngay bằng bộ nhớ đệm hoặc nội dung dự phòng (0 giây,
+            khách thấy trang tức thì, bấm được luôn).
+   Nhịp 2 — lấy bản mới nhất từ Google Sheet ở phía sau; về tới nơi
+            thì vẽ đè lên. Khách hầu như không nhận ra khoảnh khắc đổi. */
+async function khoiDong() {
+  khoiDongChuDe();
+
+  // Nhịp 1 — hiện trang ngay lập tức
+  DU_LIEU = layNhanh();
+  veTatCa();
 
   // Gắn sự kiện
   document.getElementById('nut-chu-de').addEventListener('click', () => {
@@ -217,6 +320,7 @@ async function khoiDong() {
   ganDocThem();
   ganFormLienHe();
   theoDoiCuon();
+  ganHieuUngChuot();
 
   // Thống kê: ghi nhận lượt vào web và bắt các nút tải
   ThongKe.batCacNut();
@@ -226,8 +330,25 @@ async function khoiDong() {
   dinhTuyen();
 
   document.body.classList.add('da-san-sang');
+  if (CONFIG.DEBUG) console.log('[web] Nguồn nhịp 1:', DU_LIEU._nguon);
 
-  if (CONFIG.DEBUG) console.log('[web] Nguồn nội dung:', DU_LIEU._nguon);
+  // Nhịp 2 — lấy bản mới nhất từ Sheet ở phía sau, về tới nơi thì vẽ đè
+  if (DU_LIEU._nguon !== 'cache' && CONFIG.API_URL) {
+    batThanhTai();
+    try {
+      const moi = await layNoiDung();
+      if (moi && moi._nguon === 'sheet') {
+        DU_LIEU = moi;
+        veTatCa();
+        // Nếu khách đang đọc một bài viết thì vẽ lại đúng bài đó
+        const khop = (window.location.hash || '').match(/^#\/ung-dung\/([\w-]+)$/);
+        if (khop) veBaiViet(khop[1]);
+        if (CONFIG.DEBUG) console.log('[web] Đã thay bằng nội dung từ Sheet');
+      }
+    } finally {
+      tatThanhTai();
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', khoiDong);

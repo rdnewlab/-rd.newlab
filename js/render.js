@@ -7,6 +7,25 @@
 
 let DU_LIEU = null;   // giữ bản dữ liệu đang dùng cho cả trang
 
+/* ---------- Định dạng chữ do người dùng gõ trên Sheet ----------
+   Cho phép nhấn nhá NGAY TRONG Ô SHEET mà không đụng gì tới bố cục:
+
+     **chữ**   → in đậm
+     *chữ*     → in nghiêng
+     ==chữ==   → nổi bật (nền màu nhấn nhạt)
+
+   An toàn: chữ được khoá HTML (locHtml) TRƯỚC rồi mới đổi ký hiệu,
+   nên nội dung trên Sheet không bao giờ chèn được mã vào trang.     */
+function dinhDang(chuoi) {
+  let s = locHtml(chuoi);
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // In nghiêng: dấu * phải đứng sát mép chữ và không dính vào chữ/số bên ngoài
+  // — để "5*6" hay "3*4" (phép nhân, kích thước) không bị nhầm thành nghiêng.
+  s = s.replace(/(^|[^*\w])\*([^\s*][^*\n]*?)\*(?=[^*\w]|$)/g, '$1<em>$2</em>');
+  s = s.replace(/==([^=]+)==/g, '<mark class="noi-bat">$1</mark>');
+  return s;
+}
+
 /* ---------- Tiện ích DOM ---------- */
 const $  = (s) => document.querySelector(s);
 const $$ = (s) => Array.from(document.querySelectorAll(s));
@@ -24,11 +43,15 @@ function veCaiDat(cd) {
 
   datChu('hieu-chu',        cd.tenThuongHieu);
   datChu('chan-hieu',       cd.tenThuongHieu);
-  datChu('chan-chu',        cd.chanTrang);
   datChu('hero-chuc-danh',  cd.chucDanh);
   datChu('hero-dong-1',     cd.heroDong1);
   datChu('hero-dong-2',     cd.heroDong2);
-  datChu('hero-tom-tat',    cd.heroTomTat);
+
+  // Hai đoạn chữ dài — cho phép **đậm** / *nghiêng* / ==nổi bật== từ Sheet
+  const heroTT = document.getElementById('hero-tom-tat');
+  if (heroTT && cd.heroTomTat) heroTT.innerHTML = dinhDang(cd.heroTomTat);
+  const chanChu = document.getElementById('chan-chu');
+  if (chanChu && cd.chanTrang) chanChu.innerHTML = dinhDang(cd.chanTrang);
   datChu('hero-cta-1',      cd.ctaChinh);
   datChu('hero-cta-2',      cd.ctaPhu);
   datChu('the-ten',         cd.tenThuongHieu);
@@ -76,7 +99,7 @@ function veDinhHuong(ds) {
         <span class="the__ico" aria-hidden="true">${locHtml(m.icon)}</span>
         <h3 class="the__ten">${locHtml(m.tieuDe)}</h3>
       </div>
-      <p class="the__mo-ta">${locHtml(m.noiDung)}</p>
+      <p class="the__mo-ta">${dinhDang(m.noiDung)}</p>
       <button type="button" class="nut-doc-them" aria-expanded="false">Đọc tiếp</button>
     </article>`).join('');
 }
@@ -91,7 +114,7 @@ function veLinhVuc(ds) {
         <span class="the__ico" aria-hidden="true">${locHtml(lv.icon)}</span>
         <h3 class="the__ten">${locHtml(lv.tieuDe)}</h3>
       </div>
-      <p class="the__mo-ta">${locHtml(lv.moTa)}</p>
+      <p class="the__mo-ta">${dinhDang(lv.moTa)}</p>
       <button type="button" class="nut-doc-them" aria-expanded="false">Đọc tiếp</button>
       <div class="hang-the">${the}</div>
     </article>`;
@@ -140,7 +163,7 @@ function veUngDung(ds, nhomLoc) {
 
   $('#luoi-ung-dung').innerHTML = loc.map(u => {
     const diem = tachDanh(u.diemChinh).slice(0, 4)
-      .map(d => `<li>${locHtml(d)}</li>`).join('');
+      .map(d => `<li>${dinhDang(d)}</li>`).join('');
     const anh = locLink(u.anh);
     const khoiAnh = anh
       ? `<img src="${anh}" alt="Ảnh giới thiệu ${locHtml(u.ten)}" loading="lazy" decoding="async">`
@@ -160,7 +183,7 @@ function veUngDung(ds, nhomLoc) {
           <span class="the-ud__pb">${locHtml(u.phienBan)}</span>
         </div>
         <p class="the-ud__phu-de">${locHtml(u.phuDe)}</p>
-        <p class="the-ud__tom-tat">${locHtml(u.tomTat)}</p>
+        <p class="the-ud__tom-tat">${dinhDang(u.tomTat)}</p>
         <ul class="the-ud__diem">${diem}</ul>
 
         <div class="the-ud__chan">
@@ -219,12 +242,53 @@ function veTaiLieu(ds, tuKhoa, nhomLoc) {
         <span class="the-tl__dung-luong">${locHtml(t.dungLuong)}</span>
       </div>
       <h3 class="the-tl__ten">${locHtml(t.tieuDe)}</h3>
-      <p class="the-tl__mo-ta">${locHtml(t.moTa)}</p>
+      <p class="the-tl__mo-ta">${dinhDang(t.moTa)}</p>
       ${nut}
     </article>`;
   }).join('');
 
   $('#tai-lieu-trong').classList.toggle('an', loc.length > 0);
+}
+
+/* ═══════════ 7b. VIDEO HƯỚNG DẪN ═══════════
+   Danh sách do Apps Script tự đọc từ kênh YouTube — video mới tự hiện.
+   Ảnh bìa lấy thẳng từ máy chủ ảnh của YouTube nên không tốn dung lượng. */
+function veVideo(vd) {
+  vd = vd || {};
+  const kenh = locLink(vd.kenh);
+
+  const nutKenh = $('#nut-kenh');
+  if (kenh) { nutKenh.href = kenh; nutKenh.classList.remove('an'); }
+  else { nutKenh.classList.add('an'); }
+
+  const ds = Array.isArray(vd.ds) ? vd.ds.slice(0, 9) : [];
+  $('#luoi-video').innerHTML = ds.map(v => {
+    const id = String(v.id || '').replace(/[^\w-]/g, '');
+    if (!id) return '';
+    const ngay = v.ngay ? new Date(v.ngay) : null;
+    const chuNgay = (ngay && !isNaN(ngay)) ? ngay.toLocaleDateString('vi-VN') : '';
+    return `
+    <a class="the-video" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener"
+       data-tk-loai="bam_tai_lieu" data-tk-muc="Video · ${locHtml(v.ten)}">
+      <span class="the-video__khung">
+        <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+        <span class="the-video__nut" aria-hidden="true">▶</span>
+      </span>
+      <span class="the-video__ten">${locHtml(v.ten)}</span>
+      ${chuNgay ? `<span class="the-video__ngay">${chuNgay}</span>` : ''}
+    </a>`;
+  }).join('');
+
+  $('#video-trong').classList.toggle('an', ds.length > 0);
+}
+
+/* Nút "Video hướng dẫn" trong bài viết ứng dụng.
+   Ưu tiên link riêng của app (cột LinkVideo trên Sheet), chưa có thì mở kênh. */
+function nutVideoBai(ud) {
+  const link = locLink(ud.linkVideo) || locLink((DU_LIEU.videos || {}).kenh);
+  if (!link) return '';
+  return `<a class="nut nut--vien" href="${link}" target="_blank" rel="noopener"
+             data-tk-loai="bam_tai_lieu" data-tk-muc="Video · ${locHtml(ud.ten)}">▶ Video hướng dẫn</a>`;
 }
 
 /* ═══════════ 8. LIÊN HỆ ═══════════ */
@@ -267,6 +331,8 @@ function veLienHe(cd) {
   const mang = [];
   if (locLink(cd.zalo))   mang.push(`<a class="nut-mang" href="${locLink(cd.zalo)}" target="_blank" rel="noopener">Zalo</a>`);
   if (locLink(cd.github)) mang.push(`<a class="nut-mang" href="${locLink(cd.github)}" target="_blank" rel="noopener">GitHub</a>`);
+  const kenhYT = locLink((DU_LIEU.videos || {}).kenh);
+  if (kenhYT) mang.push(`<a class="nut-mang" href="${kenhYT}" target="_blank" rel="noopener">YouTube</a>`);
   if (locLink(cd.congTaiBaoMat)) mang.push(`<a class="nut-mang" href="${locLink(cd.congTaiBaoMat)}" target="_blank" rel="noopener">Cổng tải tài liệu</a>`);
   $('#mang-xa-hoi').innerHTML = mang.join('');
 }
@@ -283,10 +349,12 @@ function veBaiViet(maApp) {
   const mucLuc = doan.map((d, i) =>
     `<li><a href="#doan-${i + 1}">${locHtml(d.tieuDe)}</a></li>`).join('');
 
+  // Trong ô Sheet, xuống dòng bằng Alt+Enter → trên web tách thành đoạn văn mới
   const than = doan.map((d, i) => `
     <section class="bai-viet__doan" id="doan-${i + 1}">
       <h2>${locHtml(d.tieuDe)}</h2>
-      <p>${locHtml(d.noiDung)}</p>
+      ${String(d.noiDung || '').split(/\n+/).filter(Boolean)
+        .map(p => `<p>${dinhDang(p)}</p>`).join('')}
     </section>`).join('');
 
   const diem = tachDanh(ud.diemChinh).map(x => `<li>${locHtml(x)}</li>`).join('');
@@ -303,10 +371,11 @@ function veBaiViet(maApp) {
         </div>
         <h1>${locHtml(ud.ten)}</h1>
         <p class="bai-viet__phu-de">${locHtml(ud.phuDe)}</p>
-        <p class="bai-viet__dan">${locHtml(ud.tomTat)}</p>
+        <p class="bai-viet__dan">${dinhDang(ud.tomTat)}</p>
 
         <div class="bai-viet__hanh-dong">
           ${nutTaiApp(ud, 'lon')}
+          ${nutVideoBai(ud)}
           ${locLink(ud.linkTai) && ud.chuThichTai
             ? `<span class="bai-viet__ghi-chu-tai">${locHtml(ud.chuThichTai)}</span>` : ''}
         </div>

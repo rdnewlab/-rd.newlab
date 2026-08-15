@@ -75,8 +75,19 @@ function chuanHoa(tho) {
     taiLieu:      lay('taiLieu'),
     nhomUngDung:  lay('nhomUngDung'),
     nhomTaiLieu:  lay('nhomTaiLieu'),
+    videos:       (tho.videos && typeof tho.videos === 'object') ? tho.videos : dp.videos,
     _nguon:       'sheet'
   };
+}
+
+/* ---------- Lấy NGAY không chờ mạng ----------
+   Trả về bộ nhớ đệm (nếu còn hạn) hoặc nội dung dự phòng — đồng bộ, 0ms.
+   Web vẽ bằng bản này trước cho khách thấy trang tức thì, rồi mới lấy
+   bản mới từ Sheet ở phía sau và vẽ đè lên khi về tới nơi.              */
+function layNhanh() {
+  const cache = docCache();
+  if (cache) return Object.assign({}, cache, { _nguon: 'cache' });
+  return Object.assign({}, NOI_DUNG_DU_PHONG, { _nguon: 'duphong' });
 }
 
 /* ---------- Hàm chính ---------- */

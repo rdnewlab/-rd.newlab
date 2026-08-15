@@ -172,8 +172,8 @@ const NOI_DUNG_DU_PHONG = {
       icon: '🧬',
       phuDe: 'Từ ý tưởng công thức tới bộ hồ sơ nộp',
       anh: 'images/autord.png',
-      tomTat: 'Phần mềm R&D cho thực phẩm, mỹ phẩm và hoá mỹ phẩm, gói trong 14 phân hệ nối liền nhau. Một công thức khai đúng một lần rồi tự chảy qua tính dinh dưỡng, tính giá, soi pháp lý, quy trình sản xuất, hồ sơ lô GMP và hồ sơ công bố — không phải gõ lại ở bất kỳ bước nào. Chạy hoàn toàn offline trên máy người dùng.',
-      diemChinh: 'Chuẩn hoá công thức về 100% và quy đổi theo cỡ lô thật|Tính dinh dưỡng, %RNI và Kcal theo 5 chuẩn, cảnh báo ngưỡng UL|Soi pháp lý tự động theo Codex CXS 192-1995 và Annex EC 1223/2009|Xuất hồ sơ công bố ASEAN và PIF ra PDF · Word · ZIP',
+      tomTat: 'Phần mềm R&D cho thực phẩm, mỹ phẩm và hoá mỹ phẩm, gói trong 14 phân hệ nối liền nhau. Một công thức khai đúng một lần rồi tự chảy qua tính dinh dưỡng, tính giá, soi pháp lý, quy trình sản xuất và hồ sơ công bố — không phải gõ lại ở bất kỳ bước nào. Bản V12 tự sinh cả ba bộ hồ sơ nặng nhất của nghề: hồ sơ nghiên cứu, hồ sơ lô GMP và bộ PIF, kèm lịch kiểm nghiệm độ ổn định tự gửi mail. Chạy hoàn toàn offline trên máy người dùng.',
+      diemChinh: 'Tự sinh hồ sơ nghiên cứu, hồ sơ lô GMP và bộ PIF nén ZIP|Tính dinh dưỡng %RNI · Kcal theo 5 chuẩn, cảnh báo ngưỡng UL|Soi pháp lý Codex CXS 192-1995 · Annex EC 1223/2009, báo đỏ chất cấm|Tự gửi mail kiểm nghiệm độ ổn định theo mốc M1–M36, tự chấm Đạt/FAIL',
       trangThai: 'Đã triển khai',
       mauNhan: 'xanh',
       linkTai: 'https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ',
@@ -187,8 +187,8 @@ const NOI_DUNG_DU_PHONG = {
       icon: '📦',
       phuDe: 'Kế hoạch vật tư, kho theo lô & báo giá sản xuất',
       anh: 'images/autokhvt.png',
-      tomTat: 'Quản trị kế hoạch vật tư, kho theo lô và tính giá báo giá sản xuất, gói trong 10 phân hệ. Nhận thẳng định mức BOM từ Auto RD, bung ra lượng nguyên liệu và bao bì cần mua theo đúng cỡ lô, quản tồn theo lô nội bộ với nguyên tắc FEFO, rồi dựng báo giá tách bạch tới từng khoản chi phí công đoạn.',
-      diemChinh: 'Dự trù NVL và bao bì theo cỡ lô, đã cộng tỷ lệ hao hụt|Xuất kho FEFO, chặn lô quá hạn và lô chưa đạt kiểm nghiệm|Báo giá 10 bước, so sánh bậc giá theo 3–5 cỡ lô|Thẩm tra giá tự động: thiếu giá, lệch giá kho, lãi thấp',
+      tomTat: 'Quản trị kế hoạch vật tư, kho theo lô và tính giá báo giá sản xuất, gói trong 10 phân hệ. Nhận thẳng định mức BOM từ Auto RD, tự lập kế hoạch và tạo lệnh sản xuất cho từng tổ, quản tồn theo lô nội bộ với nguyên tắc FEFO và kho truy xuất 360°, rồi dựng báo giá tách bạch tới từng khoản chi phí công đoạn.',
+      diemChinh: 'Tự lập kế hoạch và tạo lệnh sản xuất cho từng tổ|Kho truy xuất 360°: gõ một mã lô ra vị trí · HSD · lịch sử nhập xuất|Xuất kho FEFO, chặn lô quá hạn và lô chưa đạt kiểm nghiệm|Tính giá tới từng công đoạn: giờ công · ca máy · khấu hao, bậc giá 3–5 cỡ lô',
       trangThai: 'Đang triển khai',
       mauNhan: 'cam',
       linkTai: '',
@@ -203,7 +203,7 @@ const NOI_DUNG_DU_PHONG = {
       phuDe: 'Trung tâm chất lượng — eQMS & LIMS',
       anh: 'images/autoqc.png',
       tomTat: 'Trung tâm chất lượng của cả hệ sinh thái, gồm 19 phân hệ chạy từ kiểm nguyên liệu đầu vào cho tới lúc ký số nhả lô. Một chỉ tiêu không đạt sẽ tự mở hồ sơ điều tra OOS; lô hàng chỉ được nhả khi hội đủ ba điều kiện. Mọi thao tác ghi vào nhật ký kiểm toán không có chức năng xoá.',
-      diemChinh: 'Phiếu kiểm nghiệm tự nạp tiêu chuẩn và tự chấm Đạt / Không đạt|Chỉ tiêu FAIL tự mở hồ sơ OOS, đóng hết CAPA mới khép sự cố|Nhả lô chỉ mở khi đủ 3 điều kiện: KN đạt · hết OOS · hết CAPA|Truy xuất lô 360° và nhật ký kiểm toán chuẩn 21 CFR Part 11',
+      diemChinh: 'Chuỗi kiểm nghiệm khép kín IQC → IPQC → OQC theo lệnh sản xuất|Chỉ tiêu FAIL tự mở hồ sơ OOS, đóng hết CAPA mới khép sự cố|Quản lý hoá chất – chất chuẩn: hạn dùng, tủ lưu, chặn chuẩn hết hạn|Nhả lô đủ 3 điều kiện + nhật ký kiểm toán chuẩn 21 CFR Part 11',
       trangThai: 'Đang triển khai',
       mauNhan: 'cam',
       linkTai: '',
@@ -217,8 +217,8 @@ const NOI_DUNG_DU_PHONG = {
       icon: '🚚',
       phuDe: 'Xếp hộp, xếp thùng, xếp cả đội xe',
       anh: 'images/autobox.png',
-      tomTat: 'Bài toán đóng gói và điều xe giải bằng thuật toán xếp khối 3D, chia thành 7 mô-đun đi từ hộp sản phẩm lên tới cả đội xe. Kết quả không dừng ở con số mà là mô hình 3D xoay được, bóc xem từng lớp, kèm bản in sơ đồ bốc xếp A4 đưa thẳng cho công nhân kho.',
-      diemChinh: 'Xếp tối đa hộp vào thùng, tự xoay đứng – nằm – ngang|Đề xuất kích thước thùng carton mới vừa khít lô hàng|Điều phối container 20ft · 40ft · 40HC và xe tải, cảnh báo quá tải|Ghép nhiều loại thùng lên một xe, phân bổ trọng tâm cân bằng',
+      tomTat: 'Bài toán đóng gói và điều xe giải bằng thuật toán xếp khối 3D, chia thành 7 mô-đun đi từ hộp sản phẩm lên tới cả đội xe. Kết quả không dừng ở con số mà là mô hình 3D xoay được, bóc xem từng lớp, kèm danh mục lịch sử tính toán và phiếu bốc xếp A4 có mã QR đưa thẳng cho công nhân kho.',
+      diemChinh: 'Xếp tối đa hộp – thùng – container, tự xoay đứng · nằm · ngang|Danh mục lịch sử: nạp lại phương án 3D cũ bằng một cú bấm|Phiếu bốc xếp A4 có mã QR và sơ đồ 3D từng lớp|Cảnh báo quá tải trọng và thể tích an toàn từng chuyến xe',
       trangThai: 'Đã triển khai',
       mauNhan: 'tim',
       linkTai: 'https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ',
@@ -232,8 +232,8 @@ const NOI_DUNG_DU_PHONG = {
       icon: '🗂️',
       phuDe: 'Chuẩn hoá, tìm kiếm & trích xuất hồ sơ',
       anh: 'images/autofile.png',
-      tomTat: 'Một file EXE chạy thẳng, không cần cài đặt, gồm 9 phân hệ. Bạn tự định nghĩa biến trong ngoặc nhọn rồi dùng chung bộ biến đó cho cả tên file lẫn đường dẫn lưu — điền một lần, phần mềm sinh tên chuẩn và tự tạo đúng cây thư mục. Toàn bộ xử lý chạy tại chỗ, tài liệu không rời khỏi máy.',
-      diemChinh: 'Biến tự đặt dùng chung cho tên file và đường dẫn lưu|Trích xuất nội dung Word · Excel · PDF ra bảng tổng hợp|Tìm gần giống bằng thuật toán Levenshtein, gõ sai vẫn ra|Chuyển font tiếng Việt đời cũ VNI · TCVN3 sang Unicode',
+      tomTat: 'Một file EXE chạy thẳng, không cần cài đặt, gồm 10 phân hệ. Bạn tự định nghĩa biến trong ngoặc nhọn rồi dùng chung bộ biến đó cho cả tên file lẫn đường dẫn lưu — điền một lần, phần mềm sinh tên chuẩn và tự tạo đúng cây thư mục. Bản V23 thêm trích xuất trọn bộ chứng từ theo tệp lệnh và xưởng PDF nối – tách – tạo trang. Toàn bộ xử lý chạy tại chỗ, tài liệu không rời khỏi máy.',
+      diemChinh: 'Trích xuất trọn bộ chứng từ theo tệp lệnh · phiếu xuất kho|Xưởng PDF: nối, tách, tạo trang bìa, in hàng loạt đúng thứ tự|Tự tạo danh mục file ra Excel kèm link mở nhanh từng file|Biến tự đặt dùng chung cho tên file và cây thư mục',
       trangThai: 'Đã triển khai',
       mauNhan: 'tim',
       linkTai: 'https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg',
@@ -273,7 +273,9 @@ const NOI_DUNG_DU_PHONG = {
       noiDung: 'Một chuyên viên giỏi vẫn không thể thuộc lòng toàn bộ danh mục phụ gia được phép cùng mức dùng tối đa của từng chất trong từng nhóm thực phẩm. Auto RD bung nguyên công thức ra rồi đối chiếu tự động: thực phẩm soi theo Codex CXS 192-1995, mỹ phẩm soi theo Annex của EC 1223/2009. Chất bị cấm thì báo đỏ chặn lại; chất vượt mức tối đa cho phép thì chỉ rõ ngưỡng để hạ tỷ lệ. Kiểm tra này chạy ngay từ lúc còn đang thử nghiệm — rẻ hơn rất nhiều so với phát hiện sau khi đã sản xuất.' },
     { maApp: 'auto-rd', thuTu: 6, tieuDe: 'Từ công thức tới bộ hồ sơ nộp được',
       noiDung: 'Phần mềm R&D chỉ thực sự có ích khi kết quả in ra nộp được luôn. Auto RD dựng quy trình sản xuất theo mười bước mẫu chia ba công đoạn — pha chế, đóng gói cấp 1, đóng gói cấp 2 — rồi xuất biểu mẫu trống cho ba tổ ký ở ba thời điểm, đúng cách hồ sơ lô GMP vận hành ngoài xưởng. Hồ sơ công bố mỹ phẩm ASEAN và bộ PIF được điền tự động từ chính công thức đó, có sẵn cả bản theo chuẩn áp dụng từ 01/01/2029, xuất ra PDF, Word hoặc gói ZIP. Song song, kế hoạch theo dõi độ ổn định tự lên mốc 1–3–6–9 cho tới 36 tháng, tự soạn phiếu yêu cầu gửi phòng Lab đúng hạn và tự chấm đạt hay không khi kết quả trả về.' },
-    { maApp: 'auto-rd', thuTu: 7, tieuDe: 'Điều tôi rút ra',
+    { maApp: 'auto-rd', thuTu: 7, tieuDe: 'Ba bộ hồ sơ tự sinh: nghiên cứu, lô GMP và PIF',
+      noiDung: 'Điểm tôi đầu tư nhiều nhất ở bản V12 là để phần mềm tự sinh ba bộ hồ sơ nặng nhất của nghề. Thứ nhất, hồ sơ nghiên cứu: mỗi lần thử V1, V2, V3 đều được ghi nhật ký — thông số, cảm quan, kết luận — chốt công thức là đóng gói thành bộ hồ sơ R&D hoàn chỉnh, khỏi ngồi truy lại trí nhớ. Thứ hai, hồ sơ lô GMP: từ công thức đã duyệt, bấm một nút là bung cỡ lô, tính lượng nguyên liệu thực xuất và in biểu mẫu mười bước cho ba tổ ký. Thứ ba, bộ PIF mỹ phẩm ASEAN: phần mềm tự rút thông tin INCI, CAS, CoA, tiêu chuẩn và quy trình pha chế, nén thành gói ZIP đủ bốn phần sẵn sàng trình cơ quan quản lý. Kho CoA – MSDS – Spec gắn thẳng vào từng mã nguyên liệu nên hồ sơ không bao giờ thiếu chứng từ gốc.' },
+    { maApp: 'auto-rd', thuTu: 8, tieuDe: 'Điều tôi rút ra',
       noiDung: 'Bài học lớn nhất từ Auto RD: đừng số hoá một quy trình mình chưa từng tự tay làm. Rất nhiều chi tiết chỉ lộ ra khi ngồi làm thật — người ta hay ghi định mức theo mẻ chứ không theo kilogram; một nguyên liệu có thể mang hai tên gọi ở hai bộ phận; công thức hiếm khi đủ 100% ngay lần đầu mà thường chỉnh vài hoạt chất rồi lấy dung môi bù phần còn lại. Phần mềm bỏ qua những chi tiết đó thì dù tính đúng vẫn không ai dùng.' },
 
     /* ---------- AUTO KHVT ---------- */
@@ -289,6 +291,8 @@ const NOI_DUNG_DU_PHONG = {
       noiDung: 'Sai sót trong báo giá thường không đến từ phép tính mà từ dữ liệu đầu vào: một nguyên liệu mới chưa khai giá, một đơn giá nhập từ năm ngoái chưa cập nhật, một đơn hàng vô tình báo dưới giá vốn. Auto KHVT rà ba nhóm cảnh báo trước khi cho xuất phiếu: thiếu đơn giá, đơn giá lệch quá 5% so với giá nhập bình quân đang có trong kho, và tỷ lệ lãi rơi dưới ngưỡng an toàn đã cài. Mỗi cảnh báo có nút nhảy thẳng tới ô dữ liệu cần sửa — vì một cảnh báo mà không chỉ được chỗ sửa thì người ta sẽ bỏ qua nó.' },
     { maApp: 'auto-khvt', thuTu: 6, tieuDe: 'Tôn trọng thói quen của người đang dùng Excel',
       noiDung: 'Một quyết định thiết kế tôi cho là quan trọng: không bắt người dùng bỏ Excel ngay ngày đầu. Auto KHVT cho dán thẳng bảng từ Excel và tự khớp cột theo tiêu đề, nhập được CSV, gợi ý mã khi gõ, giữ các phím tắt quen tay. Chứng từ in ra theo mẫu quen thuộc của kế toán kho. Ứng dụng chạy offline trên một máy hoặc đặt trên ổ mạng nội bộ cho nhiều người cùng dùng, phân quyền riêng cho thủ kho, người lập kế hoạch và người tính giá. Phần mềm bắt người ta đổi thói quen quá nhiều thì thường chết yểu, dù chức năng có hay tới đâu.' },
+    { maApp: 'auto-khvt', thuTu: 7, tieuDe: 'Từ đơn hàng tới lệnh sản xuất, không cần tờ giấy nào ở giữa',
+      noiDung: 'Bản V5 nối nốt đoạn giữa mà trước đây vẫn phải làm tay: chọn danh sách đơn hàng, phần mềm tự lập kế hoạch sản xuất theo năng suất xưởng rồi xuất thẳng lệnh sản xuất cho từng tổ pha chế, đóng gói. Tồn kho có ngưỡng an toàn tối thiểu – tối đa, sắp chạm đáy là cảnh báo trước khi kịp thiếu. Kho thiết kế theo kiểu truy xuất 360°: gõ một mã lô là ra vị trí kệ, nhà cung cấp, hạn dùng và toàn bộ lịch sử nhập xuất. Màn giao hàng theo dõi đơn từ lúc lên lệnh tới lúc hoàn tất, trừ kho FEFO đúng một lần — hết hẳn lỗi trừ kho hai lần vốn rất khó truy ra.' },
 
     /* ---------- AUTO QA-QC ---------- */
     { maApp: 'auto-qaqc', thuTu: 1, tieuDe: 'Chất lượng không nằm ở tờ giấy cuối cùng',
@@ -303,6 +307,8 @@ const NOI_DUNG_DU_PHONG = {
       noiDung: 'Gõ một số lô, hệ thống bung ra cả cây lịch sử: nhà cung cấp, ngày nhập, phiếu kiểm đầu vào, lệnh sản xuất, phiếu kiểm trên dòng và thành phẩm, các sự cố liên quan. Chuỗi này phải đứng vững cả khi bị hỏi ngược lại — một lô nguyên liệu có vấn đề thì đã đi vào những lô thành phẩm nào, đã giao cho ai. Song song, mọi thao tác ghi vào nhật ký kiểm toán theo tinh thần 21 CFR Part 11: ai làm gì, lúc nào, sửa từ giá trị nào sang giá trị nào — và không có chức năng xoá log. Chính chỗ "không xoá được" mới là thứ khiến hồ sơ điện tử đứng vững trước đoàn thanh tra, và cũng là chỗ dễ bị làm hời hợt nhất nếu người viết phần mềm không hiểu vì sao nó tồn tại.' },
     { maApp: 'auto-qaqc', thuTu: 6, tieuDe: 'Phòng Lab cũng cần được quản',
       noiDung: 'Một kết quả kiểm nghiệm chỉ đáng tin khi thiết bị còn hiệu chuẩn, chất chuẩn còn hạn và phương pháp thử đã được thẩm định. Vì vậy trong Auto QA-QC có sẵn phần quản lý phòng Lab: vị trí và số lượng mẫu lưu kèm nhật ký huỷ mẫu, hạn dùng hoá chất và chất chuẩn, lịch hiệu chuẩn và bảo trì thiết bị, tất cả đều cảnh báo trước khi tới hạn. Kèm theo là phần thẩm định IQ/OQ/PQ cho thiết bị, quy trình, phương pháp thử và vệ sinh — chưa đủ ba giai đoạn đạt thì hệ thống không cho phê duyệt. Đây là phần ít được nhắc tới nhưng là nền của mọi con số phía trên.' },
+    { maApp: 'auto-qaqc', thuTu: 7, tieuDe: 'Hoá chất, chất chuẩn và động cơ Autofile nhúng trong app',
+      noiDung: 'Bản V3 thêm hai mảng ít phần mềm chất lượng nào chịu làm. Một là kiểm soát trọn vòng đời hoá chất và chất chuẩn phòng Lab: hạn dùng, nồng độ, vị trí tủ lưu, người pha — và chai chất chuẩn hết hạn bị chặn ngay trên phiếu kiểm nghiệm, vì kết quả đo bằng chuẩn hết hạn là kết quả vô giá trị. Hai là động cơ Autofile nhúng thẳng vào app: gom CoA nguyên liệu, phiếu kiểm trên dòng và thành phẩm rồi nối thành một bộ PDF hồ sơ lô, đổi tên phiếu theo biến chuẩn, tra bất kỳ file SOP hay CoA nào trong nửa giây. Chuỗi kiểm nghiệm phủ kín ba chặng — đầu vào IQC, trên dòng IPQC, thành phẩm OQC — bám theo đúng lệnh sản xuất.' },
 
     /* ---------- AUTO BOX ---------- */
     { maApp: 'auto-box', thuTu: 1, tieuDe: 'Một bài toán tưởng nhỏ mà tốn tiền thật',
@@ -315,6 +321,8 @@ const NOI_DUNG_DU_PHONG = {
       noiDung: 'Kết quả thuật toán xếp khối nếu chỉ hiện ra dưới dạng bảng số thì rất khó tin và khó kiểm tra. Vì vậy Auto Box dựng mô phỏng 3D xoay 360° được, phóng to được, kèm thanh trượt bóc xem từng lớp từ đáy lên. Người điều phối nhìn thấy chính xác lớp dưới đặt hàng gì, lớp trên đặt hàng gì, còn khoảng trống ở đâu. Đây cũng là cách nhanh nhất để một người có kinh nghiệm kho phát hiện phương án nào nghe thì hợp lý mà làm thì không nổi.' },
     { maApp: 'auto-box', thuTu: 5, tieuDe: 'Từ màn hình ra tới bãi xe',
       noiDung: 'Phương án xếp chỉ có giá trị khi tới được tay người bốc hàng. Auto Box in sơ đồ bốc xếp khổ A4 kèm hình 3D, số lượng hộp và thùng, thể tích, tải trọng và thứ tự xếp từng lớp — công nhân kho nhìn hình là làm được, không phải suy đoán. Bản in đó cũng xuất PDF gửi cho tài xế và cho khách. Danh mục hộp, thùng, phương tiện nhập xuất bằng Excel, có sao lưu và khôi phục; ứng dụng chạy dạng portable, cắm USB là chạy, không cần cài đặt.' },
+    { maApp: 'auto-box', thuTu: 6, tieuDe: 'Lịch sử tính toán và phiếu bốc xếp có mã QR',
+      noiDung: 'Bản V16 thêm hai thứ sinh ra từ chính phàn nàn của người dùng. Danh mục lịch sử tính toán: mọi lần tính đều được lưu, lọc theo mã sản phẩm, loại xe hay ngày tính — đơn hàng lặp lại thì nạp phương án 3D cũ bằng một cú bấm, không phải nhập lại thông số nào. Và phiếu bốc xếp A4 thế hệ mới: ngoài sơ đồ 3D từng lớp còn in kèm mã QR — công nhân kho quét là mở đúng phương án xếp trên điện thoại, tờ phiếu và màn hình không bao giờ lệch nhau.' },
 
     /* ---------- AUTOFILE ---------- */
     { maApp: 'autofile', thuTu: 1, tieuDe: 'Hồ sơ nhiều tới mức tìm lại còn lâu hơn làm mới',
@@ -329,6 +337,8 @@ const NOI_DUNG_DU_PHONG = {
       noiDung: 'Thứ nhất là font tiếng Việt đời cũ. Kho tài liệu của nhiều đơn vị vẫn còn hàng nghìn file gõ bằng VNI-Times hay TCVN3 — mở ra là chữ loạn, đọc không nổi, bỏ thì tiếc. Autofile nhận diện và chuyển mã hàng loạt sang Unicode mà không phá định dạng. Thứ hai là thao tác PDF ngay trong app: xem trước một chạm, ghép nhiều phiếu COA và tiêu chuẩn thành một bộ hồ sơ hoàn chỉnh, hoặc tách một file dày thành từng trang. Hai việc nhỏ, nhưng là hai việc người làm hồ sơ phải làm mỗi ngày.' },
     { maApp: 'autofile', thuTu: 6, tieuDe: 'Dữ liệu không rời khỏi máy',
       noiDung: 'Autofile là một file EXE chạy thẳng, không cần cài đặt, dùng được trên Windows 10 và 11. Toàn bộ xử lý diễn ra tại chỗ: không tải tài liệu lên đám mây, không cần Internet. Với hồ sơ chất lượng, hợp đồng và tài liệu công bố, đây không phải tính năng cộng thêm mà là điều kiện bắt buộc — nhiều đơn vị đơn giản là không được phép đưa loại tài liệu này ra khỏi mạng nội bộ.' },
+    { maApp: 'autofile', thuTu: 7, tieuDe: 'Trích xuất theo tệp lệnh và xưởng PDF',
+      noiDung: 'Bản V23 có hai bổ sung tôi dùng gần như hằng ngày. Thứ nhất, trích xuất theo tệp lệnh: nạp một lệnh sản xuất hay phiếu xuất kho, phần mềm quét ổ cứng và gom trọn bộ chứng từ liên quan — CoA, MSDS, phiếu kiểm nghiệm, hoá đơn — về một thư mục, sẵn sàng bàn giao cho khách hàng hoặc đoàn kiểm tra. Thứ hai, xưởng PDF: nối chục file CoA lẻ thành một tập, tách trang từ file dày trăm trang, chèn trang bìa, xoay trang và in hàng loạt theo đúng thứ tự. Kèm theo là danh mục file tự sinh ra Excel có link mở nhanh từng file — thứ bắt buộc phải có khi bàn giao cả một kho hồ sơ.' },
 
     /* ---------- AUTO SX ---------- */
     { maApp: 'auto-sx', thuTu: 1, tieuDe: 'Mắt xích còn thiếu giữa kế hoạch và nhà xưởng',
@@ -414,7 +424,15 @@ const NOI_DUNG_DU_PHONG = {
       link: 'https://drive.google.com/file/d/1V0Qddwl5CP1N4IN2cCVRmMoxkYS91toL/view' }
   ],
 
-  /* ═══════════ 8. NHÓM LỌC (Sheet: NhomLoc) ═══════════ */
+  /* ═══════════ 8. VIDEO HƯỚNG DẪN ═══════════
+     Danh sách video do Apps Script tự đọc từ kênh YouTube (RSS chính thức).
+     Ở chế độ dự phòng chưa có danh sách — web chỉ hiện nút mở kênh.        */
+  videos: {
+    kenh: 'https://www.youtube.com/channel/UCe31TzXPFjDIBfJuA0-c8lQ',
+    ds: []
+  },
+
+  /* ═══════════ 9. NHÓM LỌC (Sheet: NhomLoc) ═══════════ */
   nhomUngDung: [
     { ma: 'all',      ten: 'Tất cả' },
     { ma: 'rd',       ten: 'Nghiên cứu & phát triển' },
