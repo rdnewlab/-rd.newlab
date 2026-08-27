@@ -1645,3 +1645,52 @@ mark.noi-bat {
    ===================================================================== */
 button.nut        { background-color: transparent; }
 button.nut--chinh { background-color: var(--nhan-1); }
+
+
+/* =====================================================================
+   ═══  LỚP V4.17 — NÚT LIÊN HỆ NỔI (GỌI NGAY · NHẮN ZALO)  ═══
+   Nút nổi góc phải, luôn thấy khi cuộn. z-index 45: trên nội dung, dưới
+   thanh tải (90) và đèn xem ảnh (200) nên không đè các lớp đó. Menu điện
+   thoại xổ từ trên xuống, nút này ở dưới → không chạm nhau.
+   ===================================================================== */
+.gam-lien-he {
+  position: fixed; z-index: 45;
+  right: clamp(.8rem, 2.5vw, 1.4rem);
+  bottom: clamp(.8rem, 2.5vw, 1.4rem);
+  display: flex; flex-direction: column; align-items: flex-end; gap: .6rem;
+}
+.gam-lien-he.an { display: none; }
+
+.gam-nut {
+  display: inline-flex; align-items: center; gap: .55rem;
+  height: 52px; padding: 0 1.15rem; border-radius: 999px;
+  color: #fff; text-decoration: none; font-weight: var(--fw-rat-dam, 700);
+  font-size: .95rem; white-space: nowrap; border: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .28);
+  transition: transform .16s var(--do-mo), box-shadow .16s, filter .16s;
+}
+.gam-nut:hover   { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 10px 26px rgba(0, 0, 0, .34); }
+.gam-nut:active  { transform: translateY(0); }
+.gam-nut:focus-visible { outline: 3px solid var(--nhan-1); outline-offset: 3px; }
+
+.gam-nut__ico {
+  width: 26px; height: 26px; flex: none; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1rem; background: rgba(255, 255, 255, .22);
+}
+.gam-nut--goi  { background: #1E9E6A; }               /* xanh gọi điện */
+.gam-nut--zalo { background: #0068FF; }               /* xanh Zalo */
+.gam-nut--zalo .gam-nut__ico { font-weight: 800; font-style: italic; }
+
+/* Điện thoại: thu về nút TRÒN chỉ có biểu tượng cho đỡ chiếm màn;
+   chữ vẫn còn cho trình đọc màn hình (đẩy ra ngoài, không display:none). */
+@media (max-width: 560px) {
+  .gam-nut { width: 52px; height: 52px; padding: 0; justify-content: center; }
+  .gam-nut__ico { background: transparent; width: auto; height: auto; font-size: 1.5rem; }
+  .gam-nut__chu { position: absolute; left: -9999px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gam-nut { transition: none; }
+  .gam-nut:hover { transform: none; }
+}

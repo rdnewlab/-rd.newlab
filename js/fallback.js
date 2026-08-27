@@ -25,7 +25,7 @@ const NOI_DUNG_DU_PHONG = {
 
     heroDong1:       'Viết phần mềm cho đúng việc',
     heroDong2:       'nhà máy của bạn đang làm',
-    heroTomTat:      'Phần mềm bán sẵn bắt nhà máy uốn theo nó. Tôi làm ngược lại: xuống tận nơi, ngồi cùng người trực tiếp làm — thủ kho, trưởng ca, kiểm nghiệm viên — rồi viết đúng thứ họ cần, chạy khớp quy trình họ đang chạy. **Bạn cứ mô tả bằng lời, không cần biết kỹ thuật; phần còn lại để tôi lo.** Bảy ứng dụng dưới đây đều lớn lên theo cách đó — và đang chạy thật mỗi ngày trong nhà máy.',
+    heroTomTat:      'Phần mềm bán sẵn bắt nhà máy uốn theo nó. Tôi làm ngược lại: xuống tận nơi, ngồi cùng người trực tiếp làm — thủ kho, trưởng ca, kiểm nghiệm viên — rồi viết đúng thứ họ cần, chạy khớp quy trình họ đang chạy. **Bạn cứ mô tả bằng lời, không cần biết kỹ thuật; phần còn lại để tôi lo.** Các ứng dụng nối nhau qua Google Sheet, Drive và Apps Script — ==không cần mua máy chủ==, chi phí rất nhẹ, chỉ từ khoảng **100 nghìn đồng**. Bảy ứng dụng dưới đây đều lớn lên theo cách đó, và đang chạy thật mỗi ngày trong nhà máy.',
 
     ctaChinh:        'Xem các ứng dụng',
     ctaPhu:          'Thư viện tài liệu',
@@ -56,6 +56,7 @@ const NOI_DUNG_DU_PHONG = {
     dienThoai:       '0902 620 715',
     dienThoaiPhu:    '0943 156 780',
     zalo:            'https://zalo.me/0902620715',
+    soGoi:           '0943156780',
     github:          '',
     khuVuc:          'Hà Nội, Việt Nam',
     nhanViec:        'Nhận việc ở tất cả khu vực',

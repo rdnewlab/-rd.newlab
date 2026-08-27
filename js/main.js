@@ -587,6 +587,7 @@ function veTatCa() {
   veVideo(DU_LIEU.videos);
   veCongDong(DU_LIEU.congDong);
   veLienHe(DU_LIEU.caiDat);
+  veLienHeNhanh(DU_LIEU.caiDat);      // nút nổi Gọi ngay / Nhắn Zalo (V4.17)
   capNhatNutDocThem('luoi-dinh-huong');
   capNhatNutDocThem('luoi-linh-vuc');
   ganHieuUngHien();

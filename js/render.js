@@ -620,6 +620,36 @@ function veLienHe(cd) {
   $('#mang-xa-hoi').innerHTML = mang.join('');
 }
 
+/* Nút liên hệ NỔI ở góc phải màn hình — "Gọi ngay" + "Nhắn Zalo".
+   Số gọi lấy từ CaiDat.soGoi (trống thì dùng dienThoai); Zalo lấy từ CaiDat.zalo.
+   Ô nào trống thì ẩn đúng nút đó; trống cả hai thì ẩn hẳn cụm (đúng luật ô trống = ẩn). */
+function veLienHeNhanh(cd) {
+  const o = document.getElementById('gam-lien-he');
+  if (!o) return;
+
+  const so   = String(cd.soGoi || cd.dienThoai || '').trim();
+  const soLink = so.replace(/\s+/g, '');
+  const zalo = locLink(cd.zalo);
+  const nut  = [];
+
+  if (soLink) nut.push(
+    `<a class="gam-nut gam-nut--goi" href="tel:${locHtml(soLink)}"` +
+    ` data-tk-loai="bam_lien_he" data-tk-muc="Gọi ${locHtml(so)}"` +
+    ` aria-label="Gọi ${locHtml(so)}" title="Gọi ${locHtml(so)}">` +
+    `<span class="gam-nut__ico" aria-hidden="true">📞</span>` +
+    `<span class="gam-nut__chu">Gọi ngay</span></a>`);
+
+  if (zalo) nut.push(
+    `<a class="gam-nut gam-nut--zalo" href="${zalo}" target="_blank" rel="noopener"` +
+    ` data-tk-loai="bam_lien_he" data-tk-muc="Nhắn Zalo"` +
+    ` aria-label="Nhắn Zalo" title="Nhắn Zalo">` +
+    `<span class="gam-nut__ico" aria-hidden="true">Z</span>` +
+    `<span class="gam-nut__chu">Nhắn Zalo</span></a>`);
+
+  o.innerHTML = nut.join('');
+  o.classList.toggle('an', nut.length === 0);
+}
+
 /* ═══════════ 9. BÀI VIẾT CHI TIẾT ═══════════ */
 /* ---------- Dải poster của một ứng dụng ----------
    Ô Poster trên Sheet là danh sách đường dẫn ảnh, ngăn nhau bằng dấu |
