@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2.8">
+<link rel="stylesheet" href="css/style.css?v=4.11">
 </head>
 <body>
 
@@ -49,14 +49,17 @@
       <span class="hieu__chu" id="hieu-chu">rd.newlab</span>
     </a>
 
+    <!-- Danh ngôn nằm CÙNG HÀNG với rd.newlab — CaiDat → danhNgonTren.
+         Để trống ô đó là tự ẩn. Ẩn trên màn hẹp để nhường chỗ cho menu. -->
+    <p class="dai-danh-ngon an" id="dai-danh-ngon"><span id="danh-ngon-tren"></span></p>
+
     <nav class="dieu-huong" id="dieu-huong" aria-label="Điều hướng chính">
       <ul>
         <li><a href="#gioi-thieu" class="dh-link">Giới thiệu</a></li>
-        <li><a href="#dinh-huong" class="dh-link">Định hướng</a></li>
-        <li><a href="#chuyen-mon" class="dh-link">Chuyên môn</a></li>
         <li><a href="#ung-dung"  class="dh-link">Ứng dụng</a></li>
-        <li><a href="#video"     class="dh-link">Video</a></li>
         <li><a href="#thu-vien"  class="dh-link">Tài liệu</a></li>
+        <li><a href="#video"     class="dh-link">Video</a></li>
+        <li><a href="#nguoi-dung-sau" class="dh-link">Về tôi</a></li>
         <li><a href="#lien-he"   class="dh-link dh-link--nut">Liên hệ</a></li>
       </ul>
     </nav>
@@ -109,49 +112,24 @@
         <dl class="so-lieu" id="so-lieu"></dl>
       </div>
 
-      <aside class="the-ho-so" aria-label="Thẻ hồ sơ">
-        <div class="the-ho-so__dinh">
+      <!-- Chùm biểu tượng bảy ứng dụng — trôi nhẹ, dắt theo con trỏ.
+           Nội dung do js/render.js đổ vào; máy yếu hoặc điện thoại thì đứng yên. -->
+      <aside class="chum" id="chum" aria-label="Bảy ứng dụng">
+        <div class="chum__dinh">
           <span class="cham cham--song"></span>
           <span id="the-trang-thai">Sẵn sàng nhận dự án mới</span>
         </div>
-        <div class="the-ho-so__than">
-          <p class="the-ho-so__ten" id="the-ten">rd.newlab</p>
-          <p class="the-ho-so__viec" id="the-viec">Kỹ sư R&D & Tự động hoá</p>
-          <ul class="the-ho-so__ds" id="the-danh-sach"></ul>
-        </div>
+        <div class="chum__vong" id="chum-vong"></div>
+        <p class="chum__ghi">Bảy ứng dụng · bấm một biểu tượng để đọc</p>
       </aside>
 
     </div>
   </section>
 
-  <!-- ── Định hướng ── -->
-  <section class="muc" id="dinh-huong">
-    <div class="khung">
-      <header class="muc__dau">
-        <p class="nhan-nho">Định hướng</p>
-        <h2 class="tieu-de-muc">Điều tôi đang tìm ở dự án tiếp theo</h2>
-        <p class="mo-ta-muc">Tôi không tìm chỗ để chứng minh mình biết gì. Tôi tìm dự án đủ khó để học thêm, đủ rõ ràng để phần năng lực mình đang có góp được ngay từ đầu. Và hơn cả dự án, tôi mong được kết nối — với những người anh, người bạn, những đồng nghiệp cùng làm nghiên cứu, và may mắn nhất là gặp được những người thầy dẫn dắt mình đi xa hơn.</p>
-      </header>
-      <div class="luoi-4" id="luoi-dinh-huong"></div>
-    </div>
-  </section>
 
-  <!-- ── Chuyên môn ── -->
-  <section class="muc muc--nen" id="chuyen-mon">
-    <div class="khung">
-      <header class="muc__dau">
-        <p class="nhan-nho">Chuyên môn</p>
-        <h2 class="tieu-de-muc">Lĩnh vực chuyên môn và năng lực triển khai</h2>
-        <p class="mo-ta-muc">Hơn mười năm tôi đi gần hết một nhà máy: từ bàn thí nghiệm R&amp;D, sang phòng kiểm nghiệm QC, lên hệ thống chất lượng QA, qua kế hoạch vật tư và kho, rồi ra tận chuyền sản xuất — ở cả vị trí trực tiếp làm lẫn vị trí quản lý. Vốn đó cho tôi một thứ khó có được nếu chỉ đứng yên ở một chỗ: nhìn một bài toán là thấy ngay nó chạm vào những phòng nào, và ai sẽ là người phải gánh phần khó. Bảy mảng dưới đây đều là phần tôi tự tay dựng rồi tự tay vận hành, không phải kiến thức đọc trong sách.</p>
-      </header>
-      <div class="luoi-4" id="luoi-linh-vuc"></div>
 
-      <div class="nang-luc">
-        <h3 class="tieu-de-nho">Chỉ số năng lực tự đánh giá</h3>
-        <div class="nang-luc__luoi" id="luoi-nang-luc"></div>
-      </div>
-    </div>
-  </section>
+
+
 
   <!-- ── Kho ứng dụng ── -->
   <section class="muc" id="ung-dung">
@@ -164,25 +142,6 @@
 
       <div class="bo-loc" id="bo-loc-ung-dung" role="group" aria-label="Lọc theo nhóm"></div>
       <div class="luoi-ung-dung" id="luoi-ung-dung"></div>
-    </div>
-  </section>
-
-  <!-- ── Video hướng dẫn ── -->
-  <section class="muc" id="video">
-    <div class="khung">
-      <header class="muc__dau">
-        <p class="nhan-nho">Video</p>
-        <h2 class="tieu-de-muc">Video hướng dẫn</h2>
-        <p class="mo-ta-muc">Hướng dẫn cài đặt và sử dụng các ứng dụng. Video mới đăng trên kênh YouTube sẽ tự động hiện ở đây.</p>
-      </header>
-
-      <div class="luoi-video" id="luoi-video"></div>
-      <p class="trong-rong" id="video-trong">Các video hướng dẫn đang được đăng dần lên kênh — bấm nút dưới để xem trực tiếp.</p>
-
-      <div class="video__chan">
-        <a href="#" id="nut-kenh" class="nut nut--vien" target="_blank" rel="noopener"
-           data-tk-loai="bam_tai_lieu" data-tk-muc="Video · mở kênh YouTube">▶ Xem tất cả trên YouTube</a>
-      </div>
     </div>
   </section>
 
@@ -205,7 +164,29 @@
       </div>
 
       <div class="luoi-tai-lieu" id="luoi-tai-lieu"></div>
+      <!-- Nút "Xem thêm" — thư viện dài nên chỉ hiện một nhúm, ai cần mới bấm -->
+      <div class="tl-them" id="tl-them"></div>
+
       <p class="trong-rong an" id="tai-lieu-trong">Không tìm thấy tài liệu nào khớp với từ khoá.</p>
+    </div>
+  </section>
+
+  <!-- ── Video hướng dẫn ── -->
+  <section class="muc" id="video">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Video</p>
+        <h2 class="tieu-de-muc">Video hướng dẫn</h2>
+        <p class="mo-ta-muc">Hướng dẫn cài đặt và sử dụng các ứng dụng. Video mới đăng trên kênh YouTube sẽ tự động hiện ở đây.</p>
+      </header>
+
+      <div class="luoi-video" id="luoi-video"></div>
+      <p class="trong-rong" id="video-trong">Các video hướng dẫn đang được đăng dần lên kênh — bấm nút dưới để xem trực tiếp.</p>
+
+      <div class="video__chan">
+        <a href="#" id="nut-kenh" class="nut nut--vien" target="_blank" rel="noopener"
+           data-tk-loai="bam_tai_lieu" data-tk-muc="Video · mở kênh YouTube">▶ Xem tất cả trên YouTube</a>
+      </div>
     </div>
   </section>
 
@@ -218,6 +199,20 @@
         <p class="mo-ta-muc">Bốn nhóm Facebook đi theo đúng chuỗi của ngành — nghiên cứu, nguyên liệu, sản xuất, kinh doanh — cùng một nhóm Zalo trao đổi nhanh. Mỗi nhóm một chủ đề, anh chị cùng ngành cứ tự nhiên vào.</p>
       </header>
       <div class="luoi-4" id="luoi-cong-dong"></div>
+    </div>
+  </section>
+
+  <!-- ── Người đứng sau ── -->
+  <section class="muc" id="nguoi-dung-sau">
+    <div class="khung">
+      <div class="nds">
+        <div class="nds__chu">
+          <p class="nhan-nho" id="nds-nhan"></p>
+          <h2 class="tieu-de-muc" id="nds-tieu-de"></h2>
+          <div class="nds__than" id="nds-chu"></div>
+        </div>
+        <ul class="nds__y" id="nds-y"></ul>
+      </div>
     </div>
   </section>
 
@@ -235,12 +230,6 @@
           <p class="the-lien-he__dan">Nếu anh/chị có một bài toán vận hành đang muốn số hoá, hoặc một dự án cần người hiểu cả nghiệp vụ lẫn phần mềm — rất mong được nghe.</p>
           <ul class="ds-lien-he" id="ds-lien-he"></ul>
           <div class="mang-xa-hoi" id="mang-xa-hoi"></div>
-
-          <!-- Lối vào nhanh các nhóm cộng đồng ngay trong khung liên hệ -->
-          <div class="nhom-lien-he an" id="khoi-nhom-lien-he">
-            <p class="nhom-lien-he__tieu-de">Tham gia cộng đồng</p>
-            <div class="nhom-lien-he__ds" id="nhom-lien-he"></div>
-          </div>
         </div>
 
         <form class="mau-gui" id="mau-gui" novalidate>
@@ -292,16 +281,33 @@
   <div class="khung chan-trang__trong">
     <span class="chan-trang__hieu" id="chan-hieu">rd.newlab</span>
     <span class="chan-trang__chu" id="chan-chu"></span>
+    <!-- Câu chân trang NẰM CÙNG HÀNG — CaiDat → danhNgonDuoi -->
+    <span class="chan-trang__danh-ngon" id="danh-ngon-duoi"></span>
     <span class="chan-trang__nam" id="chan-nam"></span>
   </div>
 </footer>
 
+<!-- ══════════ KHUNG XEM ẢNH PHÓNG TO ══════════
+     Nằm ngoài luồng trang, mặc định ẩn. JS mở khi bấm một tấm poster. -->
+<div class="den-anh an" id="den-anh" role="dialog" aria-modal="true" aria-label="Xem ảnh phóng to">
+  <button type="button" class="den-anh__dong" id="den-dong" aria-label="Đóng">✕</button>
+  <button type="button" class="den-anh__lui" id="den-lui" aria-label="Ảnh trước">‹</button>
+  <figure class="den-anh__khung">
+    <img id="den-hinh" alt="">
+    <figcaption class="den-anh__chu" id="den-chu"></figcaption>
+  </figure>
+  <button type="button" class="den-anh__toi" id="den-toi" aria-label="Ảnh sau">›</button>
+</div>
+
+<!-- Ghi chú: vầng sáng theo con trỏ do main.js tự tạo, không đặt sẵn ở đây
+     để tránh hai phần tử trùng id. -->
+
 <!-- Scripts — thứ tự bắt buộc: cấu hình → dự phòng → api → hiển thị → khởi động -->
 <script src="js/config.js?v=2.1"></script>
-<script src="js/fallback.js?v=2.8"></script>
+<script src="js/fallback.js?v=5.1"></script>
 <script src="js/thongke.js?v=2.1"></script>
-<script src="js/api.js?v=2.8"></script>
-<script src="js/render.js?v=2.8"></script>
-<script src="js/main.js?v=2.8"></script>
+<script src="js/api.js?v=4.9"></script>
+<script src="js/render.js?v=4.8"></script>
+<script src="js/main.js?v=4.8"></script>
 </body>
 </html>
