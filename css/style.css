@@ -1011,3 +1011,626 @@ mark.noi-bat {
   body { background: #fff; color: #000; }
   .muc { padding-block: 1.5rem; }
 }
+
+
+/* =====================================================================
+   ══════════════  LỚP V4 — TẬP TRUNG VÀO ỨNG DỤNG  ══════════════
+   Thêm mới, KHÔNG sửa phần trên. Muốn quay về giao diện cũ thì xoá
+   trọn khối này là xong, phần cũ vẫn nguyên vẹn.
+
+   Gồm: ảnh bìa cao hơn · icon thật của app · dải poster · đèn xem ảnh
+        phóng to · thẻ nghiêng theo chuột.
+   ===================================================================== */
+
+/* Khoá cuộn nền khi đang mở đèn xem ảnh */
+.khoa-cuon { overflow: hidden; }
+
+/* ── Ảnh bìa cao hơn để thấy được nhiều poster hơn ── */
+.the-ud__anh { aspect-ratio: 4 / 3; }
+
+/* Dải tối mờ ở MÉP DƯỚI — chỗ icon và số ảnh đứng, để luôn đọc rõ
+   dù poster bên dưới sáng hay tối. Mép trên đã có sẵn dải cho nhãn. */
+.the-ud__phu {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 92px;
+  background: linear-gradient(to top, rgba(4, 10, 17, .88), rgba(4, 10, 17, 0));
+  pointer-events: none;
+}
+
+/* Số ảnh — nằm góc dưới phải, chỉ hiện khi app có từ 2 ảnh trở lên */
+.the-ud__so-anh {
+  position: absolute; right: .8rem; bottom: .7rem;
+  padding: .22rem .6rem; border-radius: 99px;
+  font-size: var(--fs-nhan); font-weight: var(--fw-vua);
+  color: #E6EEF4; background: rgba(10, 18, 27, .72);
+  border: 1px solid rgba(255, 255, 255, .16);
+  backdrop-filter: blur(6px);
+}
+
+/* ── Icon thật của ứng dụng, nhô lên đè mép ảnh ── */
+.the-ud__dinh { align-items: center; gap: .65rem; flex-wrap: wrap; }
+.the-ud__icon {
+  align-self: flex-start;
+  flex: 0 0 52px; width: 52px; height: 52px;
+  margin-top: -46px;                     /* nhô lên nằm đè lên ảnh bìa */
+  border-radius: 14px; padding: 5px;
+  background: var(--nen-2);
+  border: 1px solid var(--vien-dam);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, .55);
+  object-fit: contain;
+  transition: transform .22s var(--do-mo);
+}
+.the-ud__icon--chu {
+  display: grid; place-items: center; font-size: 1.5rem; line-height: 1;
+}
+.the-ud__ten { flex: 1 1 auto; min-width: 0; }
+
+/* ── Thẻ nghiêng theo chuột: đổi nhịp cho bám tay ──
+   JS ghi thẳng transform vào thẻ nên nhịp phải nhanh, nếu để .24s
+   như thẻ thường thì rê chuột sẽ thấy thẻ chạy đuổi theo, rất khó chịu. */
+@media (hover: hover) and (pointer: fine) {
+  .the-ud[data-nghieng] {
+    transition: transform .13s linear, border-color .24s, box-shadow .24s;
+    transform-style: preserve-3d;
+  }
+  .the-ud[data-nghieng]:hover .the-ud__icon { transform: translateZ(30px) scale(1.06); }
+}
+/* Điện thoại: tắt sạch, chạm không bị dính hiệu ứng */
+@media (hover: none) {
+  .the-ud[data-nghieng] { transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .the-ud[data-nghieng] { transform: none !important; transition: none; }
+  .the-ud__icon { transition: none; }
+}
+
+/* ── Icon trong tiêu đề bài viết ── */
+.bai-viet__dau h1 { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+.bai-viet__icon {
+  width: 46px; height: 46px; border-radius: 12px; padding: 4px;
+  background: var(--nen-2); border: 1px solid var(--vien-dam);
+  object-fit: contain; flex: 0 0 auto;
+}
+
+/* ── Dải poster trong bài viết ── */
+.poster { margin: 2.4rem 0 2.8rem; }
+.poster__dau {
+  display: flex; align-items: baseline; gap: .8rem;
+  flex-wrap: wrap; margin-bottom: .9rem;
+}
+.poster__tieu-de { font-size: var(--fs-h3); margin: 0; }
+.poster__ghi { margin: 0; font-size: var(--fs-nhan); color: var(--chu-3); }
+
+.poster__dai {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(210px, 260px);
+  gap: .9rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: .7rem;              /* chừa chỗ cho thanh cuộn, không cắt vào ảnh */
+  scrollbar-width: thin;
+}
+.poster__o {
+  position: relative; padding: 0; border: 1px solid var(--vien);
+  border-radius: var(--bo-goc-nho); overflow: hidden;
+  background: var(--nen-3); cursor: zoom-in;
+  scroll-snap-align: start;
+  aspect-ratio: 3 / 4;
+  transition: border-color .2s, transform .2s var(--do-mo);
+}
+.poster__o img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  display: block;
+}
+.poster__phong {
+  position: absolute; right: .5rem; bottom: .5rem;
+  width: 32px; height: 32px; display: grid; place-items: center;
+  border-radius: 8px; font-size: .95rem; color: #E6EEF4;
+  background: rgba(10, 18, 27, .72); border: 1px solid rgba(255, 255, 255, .16);
+  backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity .2s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .poster__o:hover { border-color: var(--nhan-1); transform: translateY(-3px); }
+  .poster__o:hover .poster__phong { opacity: 1; }
+}
+@media (hover: none) { .poster__phong { opacity: 1; } }
+.poster__o:focus-visible { outline: 2px solid var(--nhan-1); outline-offset: 2px; }
+
+/* ── Đèn xem ảnh phóng to ── */
+.den-anh {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: clamp(.8rem, 3vw, 2rem);
+  background: rgba(3, 8, 14, .93);
+  backdrop-filter: blur(10px);
+  animation: den-vao .2s ease;
+}
+@keyframes den-vao { from { opacity: 0; } to { opacity: 1; } }
+
+.den-anh__khung {
+  margin: 0; display: flex; flex-direction: column; align-items: center; gap: .7rem;
+  max-width: 100%; max-height: 100%;
+}
+.den-anh__khung img {
+  max-width: 100%; max-height: calc(100vh - 7rem);
+  width: auto; height: auto;
+  border-radius: var(--bo-goc-nho);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .9);
+}
+.den-anh__chu {
+  font-size: var(--fs-nho); color: #B9C7D2;
+  font-variant-numeric: tabular-nums; text-align: center;
+}
+
+.den-anh__dong, .den-anh__lui, .den-anh__toi {
+  flex: 0 0 auto;
+  display: grid; place-items: center;
+  width: 46px; height: 46px; min-width: 46px;      /* đủ 44px cho đầu ngón tay */
+  border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  color: #E6EEF4; font-size: 1.4rem; line-height: 1;
+  transition: background .18s, border-color .18s;
+}
+.den-anh__dong { position: absolute; top: 1rem; right: 1rem; font-size: 1.1rem; }
+@media (hover: hover) and (pointer: fine) {
+  .den-anh__dong:hover, .den-anh__lui:hover, .den-anh__toi:hover {
+    background: rgba(255, 255, 255, .16); border-color: var(--nhan-1);
+  }
+}
+
+@media (max-width: 640px) {
+  .den-anh { flex-direction: column; justify-content: center; }
+  .den-anh__lui, .den-anh__toi { position: absolute; bottom: 1.1rem; }
+  .den-anh__lui { left: calc(50% - 60px); }
+  .den-anh__toi { left: calc(50% + 14px); }
+  .den-anh__khung img { max-height: calc(100vh - 11rem); }
+  .poster__dai { grid-auto-columns: 62vw; }        /* thu nhỏ theo màn, không để tấm ảnh bé quá */
+}
+
+
+/* =====================================================================
+   ══════════  LỚP V4.1 — CHÙM BIỂU TƯỢNG & NGƯỜI ĐỨNG SAU  ══════════
+   Thêm mới, không sửa phần trên. Xoá trọn khối này là về V4.0.
+   ===================================================================== */
+
+/* ── Chùm bảy biểu tượng ở đầu trang ── */
+.chum { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+
+.chum__dinh {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .5rem 1rem; border-radius: 999px;
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam); color: var(--chu-2);
+  background: var(--nen-2); border: 1px solid var(--vien);
+}
+
+.chum__vong {
+  position: relative; width: 100%; max-width: 440px; aspect-ratio: 1;
+  /* --px/--py do main.js ghi vào, chạy từ -1 tới 1 theo vị trí con trỏ */
+}
+/* Vòng tròn mảnh làm nền, cho mắt thấy các biểu tượng nằm trên một quỹ đạo */
+.chum__vong::before {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 74%; height: 74%; transform: translate(-50%, -50%);
+  border: 1px dashed var(--vien); border-radius: 50%;
+  opacity: .8;
+}
+
+.chum__o {
+  position: absolute; left: var(--x); top: var(--y);
+  display: grid; place-items: center; text-decoration: none;
+  transform: translate(-50%, -50%)
+             translate(calc(var(--px, 0) * var(--sau) * 1px),
+                       calc(var(--py, 0) * var(--sau) * 1px));
+  transition: transform .12s linear;
+}
+
+.chum__hop {
+  display: grid; place-items: center;
+  border-radius: 20px; padding: 9px;
+  background: var(--nen-2);
+  border: 1px solid var(--vien-dam);
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, .55);
+  transition: border-color .22s, box-shadow .22s, scale .22s var(--do-mo);
+}
+.chum__hop img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+.chum__o--giua .chum__hop { width: 96px; height: 96px; border-radius: 24px; padding: 11px; }
+.chum__o--vong .chum__hop { width: 72px; height: 72px; }
+
+/* Tên hiện khi rê chuột hoặc khi đi bằng phím Tab */
+.chum__ten {
+  position: absolute; top: calc(100% + 7px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none;
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam); color: var(--chu);
+  padding: .25rem .6rem; border-radius: 7px;
+  background: var(--nen-2); border: 1px solid var(--vien);
+  opacity: 0; transition: opacity .2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chum__o:hover { z-index: 3; }
+  .chum__o:hover .chum__hop { border-color: var(--nhan-1); scale: 1.12;
+    box-shadow: 0 20px 44px -12px rgba(0, 0, 0, .7); }
+  .chum__o:hover .chum__ten { opacity: 1; }
+}
+.chum__o:focus-visible { outline: none; z-index: 3; }
+.chum__o:focus-visible .chum__hop { border-color: var(--nhan-1); scale: 1.12; }
+.chum__o:focus-visible .chum__ten { opacity: 1; }
+
+/* Trôi lên xuống — mỗi cái một nhịp riêng, do render.js đặt --nhip/--tre.
+   Lớp --song chỉ được main.js bật trên máy có chuột thật. */
+@keyframes chum-troi {
+  from { transform: translateY(-9px); }
+  to   { transform: translateY(9px); }
+}
+.chum__vong--song .chum__hop {
+  animation: chum-troi var(--nhip, 8s) ease-in-out var(--tre, 0s) infinite alternate;
+}
+
+.chum__ghi { font-size: var(--fs-nhan); color: var(--chu-3); text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chum__vong--song .chum__hop { animation: none; }
+  .chum__o { transition: none; }
+}
+@media (max-width: 880px) {
+  .chum__vong { max-width: 330px; }
+  .chum__o--giua .chum__hop { width: 74px; height: 74px; border-radius: 20px; padding: 9px; }
+  .chum__o--vong .chum__hop { width: 56px; height: 56px; border-radius: 16px; padding: 7px; }
+  /* Điện thoại không rê chuột được nên cho tên hiện sẵn, chữ nhỏ lại */
+  .chum__ten { opacity: 1; font-size: .68rem; padding: .18rem .45rem; }
+}
+
+/* ── Khối "Người đứng sau" ── */
+.nds { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+@media (min-width: 900px) { .nds { grid-template-columns: 1.3fr .7fr; gap: 3rem; } }
+
+.nds__than p { margin-top: 1rem; color: var(--chu-2); }
+.nds__than p:first-child { margin-top: 1.4rem; }
+
+.nds__y {
+  display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none;
+  background: var(--nen-2); border: 1px solid var(--vien);
+  border-radius: var(--bo-goc); padding: 1.5rem 1.4rem;
+}
+.nds__y li {
+  position: relative; padding-left: 1.6rem;
+  font-size: var(--fs-nho); line-height: 1.55; color: var(--chu-2);
+}
+.nds__y li::before {
+  content: ''; position: absolute; left: .25rem; top: .62em;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--nhan-1);
+}
+
+
+/* =====================================================================
+   ══════  LỚP V4.2 — Ô ĐẶT LÀM RIÊNG · XEM THÊM TÀI LIỆU · ẢNH HỎNG  ══════
+   ===================================================================== */
+
+/* Ảnh bìa nằm ĐÈ LÊN biểu tượng to. Ảnh hỏng thì tự gỡ mình ra, biểu tượng
+   lộ ra thay chỗ — không bao giờ còn ô ảnh vỡ hiện chữ thay ảnh. */
+.the-ud__anh img { position: relative; z-index: 1; }
+
+/* ── Ô "Thiết kế ứng dụng riêng" — đứng cuối lưới, luôn hiện ── */
+.the-ud--dv {
+  background:
+    linear-gradient(160deg, rgba(240, 166, 43, .10), transparent 55%),
+    var(--nen-2);
+  border-style: dashed;
+  border-color: var(--vien-dam);
+}
+.the-ud--dv .the-ud__than { padding-top: 1.7rem; }
+.the-ud--dv:hover { border-color: var(--nhan-1); border-style: solid; }
+
+.the-dv__nhan {
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam);
+  letter-spacing: .12em; text-transform: uppercase; color: var(--nhan-1);
+}
+.the-dv__ten {
+  margin-top: .55rem; font-size: 1.3rem; line-height: var(--lh-tieu-de);
+}
+.the-dv__chan { justify-content: flex-start; }
+
+/* ── Hàng "Xem thêm tài liệu" ── */
+.tl-them {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap;
+  margin-top: 1.6rem;
+}
+.tl-them:empty { display: none; }         /* hết tài liệu thì không chừa khoảng trống */
+.chu-nho-mo {
+  font-size: var(--fs-nhan); color: var(--chu-3);
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =====================================================================
+   ══════════════  LỚP V4.3 — THU KHOẢNG CÁCH GIỮA CÁC MỤC  ══════════════
+   Đo ở màn 1280: đáy phần Mở đầu 56px + đỉnh mục kế 120px = 176px trống.
+   Nhìn như trang bị hụt nội dung. Thu lại còn khoảng 124px — vẫn thoáng,
+   nhưng mắt không phải lướt qua một mảng đen dài.
+   Đổi ở đây bằng biến nên MỌI mục cùng co lại đều, không lệch nhịp.
+   ===================================================================== */
+:root  { --khoang-muc: clamp(3.2rem, 6.5vw, 5.4rem); }
+.mo-dau { padding-block: clamp(3rem, 7vw, 5.4rem) clamp(1.5rem, 2.8vw, 2.4rem); }
+.muc__dau { margin-bottom: 2.2rem; }
+
+/* Chùm biểu tượng vốn là hình vuông nên chiếm chỗ nhiều hơn cần thiết ở
+   đáy — kéo sát lại cho cân với cột chữ bên trái. */
+.chum { gap: .8rem; }
+.chum__vong { max-width: 400px; }
+
+
+/* =====================================================================
+   ══════  LỚP V4.4 — ICON KHÔNG BỊ LẤP · LƯỚI THẺ KHÔNG LỆCH HÀNG  ══════
+   ===================================================================== */
+
+/* Ở V4.2 tôi cho ảnh bìa z-index:1 để nó che biểu tượng to phía sau.
+   Nhưng icon app nhô lên đè mép ảnh lại đứng ở lớp thường → bị ảnh lấp mất
+   nửa trên. Nâng icon lên lớp 2 là đứng trước cả ảnh, đúng như thiết kế. */
+.the-ud__icon { position: relative; z-index: 2; }
+
+/* Lưới thẻ: hàng cuối còn ĐÚNG HAI thẻ thì mỗi thẻ ăn nửa hàng, không để
+   một ô trống toác bên phải. Chỉ áp cho màn rộng — màn hẹp vốn đã 1–2 cột.
+
+   Vì sao chia 6 cột: 6 chia hết cho cả 3 (ba thẻ/hàng) lẫn 2 (hai thẻ/hàng),
+   nên cùng một lưới lo được cả hai kiểu, không cần lưới thứ hai.
+
+   CỐ Ý không xử lý trường hợp thừa MỘT thẻ: cho nó chiếm trọn hàng thì ảnh
+   bìa tỷ lệ 4:3 sẽ phình cao gần 850px — xấu hơn là để trống. */
+@media (min-width: 1081px) {
+  .luoi-ung-dung { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .luoi-ung-dung > * { grid-column: span 2; }
+  .luoi-ung-dung > :nth-last-child(2):nth-child(3n+1),
+  .luoi-ung-dung > :nth-last-child(2):nth-child(3n+1) ~ * { grid-column: span 3; }
+}
+
+
+/* =====================================================================
+   ══════════════  LỚP V4.5 — DẢI POSTER TRƯỢT ĐƯỢC  ══════════════
+   Trước: chỉ cuộn được bằng thanh cuộn, trên máy tính khó nhận ra còn ảnh.
+   Nay: hai nút ‹ ›, hàng chấm chỉ vị trí, hai mép mờ dần cho biết còn ảnh.
+   ===================================================================== */
+
+.poster__dau { align-items: flex-end; justify-content: space-between; }
+
+.poster__lai { display: flex; gap: .5rem; flex: 0 0 auto; }
+.poster__nut {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  font-size: 1.4rem; line-height: 1;
+  color: var(--chu); background: var(--nen-2);
+  border: 1px solid var(--vien-dam);
+  transition: border-color .18s, color .18s, opacity .18s;
+}
+.poster__nut:disabled { opacity: .32; cursor: default; }
+@media (hover: hover) and (pointer: fine) {
+  .poster__nut:not(:disabled):hover { border-color: var(--nhan-1); color: var(--nhan-1); }
+}
+
+/* Khung bọc để làm hai mép mờ — không đặt lên chính dải cuộn,
+   vì mask trên phần tử cuộn sẽ trôi theo nội dung. */
+.poster__khung { position: relative; }
+.poster__khung::before, .poster__khung::after {
+  content: ''; position: absolute; top: 0; bottom: .7rem; width: 56px;
+  pointer-events: none; opacity: 0; transition: opacity .25s; z-index: 2;
+}
+.poster__khung::before { left: 0;  background: linear-gradient(to right, var(--nen), transparent); }
+.poster__khung::after  { right: 0; background: linear-gradient(to left,  var(--nen), transparent); }
+.poster__khung.co-trai::before { opacity: 1; }
+.poster__khung.co-phai::after  { opacity: 1; }
+
+/* Cuộn mượt khi bấm nút; ai chọn giảm chuyển động thì nhảy thẳng */
+.poster__dai { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { .poster__dai { scroll-behavior: auto; } }
+
+/* Hàng chấm chỉ vị trí */
+.poster__cham-hang {
+  display: flex; gap: .45rem; justify-content: center; align-items: center;
+  margin-top: .9rem;
+}
+.poster__cham {
+  width: 30px; height: 22px; padding: 0; cursor: pointer;
+  background: none; border: none;
+  display: grid; place-items: center;      /* vùng bấm rộng, chấm nhỏ */
+}
+.poster__cham::before {
+  content: ''; width: 22px; height: 4px; border-radius: 99px;
+  background: var(--vien-dam); transition: background .22s, width .22s;
+}
+.poster__cham.dang-o::before { background: var(--nhan-1); width: 30px; }
+@media (hover: hover) and (pointer: fine) {
+  .poster__cham:not(.dang-o):hover::before { background: var(--chu-3); }
+}
+
+@media (max-width: 640px) {
+  .poster__lai { display: none; }          /* điện thoại vuốt tay là đủ */
+  .poster__khung::before, .poster__khung::after { width: 34px; }
+}
+
+
+/* =====================================================================
+   ══════════════  LỚP V4.7 — HÀNG NHÃN NGÀNH / LĨNH VỰC  ══════════════
+   Nằm trong ô "Thiết kế ứng dụng tuỳ biến", ngay trên nút. Nói cho khách
+   thấy phạm vi phục vụ: nhiều ngành, nhiều khâu.
+   ===================================================================== */
+.the-dv__hang {
+  display: flex; align-items: baseline; gap: .55rem;
+  margin-top: .7rem; flex-wrap: wrap;
+}
+.the-dv__nhan-hang {
+  flex: 0 0 auto;
+  font-size: var(--fs-nhan); font-weight: var(--fw-dam);
+  color: var(--chu-3);
+  min-width: 4.2rem;                 /* hai hàng thẳng nhau cho gọn mắt */
+}
+.the-dv__the-ds { display: flex; flex-wrap: wrap; gap: .35rem; }
+.the-dv__the {
+  font-size: var(--fs-nhan); font-weight: var(--fw-vua);
+  color: var(--chu-2);
+  padding: .2rem .55rem; border-radius: 99px;
+  background: var(--nen-3);
+  border: 1px solid var(--vien);
+  white-space: nowrap;
+}
+
+
+/* =====================================================================
+   ══════  LỚP V4.8 — DANH NGÔN · KỸ NĂNG ĐỌC THÊM · BÌA Ô DỊCH VỤ  ══════
+   ===================================================================== */
+
+/* ── Dải danh ngôn trên cùng ── */
+.dai-danh-ngon {
+  text-align: center;
+  padding: .5rem 1rem;
+  background: var(--nhan-nen);
+  border-bottom: 1px solid var(--vien);
+}
+.dai-danh-ngon__chu {
+  font-family: var(--font-doc, 'Source Serif 4', Georgia, serif);
+  font-style: italic;
+  font-size: var(--fs-nho);
+  color: var(--chu-2);
+  letter-spacing: .01em;
+}
+.dai-danh-ngon__chu::before { content: '“'; }
+.dai-danh-ngon__chu::after  { content: '”'; }
+
+/* ── Câu ở chân trang ── */
+.chan-trang__danh-ngon {
+  flex-basis: 100%;
+  margin-top: .5rem;
+  font-family: var(--font-doc, 'Source Serif 4', Georgia, serif);
+  font-style: italic;
+  font-size: var(--fs-nho);
+  color: var(--nhan-1);
+}
+.chan-trang__danh-ngon:empty { display: none; }
+.chan-trang__danh-ngon::before { content: '“'; }
+.chan-trang__danh-ngon::after  { content: '”'; }
+
+/* ── Khối "Người đứng sau": cân hai bên + đọc thêm ── */
+.nds__them.an { display: none; }
+.nds__them p:first-child { margin-top: 1rem; }
+
+.nds__nut-them {
+  margin-top: 1rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .9rem;
+  font-family: var(--font-ui, inherit);
+  font-size: var(--fs-nho); font-weight: var(--fw-dam);
+  color: var(--nhan-1); cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--vien-dam); border-radius: 99px;
+  transition: border-color .18s, background .18s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nds__nut-them:hover { border-color: var(--nhan-1); background: var(--nhan-nen); }
+}
+
+/* Ô kỹ năng bên phải dính lên đầu để cân với cột chữ dài bên trái */
+.nds__y { align-self: start; }
+
+/* ── Bìa cho ô "Thiết kế ứng dụng tuỳ biến" ── */
+.the-dv__anh { aspect-ratio: 16 / 7; }        /* thấp hơn thẻ app, vì ô này nhiều chữ */
+.the-dv__anh::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 60px;
+  background: linear-gradient(to bottom, rgba(4,10,17,.55), transparent);
+  pointer-events: none;
+}
+.the-ud--dv .the-ud__than { padding-top: 1.4rem; }
+
+
+/* =====================================================================
+   ══════════  LỚP V4.10 — CHỮ TIÊU ĐỀ CHẠY MÀU · ICON XOAY  ══════════
+   Thêm mới, không sửa phần trên. Xoá trọn khối này là về V4.9.
+   ===================================================================== */
+
+/* ── Chữ nhấn ở tiêu đề: màu CHẢY ngang cho sống động ──
+   Dùng gradient rộng gấp đôi rồi trượt vị trí nền — chữ đứng yên, chỉ có
+   dải màu lướt qua. Nhẹ về máy (chỉ vẽ lại lớp nền), không xô lệch bố cục. */
+.chu-nhan {
+  background: linear-gradient(96deg,
+    var(--nhan-1), var(--nhan-2), var(--nhan-1), var(--nhan-2));
+  background-size: 260% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: chu-chay 7s linear infinite;
+}
+@keyframes chu-chay { to { background-position: 260% 0; } }
+
+/* ── Chùm biểu tượng: vòng nền quay chậm cho cả cụm như đang sống ──
+   Chỉ quay đường dẫn hướng (nét đứt), KHÔNG quay icon — nên các icon vẫn
+   đứng yên đúng chỗ, bấm không bị trượt. Chỉ bật trên máy có chuột thật. */
+@keyframes vong-quay {
+  from { transform: translate(-50%, -50%) rotate(0); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.chum__vong--song::before { animation: vong-quay 55s linear infinite; }
+
+/* ── Rê chuột vào một icon: XOAY một vòng + phóng to (đã có sẵn phóng to) ──
+   Xoay đặt trên ẢNH bên trong, không đặt trên khối trôi — nên không giẫm lên
+   hiệu ứng trôi lên xuống. Xoay đúng một vòng rồi về thẳng, chữ vẫn đọc được. */
+@keyframes icon-xoay { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@media (hover: hover) and (pointer: fine) {
+  .chum__o:hover .chum__hop img { animation: icon-xoay .7s var(--do-mo); }
+  .chum__o:hover { z-index: 4; }        /* icon đang rê nổi lên trên các icon khác */
+}
+
+/* Tôn trọng cài đặt "giảm chuyển động": tắt sạch cả ba */
+@media (prefers-reduced-motion: reduce) {
+  .chu-nhan { animation: none; background-size: 100% 100%; }
+  .chum__vong--song::before { animation: none; }
+  .chum__o:hover .chum__hop img { animation: none; }
+}
+
+
+/* =====================================================================
+   ═══  LỚP V4.11 — DANH NGÔN CÙNG HÀNG · CHÙM ICON XOAY QUANH RD  ═══
+   ===================================================================== */
+
+/* ── Danh ngôn TRÊN: nay nằm cùng hàng với rd.newlab (không còn dải riêng) ── */
+.dai-danh-ngon {
+  margin: 0; padding: 0; background: none; border: none; text-align: left;
+  font-family: var(--font-doc, 'Source Serif 4', Georgia, serif);
+  font-style: italic; font-size: var(--fs-nhan); color: var(--chu-3);
+  white-space: nowrap;
+}
+.dai-danh-ngon::before { content: '“'; }
+.dai-danh-ngon::after  { content: '”'; }
+/* Màn hẹp: ẩn để nhường chỗ cho menu (không dồn nút) */
+@media (max-width: 1080px) { .dai-danh-ngon { display: none !important; } }
+
+/* ── Danh ngôn DƯỚI: nằm CÙNG HÀNG với rd.newlab ở chân trang ── */
+.chan-trang__danh-ngon {
+  flex-basis: auto; margin: 0;
+  font-family: var(--font-doc, 'Source Serif 4', Georgia, serif);
+  font-style: italic; font-size: var(--fs-nhan); color: var(--nhan-1);
+}
+.chan-trang__danh-ngon:empty { display: none; }
+.chan-trang__danh-ngon::before { content: '“'; }
+.chan-trang__danh-ngon::after  { content: '”'; }
+@media (max-width: 560px) { .chan-trang__danh-ngon { flex-basis: 100%; } }
+
+/* ── Chùm biểu tượng XOAY VÒNG quanh Auto RD ──
+   Cả cụm quay quanh tâm (Auto RD ở giữa); mỗi icon tự xoay ngược lại đúng
+   bằng góc đó nên VẪN ĐỨNG THẲNG, chữ đọc được. Rê chuột vào cụm là DỪNG
+   ngay để dễ bấm và phóng to. Chỉ chạy trên máy có chuột (lớp --song). */
+@keyframes chum-orbit       { to   { transform: rotate(360deg); } }
+@keyframes chum-orbit-nguoc { from { transform: translate(-50%, -50%) rotate(0); }
+                              to   { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+.chum__vong--song            { animation: chum-orbit 40s linear infinite; }
+.chum__vong--song .chum__o   { animation: chum-orbit-nguoc 40s linear infinite; }
+/* Đang xoay vòng thì bỏ nhịp trôi lên xuống cho gọn mắt, và giữ vòng nét đứt đứng yên làm đường ray */
+.chum__vong--song .chum__hop { animation: none; }
+.chum__vong--song::before    { animation: none; }
+
+/* Rê chuột vào cụm → dừng cả vòng lẫn phần xoay ngược để bấm/phóng to dễ */
+.chum__vong--song:hover,
+.chum__vong--song:hover .chum__o { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chum__vong--song, .chum__vong--song .chum__o { animation: none; }
+}
