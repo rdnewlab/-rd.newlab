@@ -31,7 +31,8 @@ function gapMenu(mo) {
 
 // Tô sáng mục đang xem khi cuộn trang
 function theoDoiCuon() {
-  const muc = ['gioi-thieu', 'dinh-huong', 'chuyen-mon', 'ung-dung', 'video', 'thu-vien', 'cong-dong', 'lien-he'];
+  // Đúng thứ tự các mục đang có trên trang (v3 đã bỏ Định hướng và Chuyên môn)
+  const muc = ['gioi-thieu', 'ung-dung', 'thu-vien', 'video', 'cong-dong', 'nguoi-dung-sau', 'lien-he'];
   const quanSat = new IntersectionObserver((cacMuc) => {
     cacMuc.forEach(m => {
       if (!m.isIntersecting) return;
@@ -93,7 +94,20 @@ function ganBoLocUngDung() {
 function ganTimTaiLieu() {
   const oTim  = document.getElementById('o-tim-tai-lieu');
   const oNhom = document.getElementById('chon-nhom-tai-lieu');
-  const chay  = () => veTaiLieu(DU_LIEU.taiLieu, oTim.value, oNhom.value);
+  // Đổi từ khoá hay đổi danh mục thì đếm lại từ đầu, không giữ số cũ
+  const chay  = () => { datLaiSoTaiLieu(); veTaiLieu(DU_LIEU.taiLieu, oTim.value, oNhom.value); };
+
+  // Nút "Xem thêm" / "Thu gọn" được vẽ lại mỗi lần nên bắt sự kiện ở tầng ngoài
+  const oThem = document.getElementById('tl-them');
+  if (oThem) oThem.addEventListener('click', (e) => {
+    if (e.target.closest('#nut-tl-them')) themSoTaiLieu();
+    else if (e.target.closest('#nut-tl-thu')) {
+      datLaiSoTaiLieu();
+      document.getElementById('thu-vien').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else return;
+    veTaiLieu(DU_LIEU.taiLieu, oTim.value, oNhom.value);
+    ganHieuUngHien();
+  });
 
   let hen;
   oTim.addEventListener('input', () => { clearTimeout(hen); hen = setTimeout(chay, 180); });
@@ -259,6 +273,288 @@ function ganHieuUngChuot() {
     });
     hs.addEventListener('mouseleave', () => { hs.style.transform = ''; });
   }
+
+  /* 4. Thẻ ứng dụng nghiêng theo chuột (V4)
+     Gắn một lần ở tầng document nên các thẻ vẽ lại vẫn chạy, không phải gắn lại. */
+  document.addEventListener('mousemove', (e) => {
+    const the = (e.target && e.target.closest) ? e.target.closest('[data-nghieng]') : null;
+    if (!the) return;
+    const b = the.getBoundingClientRect();
+    const rx = ((e.clientY - b.top) / b.height - .5) * -5;    // tối đa ±2,5°
+    const ry = ((e.clientX - b.left) / b.width - .5) * 6;     // tối đa ±3°
+    the.style.transform =
+      'perspective(1000px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-4px)';
+  }, { passive: true });
+
+  document.addEventListener('mouseout', (e) => {
+    const the = (e.target && e.target.closest) ? e.target.closest('[data-nghieng]') : null;
+    if (the && !the.contains(e.relatedTarget)) the.style.transform = '';
+  }, { passive: true });
+}
+
+/* ═══════════ KHỐI: SỐ LIỆU ĐẾM LÊN ═══════════
+   Chỉ đếm phần SỐ, giữ nguyên phần chữ đi kèm (ví dụ "7+" đếm tới 7 rồi thêm dấu +).
+   Ô nào không có số thì để yên. Máy đặt "giảm chuyển động" thì bỏ qua hẳn. */
+function ganDemSo() {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const quanSat = new IntersectionObserver((cac, ob) => {
+    cac.forEach(m => {
+      if (!m.isIntersecting) return;
+      const o = m.target;
+      ob.unobserve(o);
+
+      demMotO(o);
+    });
+  }, { threshold: 0.6 });
+
+  document.querySelectorAll('.so-lieu__so').forEach(o => quanSat.observe(o));
+}
+
+/* Tách riêng để kiểm thử được bằng máy, và để chỗ khác gọi lại khi cần.
+   Trả về true nếu có chạy đếm, false nếu ô đó không phải số. */
+function demMotO(o, keoDai) {
+  const goc = String(o.textContent || '').trim();
+  const so  = parseInt(goc.replace(/\D/g, ''), 10);
+  if (!so || so > 100000) return false;             // không phải số thì để yên
+  const duoi = goc.replace(/^\D*\d+/, '');          // phần chữ phía sau, ví dụ dấu +
+  const KEO_DAI = keoDai || 900;
+
+  const batDau = (window.performance && performance.now) ? performance.now() : Date.now();
+  function chay(luc) {
+    const t = Math.min(1, (luc - batDau) / KEO_DAI);
+    const muot = 1 - Math.pow(1 - t, 3);            // chậm dần về cuối
+    o.textContent = Math.round(so * muot) + (t >= 1 ? duoi : '');
+    if (t < 1) requestAnimationFrame(chay);
+  }
+  chay(batDau);
+  return true;
+}
+
+/* ═══════════ KHỐI: ĐÈN XEM ẢNH PHÓNG TO ═══════════
+   Bấm một tấm poster → mở toàn màn hình, chuyển tấm bằng nút hoặc phím ← →,
+   đóng bằng nút ✕, phím Esc, hoặc bấm ra vùng nền tối. */
+var denDs = [], denViTri = 0, denTenApp = '', denNutCu = null;
+
+function denMo(ds, i, tenApp, nutGoc) {
+  denDs = ds; denViTri = i; denTenApp = tenApp || ''; denNutCu = nutGoc || null;
+  document.getElementById('den-anh').classList.remove('an');
+  document.body.classList.add('khoa-cuon');
+  denVe();
+  document.getElementById('den-dong').focus();
+}
+
+function denDong() {
+  document.getElementById('den-anh').classList.add('an');
+  document.body.classList.remove('khoa-cuon');
+  if (denNutCu) denNutCu.focus();                     // trả con trỏ về đúng chỗ vừa bấm
+}
+
+function denVe() {
+  const hinh = document.getElementById('den-hinh');
+  hinh.src = denDs[denViTri];
+  hinh.alt = 'Ảnh giới thiệu ' + denTenApp + ' — tấm ' + (denViTri + 1);
+  document.getElementById('den-chu').textContent =
+    denTenApp + ' — ảnh ' + (denViTri + 1) + ' / ' + denDs.length;
+  const mot = denDs.length < 2;
+  document.getElementById('den-lui').hidden = mot;
+  document.getElementById('den-toi').hidden = mot;
+}
+
+function denChuyen(buoc) {
+  if (!denDs.length) return;
+  denViTri = (denViTri + buoc + denDs.length) % denDs.length;   // hết thì quay vòng
+  denVe();
+}
+
+function ganDenAnh() {
+  const khung = document.getElementById('den-anh');
+  if (!khung) return;
+
+  // Gắn ở tầng document: dải poster được vẽ lại lúc nào cũng chạy
+  document.addEventListener('click', (e) => {
+    const nut = e.target.closest ? e.target.closest('.poster__o') : null;
+    if (!nut) return;
+    const khoi = nut.closest('.poster');
+    if (!khoi) return;
+    const ds = (khoi.dataset.dsPoster || '').split('|').filter(Boolean);
+    if (!ds.length) return;
+    denMo(ds, Number(nut.dataset.poster) || 0, khoi.dataset.tenApp, nut);
+  });
+
+  document.getElementById('den-dong').addEventListener('click', denDong);
+  document.getElementById('den-lui').addEventListener('click', () => denChuyen(-1));
+  document.getElementById('den-toi').addEventListener('click', () => denChuyen(1));
+  khung.addEventListener('click', (e) => { if (e.target === khung) denDong(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (khung.classList.contains('an')) return;
+    if (e.key === 'Escape')     denDong();
+    if (e.key === 'ArrowLeft')  denChuyen(-1);
+    if (e.key === 'ArrowRight') denChuyen(1);
+  });
+}
+
+/* ═══════════ KHỐI: DẢI POSTER TRƯỢT (V4.5) ═══════════
+   Dải ảnh trong bài viết vốn chỉ cuộn được bằng cách kéo thanh cuộn — trên máy
+   tính rất khó nhận ra là còn ảnh phía sau. Nay thêm:
+     · hai nút ‹ › trượt từng tấm, cuộn mượt
+     · hàng chấm chỉ đang ở tấm thứ mấy, bấm chấm là nhảy tới
+     · nút tự mờ đi khi đã ở đầu hoặc cuối dải
+     · hai mép dải mờ dần, cho mắt biết là còn ảnh bị che
+
+   Gắn ở tầng document nên dải vẽ lại lúc nào cũng chạy. */
+function ganDaiPoster() {
+
+  function daiCua(nut) {
+    const khoi = nut.closest('.poster');
+    return khoi ? khoi.querySelector('.poster__dai') : null;
+  }
+
+  // Bề rộng một bước trượt = bề rộng một tấm + khoảng cách giữa hai tấm
+  function buocTruot(dai) {
+    const o = dai.querySelector('.poster__o');
+    if (!o) return dai.clientWidth;
+    const kc = parseFloat(getComputedStyle(dai).columnGap || getComputedStyle(dai).gap) || 14;
+    return o.getBoundingClientRect().width + kc;
+  }
+
+  function capNhat(dai) {
+    const khoi = dai.closest('.poster');
+    if (!khoi) return;
+    const conLai = dai.scrollWidth - dai.clientWidth;
+
+    /* Số chấm = số TRANG cuộn được, không phải số ảnh.
+       Bốn ảnh vừa khít một hàng thì không có trang nào để nhảy — lúc đó ẩn
+       sạch hàng chấm, vẽ 4 chấm chỉ khiến người xem tưởng còn ảnh phía sau. */
+    const hang = khoi.querySelector('.poster__cham-hang');
+    if (hang) {
+      const soTrang = conLai <= 4 ? 0 : Math.ceil(dai.scrollWidth / dai.clientWidth);
+      if (hang.children.length !== soTrang) {
+        hang.innerHTML = Array.from({ length: soTrang }, (_, i) =>
+          `<button type="button" class="poster__cham" data-cham="${i}"
+                   aria-label="Tới trang ảnh ${i + 1}"></button>`).join('');
+      }
+      /* Chấm đang sáng tính theo TỶ LỆ trên quãng cuộn được, không chia cho bề
+         rộng khung. Lý do: dải 5 tấm trong khung 940px chỉ trượt được 168px —
+         chia cho 940 thì không bao giờ ra chấm cuối, cuộn hết rồi vẫn sáng chấm
+         đầu. Chia cho quãng cuộn thì 0 ra chấm đầu, hết dải ra chấm cuối. */
+      const trang = soTrang < 2 ? 0
+        : Math.round(dai.scrollLeft / Math.max(1, conLai) * (soTrang - 1));
+      Array.from(hang.children).forEach((c, i) =>
+        c.classList.toggle('dang-o', i === trang));
+    }
+
+    const lui = khoi.querySelector('[data-poster-lui]');
+    const toi = khoi.querySelector('[data-poster-toi]');
+    if (lui) lui.disabled = dai.scrollLeft <= 2;
+    if (toi) toi.disabled = dai.scrollLeft >= conLai - 2;
+
+    // Mép nào còn ảnh bị che thì bật lớp mờ dần ở mép đó
+    khoi.querySelector('.poster__khung').classList.toggle('co-trai',  dai.scrollLeft > 2);
+    khoi.querySelector('.poster__khung').classList.toggle('co-phai', dai.scrollLeft < conLai - 2);
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest) return;
+
+    const nut = e.target.closest('[data-poster-lui],[data-poster-toi]');
+    if (nut) {
+      const dai = daiCua(nut);
+      if (!dai) return;
+      const huong = nut.hasAttribute('data-poster-lui') ? -1 : 1;
+      dai.scrollBy({ left: huong * buocTruot(dai), behavior: 'smooth' });
+      return;
+    }
+
+    const cham = e.target.closest('.poster__cham');
+    if (cham) {
+      const dai = daiCua(cham);
+      if (!dai) return;
+      // Chấm là TRANG, nên nhảy theo bề rộng khung, không theo bề rộng một tấm
+      // Chấm là TRANG: nhảy theo tỷ lệ trên quãng cuộn được, khớp đúng cách
+      // xác định chấm đang sáng ở hàm capNhat.
+      const soCham = cham.parentElement.children.length;
+      const conLai = dai.scrollWidth - dai.clientWidth;
+      const dich = soCham < 2 ? 0 : (Number(cham.dataset.cham) / (soCham - 1)) * conLai;
+      dai.scrollTo({ left: dich, behavior: 'smooth' });
+    }
+  });
+
+  // Kéo thanh cuộn hay vuốt tay trên điện thoại cũng phải cập nhật chấm
+  document.addEventListener('scroll', (e) => {
+    const dai = e.target && e.target.classList && e.target.classList.contains('poster__dai')
+      ? e.target : null;
+    if (dai) capNhat(dai);
+  }, true);
+
+  // Vẽ lại bài viết thì chỉnh lại trạng thái ban đầu của nút và chấm
+  document.addEventListener('daiPosterMoi', () => {
+    document.querySelectorAll('.poster__dai').forEach(capNhat);
+  });
+}
+
+/* ═══════════ KHỐI: "ĐỌC THÊM" CỦA NGƯỜI ĐỨNG SAU (V4.8) ═══════════
+   Phần kỹ năng viết dài để trong khối ẩn; bấm nút mới mở ra. Gắn ở tầng
+   document nên khối vẽ lại lúc nào cũng chạy. */
+function ganDocThemNds() {
+  document.addEventListener('click', (e) => {
+    const nut = e.target.closest ? e.target.closest('#nds-nut-them') : null;
+    if (!nut) return;
+    const them = document.getElementById('nds-them');
+    if (!them) return;
+    const daMo = them.classList.toggle('an') === false;   // sau toggle: còn 'an' = đang đóng
+    nut.setAttribute('aria-expanded', String(daMo));
+    nut.innerHTML = daMo
+      ? 'Thu gọn <span aria-hidden="true">↑</span>'
+      : 'Đọc thêm về kỹ năng <span aria-hidden="true">↓</span>';
+  });
+}
+
+/* ═══════════ KHỐI: CHÙM BIỂU TƯỢNG DẮT THEO CON TRỎ (V4) ═══════════
+   Con trỏ đi tới đâu, cả chùm nghiêng nhẹ theo tới đó. Mỗi biểu tượng có
+   một ĐỘ SÂU riêng (--sau) nên cái gần dịch nhiều, cái xa dịch ít — mắt
+   đọc ra chiều sâu. Vẽ bằng transform và chỉ vẽ lại theo nhịp màn hình,
+   nên không làm máy giật.
+
+   Điện thoại và người chọn "giảm chuyển động": bỏ qua hoàn toàn, chùm
+   vẫn hiện đủ và vẫn bấm được — chỉ là đứng yên. */
+function ganChumIcon() {
+  const vong = document.getElementById('chum-vong');
+  if (!vong) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  vong.classList.add('chum__vong--song');   // bật phần trôi nhẹ trong CSS
+
+  let dichX = 0, dichY = 0, hienX = 0, hienY = 0, dangChay = false;
+
+  function veLai() {
+    hienX += (dichX - hienX) * .09;         // đuổi theo có độ trễ nên mềm tay
+    hienY += (dichY - hienY) * .09;
+    vong.style.setProperty('--px', hienX.toFixed(3));
+    vong.style.setProperty('--py', hienY.toFixed(3));
+    if (Math.abs(dichX - hienX) > .002 || Math.abs(dichY - hienY) > .002) {
+      requestAnimationFrame(veLai);
+    } else { dangChay = false; }
+  }
+
+  // Nghe ở tầng phần mở đầu, không chỉ trong chùm — con trỏ rê ở vùng chữ
+  // bên cạnh thì chùm cũng phản ứng, nhìn liền mạch hơn nhiều.
+  const vung = document.querySelector('.mo-dau') || document.body;
+  vung.addEventListener('mousemove', (e) => {
+    const b = vong.getBoundingClientRect();
+    if (!b.width) return;
+    dichX = Math.max(-1, Math.min(1, (e.clientX - (b.left + b.width / 2)) / (b.width || 1)));
+    dichY = Math.max(-1, Math.min(1, (e.clientY - (b.top + b.height / 2)) / (b.height || 1)));
+    if (!dangChay) { dangChay = true; requestAnimationFrame(veLai); }
+  }, { passive: true });
+
+  vung.addEventListener('mouseleave', () => {
+    dichX = 0; dichY = 0;                   // rời chuột thì chùm tự về giữa
+    if (!dangChay) { dangChay = true; requestAnimationFrame(veLai); }
+  }, { passive: true });
 }
 
 /* ═══════════ KHỐI: THANH BÁO ĐANG TẢI ═══════════
@@ -279,6 +575,8 @@ function tatThanhTai() {
 function veTatCa() {
   veCaiDat(DU_LIEU.caiDat);
   veTheHoSo(DU_LIEU);
+  veChumIcon(DU_LIEU.ungDung);        // chùm biểu tượng đầu trang (V4)
+  veNguoiDungSau(DU_LIEU.caiDat);     // khối Người đứng sau (V4)
   veDinhHuong(DU_LIEU.dinhHuong);
   veLinhVuc(DU_LIEU.linhVuc);
   veNangLuc(DU_LIEU.nangLuc);
@@ -292,6 +590,7 @@ function veTatCa() {
   capNhatNutDocThem('luoi-dinh-huong');
   capNhatNutDocThem('luoi-linh-vuc');
   ganHieuUngHien();
+  ganDemSo();           // số liệu đầu trang đếm lên (V4)
 }
 
 /* ═══════════ KHỐI: KHỞI ĐỘNG ═══════════
@@ -325,6 +624,10 @@ async function khoiDong() {
   ganFormLienHe();
   theoDoiCuon();
   ganHieuUngChuot();
+  ganDenAnh();          // đèn xem ảnh poster phóng to (V4)
+  ganChumIcon();        // chùm biểu tượng dắt theo con trỏ (V4)
+  ganDaiPoster();       // dải poster có nút trượt và chấm chỉ vị trí (V4.5)
+  ganDocThemNds();      // nút "đọc thêm" của khối Người đứng sau (V4.8)
 
   // Thống kê: ghi nhận lượt vào web và bắt các nút tải
   ThongKe.batCacNut();
