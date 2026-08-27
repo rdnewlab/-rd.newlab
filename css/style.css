@@ -1634,3 +1634,14 @@ mark.noi-bat {
 @media (prefers-reduced-motion: reduce) {
   .chum__vong--song, .chum__vong--song .chum__o { animation: none; }
 }
+
+
+/* =====================================================================
+   ═══  LỚP V4.14 — VÁ NỀN XÁM MẶC ĐỊNH CỦA NÚT <button>  ═══
+   Nút "Xem thêm tài liệu" / "Thu gọn" là thẻ <button> thật. Base .nut không
+   đặt background nên <button> lấy nền xám trắng mặc định của trình duyệt
+   (#F0F0F0) → chữ sáng chìm vào nền, nhìn như bị ẩn. Ép trong suốt cho mọi
+   nút <button>; nút chính vẫn giữ nền cam. (Thẻ <a> không bị vì vốn nền trong.)
+   ===================================================================== */
+button.nut        { background-color: transparent; }
+button.nut--chinh { background-color: var(--nhan-1); }
