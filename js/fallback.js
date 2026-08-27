@@ -605,7 +605,18 @@ const NOI_DUNG_DU_PHONG = {
      Ở chế độ dự phòng chưa có danh sách — web chỉ hiện nút mở kênh.        */
   videos: {
     kenh: 'https://www.youtube.com/channel/UCe31TzXPFjDIBfJuA0-c8lQ',
-    ds: []
+    ds: [
+      { id: 'kL_L1WnCcCw', ten: 'Nắm vững Autofile V21' },
+      { id: 'BSxlW0SSYdY', ten: 'Auto RD V8.1 — bản dùng thử làm được gì' },
+      { id: 'mtjd5n5przU', ten: 'Auto RD — tính GTDD thế nào' },
+      { id: 'E4F3GPJ3yww', ten: 'Auto R&D làm được gì' },
+      { id: 'gb-8zBepnIw', ten: 'Auto RD — tính GTDD và so sánh RNI' },
+      { id: '01BGY0EdLG4', ten: 'Auto R&D' },
+      { id: 'KQn_SL-tDAA', ten: 'Auto Nutri ăn' },
+      { id: 'obYdseLPLQ0', ten: 'Autofile V14' },
+      { id: '5KiL72MMNOU', ten: 'Auto Box V12' },
+      { id: 'saBV80x9br4', ten: 'AUTO BOX V5.0' }
+    ]
   },
 
   /* ═══════════ 9. NHÓM LỌC (Sheet: NhomLoc) ═══════════ */

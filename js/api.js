@@ -158,6 +158,19 @@ function gopUngDung(tuSheet, duPhong, conCu) {
   return ds;
 }
 
+/* ---------- Ghép video: Sheet/RSS có video thì nghe, THIẾU thì lấy bản dự phòng ----------
+   Vì sao cần: video của web đọc từ kênh YouTube qua Apps Script (RSS). Khi RSS
+   trục trặc (kênh mới chưa có nguồn RSS, hoặc YouTube chặn) thì danh sách trả về
+   rỗng — nếu cứ nghe theo, mục video trắng trơn. Ở đây: RSS có video thì dùng
+   RSS (tự cập nhật video mới); RSS rỗng thì giữ danh sách video trong bản dự
+   phòng để mục video luôn có nội dung. Đường dẫn kênh ưu tiên RSS, thiếu thì dự phòng. */
+function gopVideo(tuSheet, duPhong) {
+  const s = (tuSheet && typeof tuSheet === 'object') ? tuSheet : {};
+  const d = duPhong || {};
+  const ds = (Array.isArray(s.ds) && s.ds.length) ? s.ds : (Array.isArray(d.ds) ? d.ds : []);
+  return { kenh: s.kenh || d.kenh || '', ds: ds };
+}
+
 function chuanHoa(tho) {
   const dp = NOI_DUNG_DU_PHONG;
   if (!tho || typeof tho !== 'object') return dp;
@@ -188,7 +201,7 @@ function chuanHoa(tho) {
     nhomUngDung:  conCu ? gopNhom(lay('nhomUngDung'), dp.nhomUngDung) : lay('nhomUngDung'),
     nhomTaiLieu:  lay('nhomTaiLieu'),
     congDong:     lay('congDong'),
-    videos:       (tho.videos && typeof tho.videos === 'object') ? tho.videos : dp.videos,
+    videos:       gopVideo(tho.videos, dp.videos),
     _nguon:       'sheet'
   };
 }
