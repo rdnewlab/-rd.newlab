@@ -24,11 +24,20 @@
     try { localStorage.setItem(KHOA_LS, JSON.stringify(lichSu.slice(-TRAN_TIN))); } catch (e) {}
   }
 
+  /* Bỏ dấu **, * và markdown cho câu trả lời bot đọc gọn (đề phòng bot lỡ dùng). */
+  function lamSach(s) {
+    s = String(s || '');
+    s = s.replace(/\*\*/g, '');
+    s = s.replace(/^[ \t]*[\*\-]\s+/gm, '• ');
+    s = s.replace(/\*/g, '');
+    return s.trim();
+  }
+
   /* ---------- vẽ một dòng tin ---------- */
   function themTin(vaiTro, chu, dangCho) {
     var d = document.createElement('div');
     d.className = 'chat-tin chat-tin--' + (vaiTro === 'nguoi' ? 'nguoi' : 'bot') + (dangCho ? ' chat-tin--cho' : '');
-    d.textContent = chu;             // textContent = an toàn, không chèn mã được
+    d.textContent = (vaiTro === 'bot' && !dangCho) ? lamSach(chu) : chu;   // textContent = an toàn
     than.appendChild(d);
     than.scrollTop = than.scrollHeight;
     return d;
