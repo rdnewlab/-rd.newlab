@@ -1,0 +1,120 @@
+/* ═══════════════════════════════════════════════════════════════
+   CHAT.JS — Khung trò chuyện với trợ lý AI (Gemini qua Apps Script)
+   • Mở bằng nút 💬 trong cụm nút nổi (render.js thêm khi CaiDat.botBat bật).
+   • Lưu lịch sử NGAY TRONG MÁY khách (localStorage) — KHÔNG thu thập tên/SĐT.
+   • Mọi lỗi nuốt lặng lẽ: hỏng thì mời khách nhắn Zalo, web không vỡ.
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var KHOA_LS = 'rdnl_chat_v1';
+  var TRAN_TIN = 40;                 // giữ tối đa 40 tin gần nhất trong máy khách
+  var khung, than, oNhap, formNhap, luuY, tenBot;
+  var lichSu = [];                   // [{vaiTro:'nguoi'|'bot', chu:'...'}]
+  var daChao = false, dangGui = false;
+
+  function $(id) { return document.getElementById(id); }
+  function cd() { try { return (DU_LIEU && DU_LIEU.caiDat) || {}; } catch (e) { return {}; } }
+
+  /* ---------- lịch sử trong máy khách ---------- */
+  function docLS() {
+    try { var t = localStorage.getItem(KHOA_LS); return t ? JSON.parse(t) : []; } catch (e) { return []; }
+  }
+  function luuLS() {
+    try { localStorage.setItem(KHOA_LS, JSON.stringify(lichSu.slice(-TRAN_TIN))); } catch (e) {}
+  }
+
+  /* ---------- vẽ một dòng tin ---------- */
+  function themTin(vaiTro, chu, dangCho) {
+    var d = document.createElement('div');
+    d.className = 'chat-tin chat-tin--' + (vaiTro === 'nguoi' ? 'nguoi' : 'bot') + (dangCho ? ' chat-tin--cho' : '');
+    d.textContent = chu;             // textContent = an toàn, không chèn mã được
+    than.appendChild(d);
+    than.scrollTop = than.scrollHeight;
+    return d;
+  }
+
+  /* ---------- mở / đóng ---------- */
+  function chao() {
+    if (daChao) return;
+    daChao = true;
+    var c = cd();
+    tenBot.textContent = 'Trợ lý ' + (locHtml ? locHtml(c.hieuChu || 'rd.newlab') : 'rd.newlab');
+    luuY.textContent = c.botLuuY || 'Câu trả lời do AI tạo, có thể chưa chính xác — chi tiết vui lòng nhắn Zalo.';
+    lichSu = docLS();
+    if (lichSu.length) {
+      than.innerHTML = '';
+      lichSu.forEach(function (t) { themTin(t.vaiTro, t.chu); });
+    } else {
+      themTin('bot', c.botLoiChao || 'Chào anh/chị 👋 Mình có thể giúp gì ạ?');
+    }
+  }
+  function moChat() {
+    chao();
+    khung.classList.remove('an');
+    document.body.classList.add('chat-mo');
+    setTimeout(function () { try { oNhap.focus(); } catch (e) {} }, 60);
+  }
+  function dongChat() {
+    khung.classList.add('an');
+    document.body.classList.remove('chat-mo');
+  }
+
+  /* ---------- gửi câu hỏi ---------- */
+  function tuDongCao() { oNhap.style.height = 'auto'; oNhap.style.height = Math.min(oNhap.scrollHeight, 120) + 'px'; }
+
+  async function gui(hoi) {
+    if (dangGui) return;
+    hoi = String(hoi || '').trim();
+    if (!hoi) return;
+
+    dangGui = true;
+    themTin('nguoi', hoi);
+    lichSu.push({ vaiTro: 'nguoi', chu: hoi });
+    luuLS();
+    oNhap.value = ''; tuDongCao();
+
+    var cho = themTin('bot', '…', true);
+
+    try {
+      var kq = await guiChat(hoi, lichSu);
+      var traLoi = (kq && (kq.traLoi || kq.message)) ||
+        'Xin lỗi, mình chưa trả lời được lúc này. Anh/chị nhắn Zalo giúp mình nhé.';
+      cho.classList.remove('chat-tin--cho');
+      cho.textContent = traLoi;
+      lichSu.push({ vaiTro: 'bot', chu: traLoi });
+      luuLS();
+    } catch (e) {
+      cho.classList.remove('chat-tin--cho');
+      cho.textContent = 'Mình đang bận một chút. Anh/chị vui lòng nhắn Zalo để được trả lời nhanh nhé.';
+    } finally {
+      dangGui = false;
+      than.scrollTop = than.scrollHeight;
+    }
+  }
+
+  /* ---------- gắn sự kiện (một lần) ---------- */
+  function gan() {
+    khung = $('khung-chat'); than = $('chat-than'); oNhap = $('chat-o');
+    formNhap = $('chat-form'); luuY = $('chat-luuy'); tenBot = $('chat-ten');
+    if (!khung || !than) return;
+
+    // Mở: nút 💬 do render.js vẽ lại nhiều lần → bắt bằng uỷ quyền trên document
+    document.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('.mo-chat')) { e.preventDefault(); moChat(); }
+    });
+    $('chat-dong').addEventListener('click', dongChat);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !khung.classList.contains('an')) dongChat();
+    });
+
+    formNhap.addEventListener('submit', function (e) { e.preventDefault(); gui(oNhap.value); });
+    oNhap.addEventListener('input', tuDongCao);
+    oNhap.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); gui(oNhap.value); }
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', gan);
+  else gan();
+})();

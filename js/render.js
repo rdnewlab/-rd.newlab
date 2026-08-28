@@ -646,6 +646,13 @@ function veLienHeNhanh(cd) {
     `<span class="gam-nut__ico" aria-hidden="true">Z</span>` +
     `<span class="gam-nut__chu">Nhắn Zalo</span></a>`);
 
+  // Nút mở CHAT — nằm dưới cùng (dưới Zalo). Chỉ hiện khi CaiDat.botBat có bật.
+  if (String(cd.botBat || '').trim()) nut.push(
+    `<button type="button" class="gam-nut gam-nut--chat mo-chat"` +
+    ` aria-label="Chat với trợ lý" title="Chat với trợ lý">` +
+    `<span class="gam-nut__ico" aria-hidden="true">💬</span>` +
+    `<span class="gam-nut__chu">Chat</span></button>`);
+
   o.innerHTML = nut.join('');
   o.classList.toggle('an', nut.length === 0);
 }

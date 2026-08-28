@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4.13">
+<link rel="stylesheet" href="css/style.css?v=4.14">
 </head>
 <body>
 
@@ -303,14 +303,29 @@
      để tránh hai phần tử trùng id. -->
 
 <!-- Scripts — thứ tự bắt buộc: cấu hình → dự phòng → api → hiển thị → khởi động -->
-<!-- Nút liên hệ NỔI ở góc phải (Gọi ngay / Nhắn Zalo) — render.js đổ nội dung từ CaiDat -->
+<!-- Nút liên hệ NỔI ở góc phải (Gọi ngay / Nhắn Zalo / Chat) — render.js đổ nội dung từ CaiDat -->
 <div class="gam-lien-he an" id="gam-lien-he" aria-label="Liên hệ nhanh"></div>
 
+<!-- Khung CHAT với trợ lý AI — mở bằng nút 💬 trong cụm nút nổi. Nội dung do js/chat.js lo. -->
+<div class="khung-chat an" id="khung-chat" role="dialog" aria-label="Trò chuyện với trợ lý">
+  <div class="chat__dau">
+    <span class="chat__ten" id="chat-ten">Trợ lý rd.newlab</span>
+    <button type="button" class="chat__dong" id="chat-dong" aria-label="Đóng khung chat">✕</button>
+  </div>
+  <div class="chat__than" id="chat-than" aria-live="polite"></div>
+  <p class="chat__luuy" id="chat-luuy"></p>
+  <form class="chat__nhap" id="chat-form">
+    <textarea id="chat-o" rows="1" placeholder="Nhập câu hỏi…" aria-label="Câu hỏi của bạn"></textarea>
+    <button type="submit" class="chat__gui" id="chat-gui" aria-label="Gửi câu hỏi">➤</button>
+  </form>
+</div>
+
 <script src="js/config.js?v=2.1"></script>
-<script src="js/fallback.js?v=5.4"></script>
+<script src="js/fallback.js?v=5.6"></script>
 <script src="js/thongke.js?v=2.1"></script>
-<script src="js/api.js?v=5.0"></script>
-<script src="js/render.js?v=4.9"></script>
+<script src="js/api.js?v=5.1"></script>
+<script src="js/render.js?v=4.10"></script>
 <script src="js/main.js?v=4.9"></script>
+<script src="js/chat.js?v=1.0"></script>
 </body>
 </html>

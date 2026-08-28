@@ -1694,3 +1694,73 @@ button.nut--chinh { background-color: var(--nhan-1); }
   .gam-nut { transition: none; }
   .gam-nut:hover { transform: none; }
 }
+
+
+/* =====================================================================
+   ═══  LỚP V4.19 — CHATBOT AI (nút 💬 + khung trò chuyện)  ═══
+   ===================================================================== */
+.gam-nut--chat { background: #6D5AE0; }               /* tím "AI", khác Gọi (xanh lá) và Zalo (xanh dương) */
+.gam-nut--chat .gam-nut__ico { background: rgba(255,255,255,.22); }
+
+/* Khung chat nổi góc phải, trên cụm nút. z-index 120: trên nút nổi (45), dưới đèn ảnh (200). */
+.khung-chat {
+  position: fixed; z-index: 120;
+  right: clamp(.8rem, 2.5vw, 1.4rem);
+  bottom: calc(clamp(.8rem, 2.5vw, 1.4rem) + 62px);   /* chừa chỗ cho cụm nút nổi bên dưới */
+  width: min(370px, calc(100vw - 1.6rem));
+  height: min(540px, 74vh);
+  display: flex; flex-direction: column;
+  background: var(--nen-3, #0E141D); color: var(--chu, #EAF0F6);
+  border: 1px solid var(--vien, #26323f); border-radius: 18px; overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  transform-origin: bottom right;
+  animation: chat-hien .22s var(--do-mo, ease);
+}
+.khung-chat.an { display: none; }
+@keyframes chat-hien { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+
+.chat__dau {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  padding: .75rem 1rem; border-bottom: 1px solid var(--vien, #26323f);
+  background: linear-gradient(100deg, #6D5AE0, #4C7DF0);
+}
+.chat__ten { font-weight: 700; color: #fff; font-size: 1rem; }
+.chat__dong { background: rgba(255,255,255,.18); color: #fff; border: none; cursor: pointer;
+  width: 30px; height: 30px; border-radius: 50%; font-size: .95rem; line-height: 1; }
+.chat__dong:hover { background: rgba(255,255,255,.32); }
+
+.chat__than { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: .6rem;
+  background: var(--nen-2, #0B1219); }
+.chat-tin {
+  max-width: 84%; padding: .6rem .85rem; border-radius: 14px; font-size: .95rem; line-height: 1.5;
+  white-space: pre-wrap; word-wrap: break-word;
+}
+.chat-tin--bot   { align-self: flex-start; background: var(--nen-3, #16212e); color: var(--chu, #EAF0F6);
+  border: 1px solid var(--vien, #26323f); border-bottom-left-radius: 5px; }
+.chat-tin--nguoi { align-self: flex-end; background: var(--nhan-1, #F0A62B); color: #0A121B; font-weight: 500;
+  border-bottom-right-radius: 5px; }
+.chat-tin--cho { color: var(--chu-2, #93A3B4); font-style: italic; animation: chat-nhay 1s ease-in-out infinite; }
+@keyframes chat-nhay { 50% { opacity: .45; } }
+
+.chat__luuy { margin: 0; padding: .5rem 1rem; font-size: .74rem; line-height: 1.4;
+  color: var(--chu-2, #93A3B4); background: var(--nen-2, #0B1219);
+  border-top: 1px solid var(--vien, #26323f); }
+
+.chat__nhap { display: flex; align-items: flex-end; gap: .5rem; padding: .65rem;
+  border-top: 1px solid var(--vien, #26323f); background: var(--nen-3, #0E141D); }
+.chat__nhap textarea {
+  flex: 1; resize: none; max-height: 120px; font: inherit; font-size: .95rem; line-height: 1.4;
+  color: var(--chu, #EAF0F6); background: var(--nen-2, #0B1219);
+  border: 1px solid var(--vien, #26323f); border-radius: 12px; padding: .55rem .75rem;
+}
+.chat__nhap textarea:focus { outline: 2px solid #6D5AE0; outline-offset: 0; }
+.chat__gui { flex: none; width: 42px; height: 42px; border-radius: 12px; border: none; cursor: pointer;
+  background: #6D5AE0; color: #fff; font-size: 1.05rem; }
+.chat__gui:hover { filter: brightness(1.08); }
+
+@media (max-width: 560px) {
+  .khung-chat { right: .5rem; left: .5rem; width: auto; bottom: calc(.5rem + 60px); height: 72vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .khung-chat { animation: none; } .chat-tin--cho { animation: none; }
+}

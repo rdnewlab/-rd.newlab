@@ -276,3 +276,18 @@ async function guiLienHe(duLieu) {
   if (!phanHoi.ok) throw new Error('Máy chủ trả về mã ' + phanHoi.status);
   return await phanHoi.json();
 }
+
+/* ---------- Gửi câu hỏi cho chatbot AI ----------
+   Gửi câu hỏi + vài lượt gần nhất (để bot nhớ ngữ cảnh) tới Apps Script;
+   Apps Script gọi Gemini rồi trả về câu trả lời. Không thu thập thông tin cá nhân. */
+async function guiChat(cauHoi, lichSu) {
+  if (!CONFIG.URL_FORM) throw new Error('Chưa cấu hình link Apps Script');
+  const form = new FormData();
+  form.append('action', 'chat');
+  form.append('hoi', String(cauHoi || '').slice(0, 1000));
+  form.append('lichSu', JSON.stringify((lichSu || []).slice(-8)));
+  try { form.append('khach', ThongKe.maKhach()); } catch (e) {}
+  const phanHoi = await fetch(CONFIG.URL_FORM, { method: 'POST', body: form });
+  if (!phanHoi.ok) throw new Error('Máy chủ trả về mã ' + phanHoi.status);
+  return await phanHoi.json();
+}
