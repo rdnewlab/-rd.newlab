@@ -311,6 +311,7 @@ function veUngDung(ds, nhomLoc) {
 
         <div class="the-ud__chan">
           <a class="lien-ket-doc" href="#/ung-dung/${locHtml(u.id)}">Đọc bài viết <span aria-hidden="true">→</span></a>
+          ${nutMoApp(u, 'nho')}
           ${nutTaiApp(u, 'nho')}
         </div>
       </div>
@@ -393,6 +394,19 @@ function nutTaiApp(u, co) {
              data-tk-loai="bam_tai_app" data-tk-muc="${locHtml(u.ten)} ${locHtml(u.phienBan)}"
              title="${ghi}">
             <span class="ico-tai" aria-hidden="true">⤓</span> Tải dùng thử
+          </a>`;
+}
+
+/* ---------- Nút MỞ ứng dụng (app chạy web như Auto HCNS) ----------
+   App nào có link mở (cột LinkMo trên Sheet) thì hiện nút; trống thì tự ẩn. */
+function nutMoApp(u, co) {
+  const link = locLink(u.linkMo);
+  if (!link) return '';
+  const lop = co === 'lon' ? 'nut nut--chinh' : 'nut nut--tai nut--nho';
+  return `<a class="${lop}" href="${link}" target="_blank" rel="noopener"
+             data-tk-loai="bam_tai_app" data-tk-muc="Mở ${locHtml(u.ten)}"
+             title="Mở ứng dụng ${locHtml(u.ten)}">
+            <span aria-hidden="true">▶</span> Mở ứng dụng
           </a>`;
 }
 
@@ -742,6 +756,7 @@ function veBaiViet(maApp) {
         <p class="bai-viet__dan">${dinhDang(ud.tomTat)}</p>
 
         <div class="bai-viet__hanh-dong">
+          ${nutMoApp(ud, 'lon')}
           ${nutTaiApp(ud, 'lon')}
           ${nutVideoBai(ud)}
           ${locLink(ud.linkTai) && ud.chuThichTai
