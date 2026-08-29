@@ -37,10 +37,28 @@
   function themTin(vaiTro, chu, dangCho) {
     var d = document.createElement('div');
     d.className = 'chat-tin chat-tin--' + (vaiTro === 'nguoi' ? 'nguoi' : 'bot') + (dangCho ? ' chat-tin--cho' : '');
-    d.textContent = (vaiTro === 'bot' && !dangCho) ? lamSach(chu) : chu;   // textContent = an toàn
+    if (dangCho) {
+      // "đang gõ" — ba chấm nhún cho cảm giác bot đang soạn
+      d.innerHTML = '<span class="chat-cham"></span><span class="chat-cham"></span><span class="chat-cham"></span>';
+    } else {
+      d.textContent = (vaiTro === 'bot') ? lamSach(chu) : chu;   // textContent = an toàn
+    }
     than.appendChild(d);
     than.scrollTop = than.scrollHeight;
     return d;
+  }
+  /* Đổi bong bóng "đang gõ" thành câu trả lời thật (gõ dần cho mượt). */
+  function datTraLoi(el, chu) {
+    el.classList.remove('chat-tin--cho');
+    el.innerHTML = '';
+    var full = lamSach(chu), i = 0;
+    var buoc = Math.max(1, Math.round(full.length / 60));   // ~60 nhịp là xong, mượt mà không lâu
+    (function go() {
+      i = Math.min(full.length, i + buoc);
+      el.textContent = full.slice(0, i);
+      than.scrollTop = than.scrollHeight;
+      if (i < full.length) setTimeout(go, 18);
+    })();
   }
 
   /* ---------- mở / đóng ---------- */
@@ -89,13 +107,11 @@
       var kq = await guiChat(hoi, lichSu);
       var traLoi = (kq && (kq.traLoi || kq.message)) ||
         'Xin lỗi, mình chưa trả lời được lúc này. Anh/chị nhắn Zalo giúp mình nhé.';
-      cho.classList.remove('chat-tin--cho');
-      cho.textContent = traLoi;
+      datTraLoi(cho, traLoi);
       lichSu.push({ vaiTro: 'bot', chu: traLoi });
       luuLS();
     } catch (e) {
-      cho.classList.remove('chat-tin--cho');
-      cho.textContent = 'Mình đang bận một chút. Anh/chị vui lòng nhắn Zalo để được trả lời nhanh nhé.';
+      datTraLoi(cho, 'Mình đang bận một chút. Anh/chị vui lòng nhắn Zalo để được trả lời nhanh nhé.');
     } finally {
       dangGui = false;
       than.scrollTop = than.scrollHeight;
