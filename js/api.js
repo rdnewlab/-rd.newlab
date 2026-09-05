@@ -285,7 +285,7 @@ async function guiChat(cauHoi, lichSu) {
   const form = new FormData();
   form.append('action', 'chat');
   form.append('hoi', String(cauHoi || '').slice(0, 1000));
-  form.append('lichSu', JSON.stringify((lichSu || []).slice(-8)));
+  form.append('lichSu', JSON.stringify((lichSu || []).slice(-5)));
   try { form.append('khach', ThongKe.maKhach()); } catch (e) {}
   const phanHoi = await fetch(CONFIG.URL_FORM, { method: 'POST', body: form });
   if (!phanHoi.ok) throw new Error('Máy chủ trả về mã ' + phanHoi.status);

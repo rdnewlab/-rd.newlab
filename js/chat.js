@@ -52,12 +52,14 @@
     el.classList.remove('chat-tin--cho');
     el.innerHTML = '';
     var full = lamSach(chu), i = 0;
-    var buoc = Math.max(1, Math.round(full.length / 60));   // ~60 nhịp là xong, mượt mà không lâu
+    // Gõ xong trong ~0,35 giây bất kể câu dài ngắn: vẫn thấy chữ chạy ra cho
+    // mượt, nhưng không bắt khách ngồi chờ thêm cả giây sau khi bot đã trả lời.
+    var buoc = Math.max(1, Math.ceil(full.length / 24));
     (function go() {
       i = Math.min(full.length, i + buoc);
       el.textContent = full.slice(0, i);
       than.scrollTop = than.scrollHeight;
-      if (i < full.length) setTimeout(go, 18);
+      if (i < full.length) setTimeout(go, 14);
     })();
   }
 

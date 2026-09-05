@@ -61,6 +61,7 @@ const NOI_DUNG_DU_PHONG = {
     botLoiChao:      'Chào anh/chị 👋 Mình là trợ lý của rd.newlab. Anh/chị muốn hỏi về phần mềm nào, hay cần viết phần mềm cho việc gì ạ?',
     botLuuY:         'Câu trả lời do AI tạo, có thể chưa chính xác với phần chưa được cập nhật — chi tiết vui lòng nhắn Zalo.',
     botKienThuc:     '',
+    botKhoDrive:     '',
     github:          '',
     khuVuc:          'Hà Nội, Việt Nam',
     nhanViec:        'Nhận việc ở tất cả khu vực',
