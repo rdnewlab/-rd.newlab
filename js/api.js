@@ -265,7 +265,8 @@ async function layNoiDung() {
 async function guiLienHe(duLieu) {
   if (!CONFIG.URL_FORM) throw new Error('Chưa cấu hình link Apps Script trong js/config.js');
 
-  const form = new FormData();
+  // [SỬA 01/10/2026] FormData → URLSearchParams: tên & nội dung khách gõ tiếng Việt không còn bị méo chữ trong HopThuLienHe
+  const form = new URLSearchParams();
   form.append('action', 'lienhe');
   Object.keys(duLieu).forEach(k => form.append(k, duLieu[k]));
   form.append('nguon', location.hostname || 'cuc-bo');
@@ -282,7 +283,9 @@ async function guiLienHe(duLieu) {
    Apps Script gọi Gemini rồi trả về câu trả lời. Không thu thập thông tin cá nhân. */
 async function guiChat(cauHoi, lichSu) {
   if (!CONFIG.URL_FORM) throw new Error('Chưa cấu hình link Apps Script');
-  const form = new FormData();
+  // [SỬA 01/10/2026] Trước: FormData (multipart) → Apps Script đọc méo chữ tiếng Việt có dấu, câu hỏi tới
+  // máy chủ thành chữ lạ, AI trả lời lạc đề / "bận". Nay: URLSearchParams (urlencoded) — đã thử thật, chữ nguyên vẹn.
+  const form = new URLSearchParams();
   form.append('action', 'chat');
   form.append('hoi', String(cauHoi || '').slice(0, 1000));
   form.append('lichSu', JSON.stringify((lichSu || []).slice(-5)));
