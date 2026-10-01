@@ -16,9 +16,10 @@
 <link rel="preconnect" href="https://script.googleusercontent.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4.16">
+<link rel="stylesheet" href="css/style.css?v=5.2">
 </head>
 <body>
+<div class="thanh-cuon" aria-hidden="true"></div>
 
 <a href="#noi-dung-chinh" class="bo-qua">Bỏ qua tới nội dung</a>
 
@@ -55,11 +56,11 @@
 
     <nav class="dieu-huong" id="dieu-huong" aria-label="Điều hướng chính">
       <ul>
-        <li><a href="#gioi-thieu" class="dh-link">Giới thiệu</a></li>
         <li><a href="#ung-dung"  class="dh-link">Ứng dụng</a></li>
-        <li><a href="#thu-vien"  class="dh-link">Tài liệu</a></li>
         <li><a href="#video"     class="dh-link">Video</a></li>
+        <li><a href="#thu-vien"  class="dh-link">Tài liệu</a></li>
         <li><a href="#nguoi-dung-sau" class="dh-link">Về tôi</a></li>
+        <li><a href="#cong-dong" class="dh-link">Cộng đồng</a></li>
         <li><a href="#lien-he"   class="dh-link dh-link--nut">Liên hệ</a></li>
       </ul>
     </nav>
@@ -98,8 +99,8 @@
 
         <div class="hang-nut">
           <a href="#ung-dung" class="nut nut--chinh" id="hero-cta-1">Xem các ứng dụng</a>
-          <a href="#thu-vien" class="nut nut--vien" id="hero-cta-2">Thư viện tài liệu</a>
           <a href="#video"    class="nut nut--vien">▶ Video hướng dẫn</a>
+          <a href="#thu-vien" class="nut nut--vien" id="hero-cta-2">Thư viện tài liệu</a>
         </div>
 
         <!-- Dải huy hiệu các nhóm cộng đồng — mỗi nhóm một màu, đổ từ tab CongDong -->
@@ -112,15 +113,17 @@
         <dl class="so-lieu" id="so-lieu"></dl>
       </div>
 
-      <!-- Chùm biểu tượng bảy ứng dụng — trôi nhẹ, dắt theo con trỏ.
+      <!-- Chùm biểu tượng các ứng dụng — trôi nhẹ, dắt theo con trỏ.
            Nội dung do js/render.js đổ vào; máy yếu hoặc điện thoại thì đứng yên. -->
-      <aside class="chum" id="chum" aria-label="Bảy ứng dụng">
+      <aside class="chum" id="chum" aria-label="Các ứng dụng">
         <div class="chum__dinh">
           <span class="cham cham--song"></span>
           <span id="the-trang-thai">Sẵn sàng nhận dự án mới</span>
         </div>
         <div class="chum__vong" id="chum-vong"></div>
-        <p class="chum__ghi">Bảy ứng dụng · bấm một biểu tượng để đọc</p>
+        <!-- V5.1: dải app "Hỗ trợ & mở rộng" chạy vòng — đổ từ Sheet (nhóm CaiDat › nhomMoRong) -->
+        <div class="chum-dai an" id="chum-dai"></div>
+        <p class="chum__ghi">Các ứng dụng · bấm một biểu tượng để đọc</p>
       </aside>
 
     </div>
@@ -145,8 +148,27 @@
     </div>
   </section>
 
+  <!-- ── Video hướng dẫn ── -->
+  <section class="muc muc--nen" id="video">
+    <div class="khung">
+      <header class="muc__dau">
+        <p class="nhan-nho">Video</p>
+        <h2 class="tieu-de-muc">Video hướng dẫn</h2>
+        <p class="mo-ta-muc">Hướng dẫn cài đặt và sử dụng các ứng dụng. Video mới đăng trên kênh YouTube sẽ tự động hiện ở đây.</p>
+      </header>
+
+      <div class="luoi-video" id="luoi-video"></div>
+      <p class="trong-rong" id="video-trong">Các video hướng dẫn đang được đăng dần lên kênh — bấm nút dưới để xem trực tiếp.</p>
+
+      <div class="video__chan">
+        <a href="#" id="nut-kenh" class="nut nut--vien" target="_blank" rel="noopener"
+           data-tk-loai="bam_tai_lieu" data-tk-muc="Video · mở kênh YouTube">▶ Xem tất cả trên YouTube</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Thư viện ── -->
-  <section class="muc muc--nen" id="thu-vien">
+  <section class="muc" id="thu-vien">
     <div class="khung">
       <header class="muc__dau">
         <p class="nhan-nho">Chia sẻ</p>
@@ -171,21 +193,16 @@
     </div>
   </section>
 
-  <!-- ── Video hướng dẫn ── -->
-  <section class="muc" id="video">
+  <!-- ── Người đứng sau ── -->
+  <section class="muc muc--nen" id="nguoi-dung-sau">
     <div class="khung">
-      <header class="muc__dau">
-        <p class="nhan-nho">Video</p>
-        <h2 class="tieu-de-muc">Video hướng dẫn</h2>
-        <p class="mo-ta-muc">Hướng dẫn cài đặt và sử dụng các ứng dụng. Video mới đăng trên kênh YouTube sẽ tự động hiện ở đây.</p>
-      </header>
-
-      <div class="luoi-video" id="luoi-video"></div>
-      <p class="trong-rong" id="video-trong">Các video hướng dẫn đang được đăng dần lên kênh — bấm nút dưới để xem trực tiếp.</p>
-
-      <div class="video__chan">
-        <a href="#" id="nut-kenh" class="nut nut--vien" target="_blank" rel="noopener"
-           data-tk-loai="bam_tai_lieu" data-tk-muc="Video · mở kênh YouTube">▶ Xem tất cả trên YouTube</a>
+      <div class="nds">
+        <div class="nds__chu">
+          <p class="nhan-nho" id="nds-nhan"></p>
+          <h2 class="tieu-de-muc" id="nds-tieu-de"></h2>
+          <div class="nds__than" id="nds-chu"></div>
+        </div>
+        <ul class="nds__y" id="nds-y"></ul>
       </div>
     </div>
   </section>
@@ -199,20 +216,6 @@
         <p class="mo-ta-muc">Bốn nhóm Facebook đi theo đúng chuỗi của ngành — nghiên cứu, nguyên liệu, sản xuất, kinh doanh — cùng một nhóm Zalo trao đổi nhanh. Mỗi nhóm một chủ đề, anh chị cùng ngành cứ tự nhiên vào.</p>
       </header>
       <div class="luoi-4" id="luoi-cong-dong"></div>
-    </div>
-  </section>
-
-  <!-- ── Người đứng sau ── -->
-  <section class="muc" id="nguoi-dung-sau">
-    <div class="khung">
-      <div class="nds">
-        <div class="nds__chu">
-          <p class="nhan-nho" id="nds-nhan"></p>
-          <h2 class="tieu-de-muc" id="nds-tieu-de"></h2>
-          <div class="nds__than" id="nds-chu"></div>
-        </div>
-        <ul class="nds__y" id="nds-y"></ul>
-      </div>
     </div>
   </section>
 
@@ -283,6 +286,7 @@
     <span class="chan-trang__chu" id="chan-chu"></span>
     <!-- Câu chân trang NẰM CÙNG HÀNG — CaiDat → danhNgonDuoi -->
     <span class="chan-trang__danh-ngon" id="danh-ngon-duoi"></span>
+    <span class="chan-trang__cap-nhat an" id="chan-cap-nhat"></span>
     <span class="chan-trang__nam" id="chan-nam"></span>
   </div>
 </footer>
@@ -309,7 +313,8 @@
 <!-- Khung CHAT với trợ lý AI — mở bằng nút 💬 trong cụm nút nổi. Nội dung do js/chat.js lo. -->
 <div class="khung-chat an" id="khung-chat" role="dialog" aria-label="Trò chuyện với trợ lý">
   <div class="chat__dau">
-    <span class="chat__ten" id="chat-ten">Trợ lý rd.newlab</span>
+    <span class="chat__ai" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M10 2.5c.4 3.9 2.6 6.1 6.5 6.5-3.9.4-6.1 2.6-6.5 6.5-.4-3.9-2.6-6.1-6.5-6.5 3.9-.4 6.1-2.6 6.5-6.5Z"/><path d="M18.5 13c.2 1.9 1.1 2.8 3 3-1.9.2-2.8 1.1-3 3-.2-1.9-1.1-2.8-3-3 1.9-.2 2.8-1.1 3-3Z" opacity=".85"/></svg></span>
+    <span class="chat__dau-chu"><span class="chat__ten" id="chat-ten">Trợ lý rd.newlab</span><span class="chat__phu"><span class="cham cham--song"></span> Trợ lý AI · trả lời ngay</span></span>
     <button type="button" class="chat__dong" id="chat-dong" aria-label="Đóng khung chat">✕</button>
   </div>
   <div class="chat__than" id="chat-than" aria-live="polite"></div>
@@ -320,12 +325,12 @@
   </form>
 </div>
 
-<script src="js/config.js?v=2.1"></script>
-<script src="js/fallback.js?v=5.7"></script>
-<script src="js/thongke.js?v=2.1"></script>
+<script src="js/config.js?v=5.2"></script>
+<script src="js/fallback.js?v=5.2"></script>
+<script src="js/thongke.js?v=5.2"></script>
 <script src="js/api.js?v=5.2"></script>
-<script src="js/render.js?v=4.11"></script>
-<script src="js/main.js?v=4.9"></script>
-<script src="js/chat.js?v=1.3"></script>
+<script src="js/render.js?v=5.2"></script>
+<script src="js/main.js?v=5.2"></script>
+<script src="js/chat.js?v=5.2"></script>
 </body>
 </html>

@@ -88,6 +88,7 @@ function ganBoLocUngDung() {
     if (!nut) return;
     $$('.nut-loc').forEach(b => b.classList.toggle('dang-chon', b === nut));
     veUngDung(DU_LIEU.ungDung, nut.dataset.nhom);
+    ganHieuUngHien();                 // V5: thẻ của nhóm vừa chọn trượt vào mượt, không bật lên cụt lủn
   });
 }
 
@@ -211,7 +212,7 @@ function ganHieuUngHien() {
       });
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
   }
-  document.querySelectorAll('.the, .the-ud, .the-tl, .the-video, .thanh-nang-luc')
+  document.querySelectorAll('.the, .the-ud, .the-tl, .the-video, .thanh-nang-luc, .nhom-ud__dau, .dat-lam')
     .forEach(el => {
       if (el.classList.contains('cho-hien')) return;
       el.classList.add('cho-hien');
@@ -523,10 +524,24 @@ function ganDocThemNds() {
 function ganChumIcon() {
   const vong = document.getElementById('chum-vong');
   if (!vong) return;
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  vong.classList.add('chum__vong--song');   // bật phần trôi nhẹ trong CSS
+  /* V5.1: vòng quay chạy trên CẢ điện thoại (trước chỉ máy tính). Cuộn khỏi đầu
+     trang thì tạm dừng vòng quay + dải app mở rộng — máy không tốn sức vẽ thứ
+     không ai nhìn, cuộn trang mượt hơn. */
+  vong.classList.add('chum__vong--song');
+  const chum = document.getElementById('chum');
+  if (chum && 'IntersectionObserver' in window) {
+    new IntersectionObserver((ds) => {
+      ds.forEach(d => chum.classList.toggle('tam-dung', !d.isIntersecting));
+    }).observe(chum);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (chum) chum.classList.toggle('an-tab', document.hidden);
+  });
+
+  // Phần nghiêng theo con trỏ: chỉ máy có chuột
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
   let dichX = 0, dichY = 0, hienX = 0, hienY = 0, dangChay = false;
 
@@ -575,7 +590,7 @@ function tatThanhTai() {
 function veTatCa() {
   veCaiDat(DU_LIEU.caiDat);
   veTheHoSo(DU_LIEU);
-  veChumIcon(DU_LIEU.ungDung);        // chùm biểu tượng đầu trang (V4)
+  veChumIcon(DU_LIEU.ungDung, DU_LIEU.caiDat);   // vòng tròn app + dải mở rộng (V5.1)
   veNguoiDungSau(DU_LIEU.caiDat);     // khối Người đứng sau (V4)
   veDinhHuong(DU_LIEU.dinhHuong);
   veLinhVuc(DU_LIEU.linhVuc);

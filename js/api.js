@@ -9,7 +9,7 @@
    ⚠️ KHÔNG SỬA nếu không được yêu cầu — đây là lớp nạp dữ liệu chung.
    ===================================================================== */
 
-const KHOA_CACHE = 'rdnewlab_noidung_v2';
+const KHOA_CACHE = 'rdnewlab_noidung_v51';   // V5: đổi tên khoá → khách cũ không dính nội dung V4 (7 app, nhóm cũ)
 
 /* ---------- Tiện ích ---------- */
 

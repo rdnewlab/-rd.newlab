@@ -16,7 +16,7 @@ const CONFIG = {
 
      Để TRỐNG "" → web vẫn chạy bình thường bằng nội dung dự phòng
      trong js/fallback.js (dùng để xem thử trước khi dựng Sheet).       */
-  API_URL: 'https://script.google.com/macros/s/AKfycbz0vaACL5du4Jv7I-tGlQRuI-tz5JmsweKdD50F8hkRsp0AxF1RLXN2X6C6xpOGgI5g/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbytET-gt9_UMW7IPBESVGWgtpmFW3AzUpMQ9bEM_RmcKBamHiCfkdTxRUFbn9Sv6nlrsw/exec',   // Sheet V5 — gắn 01/10/2026
 
   /* --- 2. Link gửi mail riêng (không bắt buộc) ----------------------
      Để TRỐNG thì form liên hệ dùng chung API_URL ở trên — nên để trống.

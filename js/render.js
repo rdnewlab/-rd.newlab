@@ -70,6 +70,13 @@ function veCaiDat(cd) {
   datChu('the-ten',         cd.tenThuongHieu);
   datChu('the-viec',        cd.tenHienThi);
   datChu('chan-nam',        '© ' + new Date().getFullYear());
+  // V5.1: ngày nội dung web được sửa lần cuối (máy tự ghi khi anh sửa Sheet)
+  const chanCN = document.getElementById('chan-cap-nhat');
+  if (chanCN) {
+    const n = ngayVN(cd.ngayCapNhatWeb);
+    chanCN.textContent = n ? 'Cập nhật nội dung: ' + n : '';
+    chanCN.classList.toggle('an', !n);
+  }
 
   // Ba con số nổi bật
   const soLieu = [
@@ -111,12 +118,38 @@ function veTheHoSo(dl) {
    Một biểu tượng đứng giữa, sáu cái còn lại xếp thành vòng quanh nó.
    Vị trí tính bằng lượng giác chứ không gõ tay: thêm hay bớt app thì
    vòng tự chia lại đều, không phải sửa CSS.                              */
-function veChumIcon(ds) {
+/* V5.1: app nào ở GIỮA, app nào trên VÒNG, app nào chạy ở DẢI dưới — đều do Sheet quyết:
+     • giữa  = CaiDat › appTrungTam (trống thì lấy app đầu tiên)
+     • vòng  = mọi app KHÔNG thuộc nhóm mở rộng, theo cột ThuTu
+     • dải   = app thuộc nhóm CaiDat › nhomMoRong — thêm app mới vào nhóm này là tự lên dải */
+function chiaAppChum(ds, cd) {
+  cd = cd || {};
+  const coIcon = (ds || []).filter(u => locLink(u.iconAnh));   // app nào chưa có icon thì bỏ qua
+  const maMR = String(cd.nhomMoRong || '').trim();
+  const moRong = maMR ? coIcon.filter(u => u.nhom === maMR) : [];
+  let chinh = coIcon.filter(u => !moRong.includes(u));
+  if (!chinh.length) chinh = coIcon.slice();
+  const maGiua = String(cd.appTrungTam || '').trim();
+  const giua = chinh.find(u => u.id === maGiua) || chinh[0];
+  return { giua, vong: chinh.filter(u => u !== giua), moRong };
+}
+
+function veChumIcon(ds, cd) {
   const khung = $('#chum-vong');
   if (!khung) return;
 
-  const dsc = (ds || []).filter(u => locLink(u.iconAnh));   // app nào chưa có icon thì bỏ qua
-  if (!dsc.length) { khung.innerHTML = ''; return; }
+  const chia = chiaAppChum(ds, cd);
+  if (!chia.giua) { khung.innerHTML = ''; veDaiMoRong([]); return; }
+  const dsc = [chia.giua].concat(chia.vong);
+
+  // Chú thích dưới cụm tự đếm số app — thêm app trên Sheet là tự đổi, khỏi sửa code
+  const ghi = document.querySelector('.chum__ghi');
+  if (ghi) ghi.textContent = dsc.length + ' ứng dụng chính' +
+    (chia.moRong.length ? ' · ' + chia.moRong.length + ' công cụ mở rộng' : '') + ' · bấm để đọc';
+  const chum = document.getElementById('chum');
+  if (chum) chum.setAttribute('aria-label', (dsc.length + chia.moRong.length) + ' ứng dụng');
+  const nMR = ((DU_LIEU && DU_LIEU.nhomUngDung) || []).find(n => n && n.ma === String((cd || {}).nhomMoRong || '').trim());
+  veDaiMoRong(chia.moRong, nMR);
 
   const quanh = Math.max(1, dsc.length - 1);                // số cái nằm trên vòng
   const BAN_KINH = 37;                                      // % so với cạnh khung
@@ -146,6 +179,26 @@ function veChumIcon(ds) {
         <span class="chum__ten">${locHtml(u.ten)}</span>
       </a>`;
   }).join('');
+}
+
+/* Dải app mở rộng chạy vòng dưới chùm. Nội dung nhân đôi để trôi liền mạch
+   (bản sao ẩn với trình đọc màn hình). Ít app quá thì nhân thêm cho kín dải. */
+function veDaiMoRong(ds, nhom) {
+  const dai = document.getElementById('chum-dai');
+  if (!dai) return;
+  if (!ds.length) { dai.innerHTML = ''; dai.classList.add('an'); return; }
+  dai.classList.remove('an');
+  const mot = (an) => ds.map(u => `
+      <a class="chum-dai__o" href="#/ung-dung/${locHtml(u.id)}"${an ? ' tabindex="-1" aria-hidden="true"' : ''}>
+        <img src="${locLink(u.iconAnh)}" alt="" width="34" height="34" decoding="async" loading="lazy"
+             onerror="this.style.visibility='hidden'">
+        <span class="chum-dai__chu"><b>${locHtml(u.ten)}</b><small>${locHtml(u.phuDe || u.phienBan || '')}</small></span>
+      </a>`).join('');
+  const lap = Math.max(1, Math.ceil(4 / ds.length));          // tối thiểu ~4 ô mỗi nửa vòng
+  let nua = ''; for (let i = 0; i < lap; i++) nua += mot(i > 0);
+  let nuaAn = ''; for (let i = 0; i < lap; i++) nuaAn += mot(true);
+  dai.innerHTML = `<div class="chum-dai__nhan">${locHtml((nhom && nhom.icon) || '🧩')} ${locHtml((nhom && nhom.ten) || 'Hỗ trợ & mở rộng')}</div>
+    <div class="chum-dai__khung"><div class="chum-dai__ray" style="--n:${ds.length * lap}">${nua}${nuaAn}</div></div>`;
 }
 
 /* ═══════════ KHỐI "NGƯỜI ĐỨNG SAU" (V4) ═══════════
@@ -259,15 +312,51 @@ function veNangLuc(ds) {
 
 /* ═══════════ 6. KHO ỨNG DỤNG ═══════════ */
 function veBoLoc(nhom) {
-  $('#bo-loc-ung-dung').innerHTML = nhom.map((n, i) => `
-    <button class="nut-loc${i === 0 ? ' dang-chon' : ''}" data-nhom="${locHtml(n.ma)}">${locHtml(n.ten)}</button>`
-  ).join('');
+  const ds = (typeof DU_LIEU !== 'undefined' && DU_LIEU.ungDung) || [];
+  $('#bo-loc-ung-dung').innerHTML = nhom.map((n, i) => {
+    const so = n.ma === 'all' ? ds.length : ds.filter(u => u.nhom === n.ma).length;
+    if (n.ma !== 'all' && !so) return '';                  // nhóm chưa có app nào → không hiện nút
+    return `
+    <button class="nut-loc${i === 0 ? ' dang-chon' : ''}" data-nhom="${locHtml(n.ma)}">` +
+      (n.icon ? `<span class="nut-loc__ico" aria-hidden="true">${locHtml(n.icon)}</span>` : '') +
+      `${locHtml(n.ten)}<span class="nut-loc__so">${so}</span></button>`;
+  }).join('');
 }
 
-function veUngDung(ds, nhomLoc) {
-  const loc = (!nhomLoc || nhomLoc === 'all') ? ds : ds.filter(u => u.nhom === nhomLoc);
+/* V5: vẽ MỘT thẻ ứng dụng — tách riêng để dùng cho cả lưới phẳng lẫn lưới theo nhóm */
+/* Nhãn nhóm nhỏ trên thẻ (🏭 Sản xuất…) — lấy từ tab NhomLoc */
+function nhanNhomApp(ma) {
+  const n = ((DU_LIEU && DU_LIEU.nhomUngDung) || []).find(x => x && x.ma === ma && ma !== 'all');
+  return n ? `<span class="the-ud__nhom">${n.icon ? locHtml(n.icon) + ' ' : ''}${locHtml(n.ten)}</span>` : '';
+}
 
-  $('#luoi-ung-dung').innerHTML = loc.map(u => {
+/* V5.1: thẻ GỌN cho app hỗ trợ & mở rộng — nằm ngang, không ảnh bìa lớn, đỡ dài trang */
+function theUngDungGon(u) {
+  const ic = locLink(u.iconAnh);
+  const khoiIcon = ic
+    ? `<img class="the-ud__icon" src="${ic}" alt="" loading="lazy" decoding="async"
+            width="52" height="52" onerror="thayIconHong(this, '${locHtml(u.icon)}')">`
+    : `<span class="the-ud__icon the-ud__icon--chu" aria-hidden="true">${locHtml(u.icon)}</span>`;
+  return `
+    <article class="the-ud the-ud--gon" data-nhom="${locHtml(u.nhom)}">
+      <div class="the-ud__than">
+        <div class="the-ud__dinh">
+          ${khoiIcon}
+          <h3 class="the-ud__ten"><a href="#/ung-dung/${locHtml(u.id)}">${locHtml(u.ten)}</a></h3>
+          <span class="the-ud__pb">${locHtml(u.phienBan)}</span>
+        </div>
+        <p class="the-ud__phu-de">${locHtml(u.phuDe)}</p>
+        <p class="the-ud__tom-tat">${dinhDang(u.tomTat)}</p>
+        <div class="the-ud__chan">
+          <a class="lien-ket-doc" href="#/ung-dung/${locHtml(u.id)}">Đọc bài viết <span aria-hidden="true">→</span></a>
+          ${nutMoApp(u, 'nho')}
+          ${nutTaiApp(u, 'nho')}
+        </div>
+      </div>
+    </article>`;
+}
+
+function theUngDung(u) {
     // Thẻ chỉ nhá 3 điểm — đủ mồi, bản đủ 4 điểm nằm trong bài viết
     const diem = tachDanh(u.diemChinh).slice(0, 3)
       .map(d => `<li>${dinhDang(d)}</li>`).join('');
@@ -296,6 +385,7 @@ function veUngDung(ds, nhomLoc) {
         <span class="the-ud__phu" aria-hidden="true"></span>
         <span class="nhan-tt nhan-tt--${locHtml(u.mauNhan || 'xam')}">${locHtml(u.trangThai)}</span>
         ${soAnh > 1 ? `<span class="the-ud__so-anh" aria-hidden="true">${soAnh} ảnh</span>` : ''}
+        ${nhanNhomApp(u.nhom)}
       </a>
       <div class="the-ud__than">
         <div class="the-ud__dinh">
@@ -316,58 +406,148 @@ function veUngDung(ds, nhomLoc) {
         </div>
       </div>
     </article>`;
-  }).join('') + veTheDichVu(DU_LIEU.caiDat);
 }
 
-/* ---------- Ô "Thiết kế ứng dụng riêng" ----------
-   Đứng cuối lưới ứng dụng và LUÔN hiện, kể cả khi đang lọc nhóm — vì đây không
-   phải một app, mà là lời mời: app nào cũng không khớp thì đặt làm riêng.
-   Thiếu tiêu đề trong CaiDat thì không hiện gì, đúng luật ô trống tự ẩn. */
+/* V5: khu ứng dụng CHIA NHÓM (Nghiên cứu · Sản xuất · Kinh doanh …).
+   Tiêu đề + mô tả mỗi nhóm lấy từ tab NhomLoc. Bố cục tự chọn theo số app:
+     1 app   → thẻ nằm ngang trải hết hàng (khỏi để trống 2/3 hàng)
+     4, 7…   → 2 cột (4 app thành 2×2 cân đối)
+     còn lại → 3 cột như cũ                                              */
+function veUngDung(ds, nhomLoc) {
+  const o = $('#luoi-ung-dung');
+  const tatCa = !nhomLoc || nhomLoc === 'all';
+  const dsNhom = (DU_LIEU.nhomUngDung || []).filter(n => n && n.ma && n.ma !== 'all');
+
+  // Sheet chưa khai nhóm → vẽ lưới phẳng như V4, không vỡ gì
+  if (!dsNhom.length) {
+    o.classList.remove('luoi-ung-dung--nhom');
+    o.innerHTML = ds.filter(u => tatCa || u.nhom === nhomLoc).map(theUngDung).join('') + veTheDichVu(DU_LIEU.caiDat);
+    return;
+  }
+
+  const cd = DU_LIEU.caiDat || {};
+  const maMR = String(cd.nhomMoRong || '').trim();
+  const nhomMR = dsNhom.find(n => n.ma === maMR);
+  const kieuLuoi = (n) => n === 1 ? ' luoi-ung-dung--mot' : (n % 3 === 1 ? ' luoi-ung-dung--hai' : '');
+
+  /* V5.1 — xem "Tất cả": 2 khu rõ ràng thay vì 5–6 nhóm lắt nhắt.
+       ① Ứng dụng chính (mỗi thẻ có nhãn nhóm nhỏ) — theo cột ThuTu
+       ② Hỗ trợ & mở rộng — thẻ gọn nằm ngang, ở dưới cùng            */
+  if (tatCa && nhomMR) {
+    const chinh  = ds.filter(u => u.nhom !== maMR);
+    const moRong = ds.filter(u => u.nhom === maMR);
+    const dau = (ico, ten, so, moTa) => `
+      <header class="nhom-ud__dau">
+        ${ico ? `<span class="nhom-ud__ico" aria-hidden="true">${locHtml(ico)}</span>` : ''}
+        <div class="nhom-ud__chu">
+          <h3 class="nhom-ud__ten">${locHtml(ten)}<span class="nhom-ud__so">${so} ứng dụng</span></h3>
+          ${moTa ? `<p class="nhom-ud__mo-ta">${dinhDang(moTa)}</p>` : ''}
+        </div>
+      </header>`;
+    o.classList.add('luoi-ung-dung--nhom');
+    o.innerHTML =
+      (chinh.length ? `
+      <section class="nhom-ud nhom-ud--chinh" data-nhom="chinh" style="--tt:0">
+        ${dau('⭐', cd.udChinhTieuDe || 'Ứng dụng chính', chinh.length, cd.udChinhMoTa)}
+        <div class="luoi-ung-dung luoi-ung-dung--con${kieuLuoi(chinh.length)}">${chinh.map(theUngDung).join('')}</div>
+      </section>` : '') +
+      (moRong.length ? `
+      <section class="nhom-ud nhom-ud--mo-rong" data-nhom="${locHtml(maMR)}" style="--tt:1">
+        ${dau(nhomMR.icon, nhomMR.ten, moRong.length, nhomMR.moTa)}
+        <div class="luoi-ung-dung luoi-ung-dung--con luoi-ung-dung--gon">${moRong.map(theUngDungGon).join('')}</div>
+      </section>` : '') +
+      veTheDichVu(cd);
+    return;
+  }
+
+  const daBiet = {};
+  dsNhom.forEach(n => { daBiet[n.ma] = true; });
+  const khoi = (tatCa ? dsNhom : dsNhom.filter(n => n.ma === nhomLoc))
+    .map(n => ({ n, app: ds.filter(u => u.nhom === n.ma) }))
+    .filter(k => k.app.length);
+  // App gõ nhầm mã nhóm (chưa có ở NhomLoc) vẫn phải hiện — gom vào "Ứng dụng khác"
+  const la = ds.filter(u => !daBiet[u.nhom]);
+  if (tatCa && la.length) khoi.push({ n: { ma: 'khac', ten: 'Ứng dụng khác', icon: '📦', moTa: '' }, app: la });
+
+  o.classList.add('luoi-ung-dung--nhom');
+  o.innerHTML = khoi.map((k, i) => {
+    const n = k.app.length;
+    const laMR = k.n.ma === maMR;
+    const kieu = laMR ? ' luoi-ung-dung--gon' : kieuLuoi(n);
+    return `
+    <section class="nhom-ud" data-nhom="${locHtml(k.n.ma)}" style="--tt:${i}">
+      <header class="nhom-ud__dau">
+        ${k.n.icon ? `<span class="nhom-ud__ico" aria-hidden="true">${locHtml(k.n.icon)}</span>` : ''}
+        <div class="nhom-ud__chu">
+          <h3 class="nhom-ud__ten">${locHtml(k.n.ten)}<span class="nhom-ud__so">${n} ứng dụng</span></h3>
+          ${k.n.moTa ? `<p class="nhom-ud__mo-ta">${dinhDang(k.n.moTa)}</p>` : ''}
+        </div>
+      </header>
+      <div class="luoi-ung-dung luoi-ung-dung--con${kieu}">${k.app.map(laMR ? theUngDungGon : theUngDung).join('')}</div>
+    </section>`;
+  }).join('') +
+  veTheDichVu(DU_LIEU.caiDat);
+}
+
+/* ---------- Khu "Đặt làm riêng" ----------
+   [SỬA 01/10/2026] Trước: một thẻ có ẢNH BÌA chữ in sẵn — ảnh rộng bị nhét vào cột hẹp nên cắt mất chữ
+   ("…n may đo / …c của bạn"), ngành thì in cứng 4 cái trong ảnh, đoạn chữ bị cắt "…".
+   Nay: một khu riêng vẽ HOÀN TOÀN bằng chữ từ Sheet — không bao giờ cắt chữ, thêm/bớt ngành chỉ cần sửa ô:
+     cột trái  = nhãn · tiêu đề · đoạn giới thiệu · gạch đầu dòng · nút
+     cột phải  = lưới NGÀNH (emoji đầu mỗi ngành thành ô icon) · hàng KHÂU · 4 BƯỚC làm việc
+   Đứng cuối khu Ứng dụng, LUÔN hiện kể cả khi lọc nhóm. Thiếu tiêu đề → ẩn cả khu (ô trống tự ẩn). */
 function veTheDichVu(cd) {
   cd = cd || {};
   if (!chuoiCo(cd.dichVuTieuDe)) return '';
 
-  const y = tachDanh(cd.dichVuY).map(t => `<li>${locHtml(t)}</li>`).join('');
+  const y = tachDanh(cd.dichVuY).map(t => `<li>${dinhDang(t)}</li>`).join('');
   const nut = locHtml(cd.dichVuNut || 'Trao đổi yêu cầu');
 
-  // Hai hàng nhãn: ngành phục vụ và các khâu — mỗi hàng tự ẩn nếu ô Sheet trống
-  const hangNhan = (nhan, chuoi) => {
-    const the = tachDanh(chuoi);
-    if (!the.length) return '';
-    return `
-        <div class="the-dv__hang">
-          <span class="the-dv__nhan-hang">${locHtml(nhan)}</span>
-          <span class="the-dv__the-ds">${the.map(t =>
-            `<span class="the-dv__the">${locHtml(t)}</span>`).join('')}</span>
-        </div>`;
+  // Tách emoji đứng đầu ("🐾 Pet – thú cưng") ra làm icon; ngành không có emoji thì dùng chấm tròn
+  const tachIcon = (t) => {
+    const m = String(t).match(/^([^\p{L}\p{N}\s]+)\s*(.*)$/u);
+    return m && m[2] ? { ico: m[1], chu: m[2] } : { ico: '', chu: String(t) };
   };
+  const nganh = tachDanh(cd.dichVuNganh).map(tachIcon);
+  const khoiNganh = nganh.length ? `
+      <div class="dat-lam__khoi">
+        <p class="dat-lam__nho">${locHtml(cd.dichVuNganhNhan || 'Ngành phục vụ')}</p>
+        <ul class="dat-lam__nganh">${nganh.map(n => `
+          <li><span class="dat-lam__ico" aria-hidden="true">${locHtml(n.ico || '•')}</span><span>${locHtml(n.chu)}</span></li>`).join('')}
+        </ul>
+      </div>` : '';
 
-  // Ảnh bìa cho ô dịch vụ — để nhìn cân với các thẻ ứng dụng (vốn đều có bìa).
-  // Ảnh hỏng thì tự gỡ, khối chữ vẫn nguyên.
-  const anh = locLink(cd.dichVuAnh);
-  const khoiAnh = anh
-    ? `<div class="the-ud__anh the-dv__anh">
-         <img src="${anh}" alt="Thiết kế ứng dụng tuỳ biến" loading="lazy" decoding="async" onerror="this.closest('.the-ud__anh').remove()">
-         <span class="the-ud__phu" aria-hidden="true"></span>
-       </div>`
-    : '';
+  const khau = tachDanh(cd.dichVuVung);
+  const khoiKhau = khau.length ? `
+      <div class="dat-lam__khoi">
+        <p class="dat-lam__nho">${locHtml(cd.dichVuVungNhan || 'Khâu số hoá được')}</p>
+        <div class="dat-lam__khau">${khau.map(k => `<span>${locHtml(k)}</span>`).join('')}</div>
+      </div>` : '';
+
+  const buoc = tachDanh(cd.dichVuBuoc);
+  const khoiBuoc = buoc.length ? `
+      <ol class="dat-lam__buoc">${buoc.map(b => `<li><span>${locHtml(b)}</span></li>`).join('')}</ol>` : '';
+
+  // Nút phụ "Hỏi AI" chỉ hiện khi trợ lý đang bật (CaiDat › botBat)
+  const nutAI = chuoiCo(cd.botBat)
+    ? `<button type="button" class="nut nut--vien mo-chat">${ICON_AI} Hỏi AI về dự án</button>` : '';
 
   return `
-    <article class="the-ud the-ud--dv" data-nhom="all">
-      ${khoiAnh}
-      <div class="the-ud__than">
-        <p class="the-dv__nhan">${locHtml(cd.dichVuNhan || 'Đặt làm riêng')}</p>
-        <h3 class="the-dv__ten">${locHtml(cd.dichVuTieuDe)}</h3>
-        <p class="the-ud__tom-tat">${dinhDang(cd.dichVuChu)}</p>
-        <ul class="the-ud__diem">${y}</ul>
-        ${hangNhan('Ngành', cd.dichVuNganh)}
-        ${hangNhan('Lĩnh vực', cd.dichVuVung)}
-        <div class="the-ud__chan the-dv__chan">
-          <a class="nut nut--chinh nut--nho" href="#lien-he"
-             data-tk-loai="bam_dat_lam_rieng" data-tk-muc="Thiết kế ứng dụng riêng">${nut}</a>
+    <section class="dat-lam" data-nhom="all" aria-label="${locHtml(cd.dichVuNhan || 'Đặt làm riêng')}">
+      <div class="dat-lam__trai">
+        <p class="dat-lam__nhan">${locHtml(cd.dichVuNhan || 'Đặt làm riêng')}</p>
+        <h3 class="dat-lam__ten">${locHtml(cd.dichVuTieuDe)}</h3>
+        ${chuoiCo(cd.dichVuChu) ? `<p class="dat-lam__chu">${dinhDang(cd.dichVuChu)}</p>` : ''}
+        ${y ? `<ul class="dat-lam__y">${y}</ul>` : ''}
+        <div class="dat-lam__nut">
+          <a class="nut nut--chinh" href="#lien-he"
+             data-tk-loai="bam_dat_lam_rieng" data-tk-muc="Đặt làm riêng">${nut} <span aria-hidden="true">→</span></a>
+          ${nutAI}
         </div>
       </div>
-    </article>`;
+      <div class="dat-lam__phai">${khoiNganh}${khoiKhau}</div>
+      ${khoiBuoc}
+    </section>`;
 }
 
 /* Icon thật hỏng đường dẫn thì thay bằng hình vẽ chữ, không để ô trống */
@@ -402,11 +582,11 @@ function nutTaiApp(u, co) {
 function nutMoApp(u, co) {
   const link = locLink(u.linkMo);
   if (!link) return '';
-  const lop = co === 'lon' ? 'nut nut--chinh' : 'nut nut--tai nut--nho';
+  const lop = co === 'lon' ? 'nut nut--chinh nut--thu' : 'nut nut--tai nut--nho nut--thu';
   return `<a class="${lop}" href="${link}" target="_blank" rel="noopener"
-             data-tk-loai="bam_tai_app" data-tk-muc="Mở ${locHtml(u.ten)}"
-             title="Mở ứng dụng ${locHtml(u.ten)}">
-            <span aria-hidden="true">▶</span> Mở ứng dụng
+             data-tk-loai="bam_tai_app" data-tk-muc="Dùng thử ${locHtml(u.ten)}"
+             title="Mở bản dùng thử ${locHtml(u.ten)} trên trình duyệt">
+            <span aria-hidden="true">▶</span> Dùng thử ngay
           </a>`;
 }
 
@@ -417,7 +597,8 @@ function veChonNhomTaiLieu(nhom) {
 }
 
 /* Số tài liệu hiện mỗi lượt. Đổi tìm kiếm hay đổi danh mục thì đếm lại từ đầu. */
-const TAI_LIEU_MOI_LAN = 6;
+// Điện thoại hiện 4 tài liệu mỗi lượt (đỡ cuộn), máy tính 6
+const TAI_LIEU_MOI_LAN = (window.matchMedia && matchMedia('(max-width: 640px)').matches) ? 4 : 6;
 let taiLieuHien = TAI_LIEU_MOI_LAN;
 
 function datLaiSoTaiLieu() { taiLieuHien = TAI_LIEU_MOI_LAN; }
@@ -449,9 +630,11 @@ function veTaiLieu(ds, tuKhoa, nhomLoc) {
       <div class="the-tl__dinh">
         <span class="dinh-dang dinh-dang--${locHtml(String(t.dinhDang || '').toLowerCase())}">${locHtml(t.dinhDang)}</span>
         <span class="the-tl__dung-luong">${locHtml(t.dungLuong)}</span>
+        ${soNgayQua(t.ngayCapNhat) <= 14 ? '<span class="nhan-moi nhan-moi--nho">Mới</span>' : ''}
       </div>
       <h3 class="the-tl__ten">${locHtml(t.tieuDe)}</h3>
       <p class="the-tl__mo-ta">${dinhDang(t.moTa)}</p>
+      ${ngayVN(t.ngayCapNhat) ? `<p class="the-tl__ngay">Cập nhật ${ngayVN(t.ngayCapNhat)}</p>` : ''}
       ${nut}
     </article>`;
   }).join('');
@@ -476,6 +659,18 @@ function veTaiLieu(ds, tuKhoa, nhomLoc) {
 /* ═══════════ 7b. VIDEO HƯỚNG DẪN ═══════════
    Danh sách do Apps Script tự đọc từ kênh YouTube — video mới tự hiện.
    Ảnh bìa lấy thẳng từ máy chủ ảnh của YouTube nên không tốn dung lượng. */
+/* Ngày từ Sheet ("2026-09-21") → "21/09/2026". Đọc thẳng chữ số, không qua múi giờ
+   (new Date("2026-09-21") là nửa đêm giờ quốc tế — máy ở múi khác có thể lùi 1 ngày). */
+function ngayVN(v) {
+  const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : '';
+}
+function soNgayQua(v) {
+  const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return Infinity;
+  return (Date.now() - new Date(+m[1], +m[2] - 1, +m[3]).getTime()) / 864e5;
+}
+
 function veVideo(vd) {
   vd = vd || {};
   const kenh = locLink(vd.kenh);
@@ -484,18 +679,20 @@ function veVideo(vd) {
   if (kenh) { nutKenh.href = kenh; nutKenh.classList.remove('an'); }
   else { nutKenh.classList.add('an'); }
 
-  const ds = Array.isArray(vd.ds) ? vd.ds.slice(0, 9) : [];
+  // V5.1: danh sách lấy từ tab Video trên Sheet (+ video mới của kênh), đã xếp mới nhất lên đầu
+  const ds = Array.isArray(vd.ds) ? vd.ds.slice(0, 12) : [];
   $('#luoi-video').innerHTML = ds.map(v => {
     const id = String(v.id || '').replace(/[^\w-]/g, '');
     if (!id) return '';
-    const ngay = v.ngay ? new Date(v.ngay) : null;
-    const chuNgay = (ngay && !isNaN(ngay)) ? ngay.toLocaleDateString('vi-VN') : '';
+    const chuNgay = ngayVN(v.ngay);
+    const moi = soNgayQua(v.ngay) <= 21;
     return `
     <a class="the-video" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener"
        data-tk-loai="bam_tai_lieu" data-tk-muc="Video · ${locHtml(v.ten)}">
       <span class="the-video__khung">
         <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy" decoding="async">
         <span class="the-video__nut" aria-hidden="true">▶</span>
+        ${moi ? '<span class="nhan-moi">Mới</span>' : ''}
       </span>
       <span class="the-video__ten">${locHtml(v.ten)}</span>
       ${chuNgay ? `<span class="the-video__ngay">${chuNgay}</span>` : ''}
@@ -637,11 +834,26 @@ function veLienHe(cd) {
 /* Nút liên hệ NỔI ở góc phải màn hình — "Gọi ngay" + "Nhắn Zalo".
    Số gọi lấy từ CaiDat.soGoi (trống thì dùng dienThoai); Zalo lấy từ CaiDat.zalo.
    Ô nào trống thì ẩn đúng nút đó; trống cả hai thì ẩn hẳn cụm (đúng luật ô trống = ẩn). */
+/* Số điện thoại bị Google Sheet cắt mất số 0 đầu (0943156780 → 943156780)
+   → tự thêm lại, để nút Gọi ngay không bao giờ quay số sai. */
+function chuanSoDT(v) {
+  const s = String(v == null ? '' : v).trim().replace(/\.0+$/, '');
+  const so = s.replace(/[^\d]/g, '');
+  if (/^[1-9]\d{8}$/.test(so) && s.replace(/[\s.\-]/g, '') === so) return '0' + s;
+  return s;
+}
+
+/* Biểu tượng AI: một ngôi sao 4 cánh lớn + 2 sao nhỏ — kiểu "tia sáng" quen thuộc của trợ lý AI */
+const ICON_AI = '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">' +
+  '<path d="M10 2.5c.4 3.9 2.6 6.1 6.5 6.5-3.9.4-6.1 2.6-6.5 6.5-.4-3.9-2.6-6.1-6.5-6.5 3.9-.4 6.1-2.6 6.5-6.5Z"/>' +
+  '<path d="M18.5 13c.2 1.9 1.1 2.8 3 3-1.9.2-2.8 1.1-3 3-.2-1.9-1.1-2.8-3-3 1.9-.2 2.8-1.1 3-3Z" opacity=".85"/>' +
+  '<path d="M17 2.5c.13 1.2.8 1.87 2 2-1.2.13-1.87.8-2 2-.13-1.2-.8-1.87-2-2 1.2-.13 1.87-.8 2-2Z" opacity=".7"/></svg>';
+
 function veLienHeNhanh(cd) {
   const o = document.getElementById('gam-lien-he');
   if (!o) return;
 
-  const so   = String(cd.soGoi || cd.dienThoai || '').trim();
+  const so   = chuanSoDT(cd.soGoi || cd.dienThoai);
   const soLink = so.replace(/\s+/g, '');
   const zalo = locLink(cd.zalo);
   const nut  = [];
@@ -661,11 +873,12 @@ function veLienHeNhanh(cd) {
     `<span class="gam-nut__chu">Nhắn Zalo</span></a>`);
 
   // Nút mở CHAT — nằm dưới cùng (dưới Zalo). Chỉ hiện khi CaiDat.botBat có bật.
+  // V5.1: nút "Hỏi AI" — biểu tượng tia sáng AI, viền chuyển màu, nhịp sáng nhẹ
   if (String(cd.botBat || '').trim()) nut.push(
-    `<button type="button" class="gam-nut gam-nut--chat mo-chat"` +
-    ` aria-label="Chat với trợ lý" title="Chat với trợ lý">` +
-    `<span class="gam-nut__ico" aria-hidden="true">💬</span>` +
-    `<span class="gam-nut__chu">Chat</span></button>`);
+    `<button type="button" class="gam-nut gam-nut--chat gam-nut--ai mo-chat"` +
+    ` aria-label="Hỏi trợ lý AI" title="Hỏi trợ lý AI">` +
+    `<span class="gam-nut__ico" aria-hidden="true">${ICON_AI}</span>` +
+    `<span class="gam-nut__chu">Hỏi AI</span></button>`);
 
   o.innerHTML = nut.join('');
   o.classList.toggle('an', nut.length === 0);
