@@ -38,12 +38,16 @@ function locLink(url) {
 
 /* ---------- Bộ nhớ đệm ---------- */
 
-function docCache() {
+/* [SỬA 06/10/2026] choPhepCu = true → trả cả bản ĐÃ HẾT HẠN (lần gần nhất lấy được từ Sheet, giữ tối đa 30 ngày).
+   Vì sao: máy chủ Google có lúc chậm quá 8 giây → trước đây web quay về bản DỰ PHÒNG trong code, mất những link
+   chủ web mới gắn trên Sheet (vd nút "Tải bản cài" Auto Family). Bản Sheet cũ vài giờ vẫn đúng hơn bản dự phòng. */
+function docCache(choPhepCu) {
   try {
     const tho = localStorage.getItem(KHOA_CACHE);
     if (!tho) return null;
     const goi = JSON.parse(tho);
     const hanPhut = (Date.now() - goi.luc) / 60000;
+    if (choPhepCu) return hanPhut <= 30 * 24 * 60 ? goi.data : null;
     if (hanPhut > CONFIG.CACHE_PHUT) return null;
     return goi.data;
   } catch (e) { return null; }
@@ -218,6 +222,9 @@ function chuanHoa(tho) {
 function layNhanh() {
   const cache = docCache();
   if (cache) return Object.assign({}, cache, { _nguon: 'cache' });
+  // [SỬA 06/10/2026] hết hạn thì vẽ trước bằng bản Sheet cũ (nguồn 'cache-cu' → main.js vẫn đi lấy bản mới)
+  const cu = docCache(true);
+  if (cu) return Object.assign({}, cu, { _nguon: 'cache-cu' });
   return Object.assign({}, NOI_DUNG_DU_PHONG, { _nguon: 'duphong' });
 }
 
@@ -273,6 +280,9 @@ async function layNoiDung() {
 
   } catch (loi) {
     if (CONFIG.DEBUG) console.warn('[noi-dung] Không lấy được từ Sheet:', loi.message);
+    // [SỬA 06/10/2026] còn bản Sheet lần trước thì dùng bản đó, chỉ khách lần đầu mới phải dùng bản dự phòng
+    const cu = docCache(true);
+    if (cu) return Object.assign({}, cu, { _nguon: 'cache-cu' });
     return Object.assign({}, NOI_DUNG_DU_PHONG, { _nguon: 'duphong' });
   }
 }

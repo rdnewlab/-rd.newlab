@@ -397,7 +397,7 @@ const NOI_DUNG_DU_PHONG = {
    "diemChinh": "Mỗi người một mã PIN, phân quyền 13 vùng × Xem · Thêm-Sửa · Duyệt|Việc nhà một chạm: tự cộng sao, đổi quà, bảng vinh danh tuần|Thực đơn tuần → danh sách đi chợ → phiếu chi, so với hạn mức|Thu – chi nhiều ví, khoản định kỳ tự nhắc hạn|Trợ lý AI hỏi bằng lời, trả lời từ dữ liệu nhà mình, tôn trọng phân quyền|Gửi link cho cả nhà: chạm tên + nhập PIN là vào, đồng bộ 15 giây",
    "trangThai": "Đang triển khai",
    "mauNhan": "cam",
-   "linkTai": "",
+   "linkTai": "https://drive.google.com/drive/folders/1ko_Ur2GV_8pVi8RThwAaZgH0-zd12MNG",
    "chuThichTai": "Miễn phí 7 ngày · điện thoại + Windows",
    "linkVideo": "",
    "linkMo": "https://rdnewlab-family.web.app"

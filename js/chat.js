@@ -78,7 +78,21 @@
       themTin('bot', c.botLoiChao || 'Chào anh/chị 👋 Mình có thể giúp gì ạ?');
     }
   }
+  /* [THÊM MỚI 06/10/2026] ĐÁNH THỨC MÁY CHỦ khi khách vừa mở khung chat (mỗi lần tải trang chỉ 1 lần).
+     Máy chủ Google "ngủ" khi vắng khách; lần gọi đầu phải khởi động + đọc Sheet. Gửi trước một lệnh nhẹ
+     trong lúc khách còn đang gõ → tới khi bấm gửi, máy chủ đã sẵn sàng, trả lời nhanh hơn vài giây. */
+  var daDanhThuc = false;
+  function danhThuc() {
+    if (daDanhThuc) return;
+    daDanhThuc = true;
+    try {
+      if (!CONFIG.URL_FORM) return;
+      var f = new URLSearchParams(); f.append('action', 'khoi');
+      fetch(CONFIG.URL_FORM, { method: 'POST', body: f }).catch(function () {});   // lỗi thì thôi, không ảnh hưởng chat
+    } catch (e) {}
+  }
   function moChat() {
+    danhThuc();
     chao();
     khung.classList.remove('an');
     document.body.classList.add('chat-mo');
@@ -104,15 +118,24 @@
     oNhap.value = ''; tuDongCao();
 
     var cho = themTin('bot', '…', true);
+    // [THÊM MỚI 06/10/2026] Chờ lâu thì báo khách biết bot vẫn đang làm (đỡ tưởng web treo)
+    var nhacCho = setTimeout(function () {
+      if (!cho.classList.contains('chat-tin--cho')) return;
+      var g = document.createElement('span'); g.className = 'chat-cho-chu';
+      g.textContent = ' Mình đang tra tài liệu, chờ chút nhé…';
+      cho.appendChild(g); than.scrollTop = than.scrollHeight;
+    }, 6000);
 
     try {
       var kq = await guiChat(hoi, lichSu);
+      clearTimeout(nhacCho);
       var traLoi = (kq && (kq.traLoi || kq.message)) ||
         'Xin lỗi, mình chưa trả lời được lúc này. Anh/chị nhắn Zalo giúp mình nhé.';
       datTraLoi(cho, traLoi);
       lichSu.push({ vaiTro: 'bot', chu: traLoi });
       luuLS();
     } catch (e) {
+      clearTimeout(nhacCho);
       datTraLoi(cho, 'Mình đang bận một chút. Anh/chị vui lòng nhắn Zalo để được trả lời nhanh nhé.');
     } finally {
       dangGui = false;
@@ -130,6 +153,10 @@
     document.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('.mo-chat')) { e.preventDefault(); moChat(); }
     });
+    // [THÊM MỚI 06/10/2026] Rê chuột / chạm vào nút 💬 là đánh thức máy chủ luôn — sớm hơn lúc bấm mở thêm 1–2 giây
+    document.addEventListener('pointerover', function (e) {
+      if (e.target.closest && e.target.closest('.mo-chat')) danhThuc();
+    }, { passive: true });
     $('chat-dong').addEventListener('click', dongChat);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !khung.classList.contains('an')) dongChat();
