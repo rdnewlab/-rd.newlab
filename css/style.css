@@ -2354,3 +2354,75 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .dat-lam__buoc li { font-size: .78rem; gap: .45rem; align-items: flex-start; }
   .dat-lam__buoc li::before { width: 1.6rem; height: 1.6rem; font-size: .75rem; }
 }
+
+
+/* =====================================================================
+   ═══  LỚP V5.6 (01/10/2026) — VÁ 2 LỖI THẤY TRÊN IPHONE THẬT  ═══
+   ===================================================================== */
+
+/* ── 1. Vòng biểu tượng bị NGHIÊNG ──
+   Trước: vòng quay 1 nhịp, từng icon quay ngược 1 nhịp RIÊNG. Khi Sheet về, render vẽ lại
+   icon → nhịp quay ngược của icon bắt đầu lại từ 0 trong khi vòng đã quay một góc → mọi icon
+   nghiêng đúng bằng góc đó (đo được lệch 45°).
+   Nay: CHỈ MỘT đồng hồ góc --goc trên vòng; icon đọc lại chính --goc đó (kế thừa) để quay
+   ngược → vẽ lại bao nhiêu lần cũng luôn đứng thẳng. Trình duyệt quá cũ không hiểu @property
+   thì vòng đứng yên, icon vẫn thẳng. */
+@property --goc { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+@keyframes chum-goc { to { --goc: 360deg; } }
+.chum__vong--song { animation: chum-goc 40s linear infinite; transform: rotate(var(--goc)); }
+.chum__vong--song .chum__o {
+  animation: none; transition: none;
+  transform: translate(-50%, -50%) rotate(calc(-1 * var(--goc)));
+}
+
+/* ── 2. Bấm ô chat trên iPhone → cả trang PHÓNG TO, lệch phải, mất mép ──
+   Safari iPhone tự phóng to khi ô nhập có chữ < 16px (ô chat đang .95rem ≈ 15px).
+   Máy cảm ứng: mọi ô nhập để đúng 16px → không còn tự phóng to. */
+@media (pointer: coarse) {
+  input, select, textarea, .chat__nhap textarea,
+  .o-tim input, .thanh-tim select, .o-nhap input, .o-nhap textarea { font-size: 16px; }
+}
+
+
+/* ═══════════ V5.7 (06/10/2026) — cân đối theo yêu cầu chủ web ═══════════ */
+/* ① Liên hệ: 2 khung CAO BẰNG NHAU. Trái: hàng nút mạng xã hội dính đáy.
+      Phải: ô Nội dung giãn ra lấp phần dư, nút Gửi dính đáy — mép dưới 2 khung thẳng hàng. */
+@media (min-width: 981px) {
+  .lien-he__luoi { align-items: stretch; }
+  .the-lien-he { display: flex; flex-direction: column; }
+  .the-lien-he .mang-xa-hoi { margin-top: auto; }
+  .the-lien-he .ds-lien-he { margin-bottom: 1.8rem; }
+  .mau-gui { display: flex; flex-direction: column; gap: 1.1rem; }
+  .mau-gui .o-nhap:has(textarea) { flex: 1 1 auto; grid-template-rows: auto 1fr; }
+  .mau-gui textarea { min-height: 9rem; height: 100%; }
+}
+.bao-mau:empty { display: none; }                 /* dòng báo trống không chiếm chỗ */
+
+/* ② Hỗ trợ & mở rộng: máy tính 4 thẻ / hàng (ít app hơn thì chia đều) · máy tính bảng 2 · điện thoại 1 */
+#luoi-ung-dung .luoi-ung-dung--gon { align-items: stretch; }
+@media (min-width: 1081px) {
+  #luoi-ung-dung .luoi-ung-dung--gon { grid-template-columns: repeat(var(--so-cot, 4), minmax(0, 1fr)); }
+  #luoi-ung-dung .luoi-ung-dung--gon > * { grid-column: auto; }
+}
+@media (min-width: 641px) and (max-width: 1080px) {
+  #luoi-ung-dung .luoi-ung-dung--gon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #luoi-ung-dung .luoi-ung-dung--gon > * { grid-column: auto; }
+}
+@media (max-width: 640px) {
+  #luoi-ung-dung .luoi-ung-dung--gon { grid-template-columns: minmax(0, 1fr); }
+}
+/* Mọi thẻ gọn cùng một khuôn: phụ đề luôn 2 dòng, tóm tắt 2 dòng, chân thẻ dính đáy */
+.the-ud--gon { display: flex; flex-direction: column; height: 100%; }
+.the-ud--gon .the-ud__than { flex: 1 1 auto; }
+.the-ud--gon .the-ud__phu-de {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  min-height: calc(2 * 1.5em); line-height: 1.5;
+}
+.the-ud--gon .the-ud__tom-tat { min-height: calc(2 * 1.6em); line-height: 1.6; }
+/* Chân thẻ: hàng nút (2 nút chia đôi, 1 nút trải hết) → dưới là "Đọc bài viết" */
+.the-ud__chan--gon { flex-direction: column; align-items: stretch; justify-content: flex-end; gap: .7rem; }
+.the-ud__nut { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: .5rem; height: 2.6rem; align-items: stretch; }   /* cao CỐ ĐỊNH → mọi thẻ thẳng hàng */
+.the-ud__nut > .nut { justify-content: center; text-align: center; white-space: nowrap; min-width: 0; padding-inline: .6rem; }
+.the-ud__nut > .chua-co-ban-tai { align-self: center; text-align: center; font-size: .74rem; line-height: 1.3;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.the-ud__chan--gon .lien-ket-doc { align-self: flex-start; }

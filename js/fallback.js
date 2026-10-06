@@ -18,13 +18,13 @@ const NOI_DUNG_DU_PHONG = {
   "tenHienThi": "Kỹ sư R&D & Tự động hoá",
   "chucDanh": "Nhận viết phần mềm theo yêu cầu",
   "tieuDeTrang": "Viết phần mềm theo yêu cầu cho nhà máy",
-  "moTaSEO": "Nhận viết phần mềm theo yêu cầu cho nhà máy dược phẩm – thực phẩm – mỹ phẩm: kế hoạch vật tư, kho theo lô, kiểm nghiệm, điều hành sản xuất, nhân sự, kinh doanh, hồ sơ. Chín ứng dụng đang chạy thật.",
+  "moTaSEO": "Nhận viết phần mềm theo yêu cầu cho nhà máy dược phẩm – thực phẩm – mỹ phẩm: kế hoạch vật tư, kho theo lô, kiểm nghiệm, điều hành sản xuất, nhân sự, kinh doanh, hồ sơ. Mười ứng dụng đang chạy thật.",
   "heroDong1": "Viết phần mềm cho đúng việc",
   "heroDong2": "nhà máy của bạn đang làm",
   "heroTomTat": "Phần mềm bán sẵn bắt nhà máy uốn theo nó. Tôi làm ngược lại: xuống tận nơi, ngồi cùng người trực tiếp làm — thủ kho, trưởng ca, kiểm nghiệm viên — rồi viết đúng thứ họ cần, chạy khớp quy trình họ đang chạy. **Bạn cứ mô tả bằng lời, không cần biết kỹ thuật; phần còn lại để tôi lo.** Các ứng dụng nối nhau qua Google Sheet, Drive và Apps Script — ==không cần mua máy chủ==, chi phí rất nhẹ, chỉ từ khoảng **100 nghìn đồng**. Những ứng dụng dưới đây đều lớn lên theo cách đó, và đang chạy thật mỗi ngày trong nhà máy.",
   "ctaChinh": "Xem các ứng dụng",
   "ctaPhu": "Thư viện tài liệu",
-  "soLieu1So": "9",
+  "soLieu1So": "10",
   "soLieu1Nhan": "ứng dụng đã xây dựng",
   "soLieu2So": "120",
   "soLieu2Nhan": "phân hệ nghiệp vụ",
@@ -229,7 +229,7 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ",
    "chuThichTai": "RAR · 92,9 MB · bản dùng thử V11.1",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-rd.web.app"
   },
   {
    "id": "auto-hcns",
@@ -248,7 +248,7 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1kIb8-yxbrWadmIDRejUkYeneD6ek7Dvz",
    "chuThichTai": "Bản dùng thử 7 ngày",
    "linkVideo": "",
-   "linkMo": "https://rdnewlab.github.io/HCNS/"
+   "linkMo": "https://rdnewlab-hcns-thu.web.app"
   },
   {
    "id": "auto-kd",
@@ -260,14 +260,14 @@ const NOI_DUNG_DU_PHONG = {
    "phuDe": "Từ báo giá đến tiền về — cả đường bán hàng gia công OEM/ODM",
    "anh": "images/bia/auto-kd.webp",
    "poster": "images/poster/auto-kd-1.webp|images/poster/auto-kd-2.webp|images/poster/auto-kd-3.webp",
-   "tomTat": "Phần mềm quản trị kinh doanh cho nhà máy gia công thực phẩm bảo vệ sức khoẻ, mỹ phẩm, hoá mỹ phẩm (OEM/ODM). Một app đi trọn đường bán hàng: khách hàng → báo giá → mẫu thử → đơn hàng 8 khâu → công nợ. Mỗi đơn hàng có **hồ sơ riêng 8 tab** — hợp đồng, cảnh báo, thanh toán, hoá đơn VAT, giao hàng, tài liệu, nhật ký; công thức có bước **chọn bao bì 3 cấp** và app tự cộng tiền bao bì vào giá. Kèm **Cổng khách hàng** để khách tự xem tiến độ đơn, nhận báo giá và tự thử xây công thức. Dữ liệu nằm trên Google Sheet riêng của chính nhà máy.",
-   "diemChinh": "Báo giá bậc thang theo 4 mốc MOQ: 3.000 · 5.000 · 10.000 · 20.000, VAT 0–10%|Đơn hàng chạy 8 khâu: tạm ứng → maket → vật tư → sản xuất → QC & COA → nhập kho → giao|Cổng khách hàng 7 thẻ: khách tự xem tiến độ, báo giá, công nợ, chấm điểm mẫu|Bao bì 3 cấp + 3 mức giá tự cộng vào giá thành — khách chỉ thấy khoảng giá|Khách của ai người nấy giữ: bảo vệ 45 ngày, cảnh báo trùng khi nhập|Phân quyền 13 menu × 6 thao tác, 4 quy trình duyệt chạy thật",
+   "tomTat": "Phần mềm quản trị kinh doanh cho nhà máy gia công thực phẩm bảo vệ sức khoẻ, mỹ phẩm, hoá mỹ phẩm (OEM/ODM). Một app đi trọn đường bán hàng: khách hàng → báo giá → mẫu thử → đơn hàng 8 khâu → công nợ. Mỗi đơn hàng có **hồ sơ riêng 8 tab** — hợp đồng, cảnh báo, thanh toán, hoá đơn VAT, giao hàng, tài liệu, nhật ký; công thức có bước **chọn bao bì 3 cấp** và app tự cộng tiền bao bì vào giá. Kèm **Cổng khách hàng** để khách tự xem tiến độ đơn, nhận báo giá và tự thử xây công thức. Dữ liệu nằm trên Google Sheet riêng của chính nhà máy. Bản mới thêm **thiết kế bao bì 3D xoay tay** (lọ, chai, tuýp, hũ, hộp, thùng — chọn màu thân, nắp, kiểu nhãn) để chốt maket với khách ngay trên màn hình, và phát app cho cả phòng qua một đường link web.",
+   "diemChinh": "Báo giá bậc thang theo 4 mốc MOQ: 3.000 · 5.000 · 10.000 · 20.000, VAT 0–10%|Đơn hàng chạy 8 khâu: tạm ứng → maket → vật tư → sản xuất → QC & COA → nhập kho → giao|Cổng khách hàng 7 thẻ: khách tự xem tiến độ, báo giá, công nợ, chấm điểm mẫu|Bao bì 3 cấp + 3 mức giá tự cộng vào giá thành — khách chỉ thấy khoảng giá|Khách của ai người nấy giữ: bảo vệ 45 ngày, cảnh báo trùng khi nhập|Phân quyền 13 menu × 6 thao tác, 4 quy trình duyệt chạy thật|Thiết kế bao bì 3D xoay tay, đổi màu thân · nắp · nhãn, lưu ảnh PNG gửi khách",
    "trangThai": "Đang triển khai",
    "mauNhan": "cam",
    "linkTai": "https://drive.google.com/drive/folders/1xQZjqsdhbl6Nk6qQAeLgmTJe7lTNede6",
    "chuThichTai": "Miễn phí 7 ngày · dùng thử 30 ngày",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-kd.web.app"
   },
   {
    "id": "auto-khvt",
@@ -286,7 +286,7 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1nmbkTnAkyUJDiVqyNB4AolPO15sehTBH",
    "chuThichTai": "Bản dùng thử 7 ngày",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-khvt.web.app"
   },
   {
    "id": "auto-sx",
@@ -298,14 +298,14 @@ const NOI_DUNG_DU_PHONG = {
    "phuDe": "Điều hành xưởng — lệnh sản xuất, hồ sơ lô, máy móc, kho",
    "anh": "images/bia/auto-sx.webp",
    "poster": "images/poster/auto-sx-1.webp|images/poster/auto-sx-2.webp|images/poster/auto-sx-3.webp|images/poster/auto-sx-4.webp",
-   "tomTat": "Phần mềm điều hành sản xuất (MES) cho nhà máy GMP, gói trong 7 phân hệ với 20 màn nghiệp vụ: từ đơn hàng → kế hoạch → lệnh sản xuất → hồ sơ lô điện tử, kèm máy móc, kho và nhân sự xưởng. **Chạy ngoại tuyến ngay trên máy tính**, dữ liệu sản xuất nằm tại nhà máy. Khoảng 46 danh sách lựa chọn tự thêm, sửa, đổi tên ngay trong app — không cần lập trình viên.",
-   "diemChinh": "Hồ sơ lô điện tử (EBR) truy từ nguyên liệu tới thành phẩm|Tự nhắc hạn hiệu chuẩn, bảo trì, vệ sinh — đếm việc quá hạn ngay màn đầu|Tồn theo từng kho, cảnh báo tồn thấp và hạn dùng, xuất lô hạn gần trước (FEFO)|Xuất Excel số là số thật — gõ =SUM() ra đúng tổng|Chạy offline, không cần máy chủ, không cần thuê cloud|Tiếng Việt toàn bộ, theo đúng dòng chảy xưởng Việt Nam",
+   "tomTat": "Phần mềm điều hành sản xuất (MES) cho nhà máy GMP, gói trong 7 phân hệ với 20 màn nghiệp vụ: từ đơn hàng → kế hoạch → lệnh sản xuất → hồ sơ lô điện tử, kèm máy móc, kho và nhân sự xưởng. **Chạy ngoại tuyến ngay trên máy tính**, dữ liệu sản xuất nằm tại nhà máy. Khoảng 46 danh sách lựa chọn tự thêm, sửa, đổi tên ngay trong app — không cần lập trình viên. Bản 3.0.48 thêm **thông số – tiêu chuẩn vật tư theo từng máy**: phiếu TS-TC có ảnh, in A4, gõ số đo thực tế là app báo ngay Đạt hay Ngoài ngưỡng; lệnh sản xuất tự hiện thông số chuẩn của máy được chọn.",
+   "diemChinh": "Hồ sơ lô điện tử (EBR) truy từ nguyên liệu tới thành phẩm|Tự nhắc hạn hiệu chuẩn, bảo trì, vệ sinh — đếm việc quá hạn ngay màn đầu|Tồn theo từng kho, cảnh báo tồn thấp và hạn dùng, xuất lô hạn gần trước (FEFO)|Xuất Excel số là số thật — gõ =SUM() ra đúng tổng|Chạy offline, không cần máy chủ, không cần thuê cloud|Tiếng Việt toàn bộ, theo đúng dòng chảy xưởng Việt Nam|Thông số – tiêu chuẩn vật tư theo từng máy, số đo thực tế tự báo Đạt / Ngoài ngưỡng",
    "trangThai": "Đang triển khai",
    "mauNhan": "cam",
    "linkTai": "https://drive.google.com/drive/folders/1Ockdn3ls4A9hjFDf2R3vZARbSZy8Fh6S",
    "chuThichTai": "Có key dùng thử",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-sx.web.app"
   },
   {
    "id": "auto-qaqc",
@@ -324,20 +324,20 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1mUJuhlKWryrubAkn7Hm8VOBIL443F7Nk",
    "chuThichTai": "Bản dùng thử 7 ngày",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-qaqc.web.app"
   },
   {
    "id": "autofile",
    "ten": "Autofile",
-   "phienBan": "V23",
+   "phienBan": "V24",
    "nhom": "morong",
    "icon": "🗂️",
    "iconAnh": "images/icon/autofile.png",
    "phuDe": "Chuẩn hoá, tìm kiếm & trích xuất hồ sơ",
    "anh": "images/bia/autofile.webp",
    "poster": "images/poster/autofile-1.webp|images/poster/autofile-2.webp|images/poster/autofile-3.webp|images/poster/autofile-4.webp",
-   "tomTat": "Một file EXE chạy thẳng, không cần cài đặt, gồm 10 phân hệ. Bạn tự định nghĩa biến trong ngoặc nhọn rồi dùng chung bộ biến đó cho cả tên file lẫn đường dẫn lưu — điền một lần, phần mềm sinh tên chuẩn và tự tạo đúng cây thư mục. Bản V23 thêm trích xuất trọn bộ chứng từ theo tệp lệnh và xưởng PDF nối – tách – tạo trang. Toàn bộ xử lý chạy tại chỗ, tài liệu không rời khỏi máy.",
-   "diemChinh": "Trích xuất trọn bộ chứng từ theo tệp lệnh · phiếu xuất kho|Xưởng PDF: nối, tách, tạo trang bìa, in hàng loạt đúng thứ tự|Tự tạo danh mục file ra Excel kèm link mở nhanh từng file|Biến tự đặt dùng chung cho tên file và cây thư mục",
+   "tomTat": "Một file EXE chạy thẳng, không cần cài đặt, gồm 10 phân hệ. Bạn tự định nghĩa biến trong ngoặc nhọn rồi dùng chung bộ biến đó cho cả tên file lẫn đường dẫn lưu — điền một lần, phần mềm sinh tên chuẩn và tự tạo đúng cây thư mục. Bản V23 thêm trích xuất trọn bộ chứng từ theo tệp lệnh và xưởng PDF nối – tách – tạo trang; bản V24 thêm **dịch tài liệu sang tiếng Việt** ngay lúc chuyển đổi file, giữ nguyên bảng và khối mã. Toàn bộ xử lý chạy tại chỗ, tài liệu không rời khỏi máy.",
+   "diemChinh": "Trích xuất trọn bộ chứng từ theo tệp lệnh · phiếu xuất kho|Xưởng PDF: nối, tách, tạo trang bìa, in hàng loạt đúng thứ tự|Tự tạo danh mục file ra Excel kèm link mở nhanh từng file|Biến tự đặt dùng chung cho tên file và cây thư mục|Dịch tài liệu sang tiếng Việt khi chuyển đổi file — giữ nguyên bảng",
    "trangThai": "Đã triển khai",
    "mauNhan": "tim",
    "linkTai": "https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg",
@@ -362,7 +362,7 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ",
    "chuThichTai": "RAR · 73 MB · dùng thử 7 ngày",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-box.web.app"
   },
   {
    "id": "auto-fixcard",
@@ -381,7 +381,26 @@ const NOI_DUNG_DU_PHONG = {
    "linkTai": "https://drive.google.com/drive/folders/1xQZjqsdhbl6Nk6qQAeLgmTJe7lTNede6",
    "chuThichTai": "Dùng thử đầy đủ 7 ngày",
    "linkVideo": "",
-   "linkMo": ""
+   "linkMo": "https://rdnewlab-fixcard.web.app"
+  },
+  {
+   "id": "auto-family",
+   "ten": "Auto Family",
+   "phienBan": "V3",
+   "nhom": "morong",
+   "icon": "🏡",
+   "iconAnh": "images/icon/auto-family.png",
+   "phuDe": "Việc nhà · thực đơn · đi chợ · thu chi — cả nhà chung một app",
+   "anh": "images/bia/auto-family.webp",
+   "poster": "images/poster/auto-family-1.webp|images/poster/auto-family-2.webp|images/poster/auto-family-3.webp|images/poster/auto-family-4.webp",
+   "tomTat": "Ứng dụng quản lý gia đình gói trong 11 màn: việc nhà, giao việc, thực đơn, đi chợ, thu – chi, đề xuất & bỏ phiếu, lịch & ghi nhớ. Mỗi người trong nhà **một tài khoản, một mã PIN**, bố mẹ phân quyền tới từng màn — con chỉ thấy phần của con, không thấy tiền. Thực đơn nối sang đi chợ, đi chợ mua xong thành phiếu chi, việc nhà làm xong tự cộng sao đổi quà. **Trợ lý AI trả lời từ chính dữ liệu nhà mình.** Dữ liệu đồng bộ mọi máy qua Google Sheet của chính gia đình — ==không cần máy chủ==; chạy trên điện thoại như một app và cả bản Windows.",
+   "diemChinh": "Mỗi người một mã PIN, phân quyền 13 vùng × Xem · Thêm-Sửa · Duyệt|Việc nhà một chạm: tự cộng sao, đổi quà, bảng vinh danh tuần|Thực đơn tuần → danh sách đi chợ → phiếu chi, so với hạn mức|Thu – chi nhiều ví, khoản định kỳ tự nhắc hạn|Trợ lý AI hỏi bằng lời, trả lời từ dữ liệu nhà mình, tôn trọng phân quyền|Gửi link cho cả nhà: chạm tên + nhập PIN là vào, đồng bộ 15 giây",
+   "trangThai": "Đang triển khai",
+   "mauNhan": "cam",
+   "linkTai": "",
+   "chuThichTai": "Miễn phí 7 ngày · điện thoại + Windows",
+   "linkVideo": "",
+   "linkMo": "https://rdnewlab-family.web.app"
   }
  ],
  "baiViet": [
@@ -440,6 +459,12 @@ const NOI_DUNG_DU_PHONG = {
    "noiDung": "Cắm thẻ nhớ vào máy, Windows hiện một hộp thoại: \"Bạn cần format ổ E: trước khi dùng\" — và chỉ có đúng một nút để bấm. Người dùng bấm, rồi mất sạch ảnh cưới, video, dữ liệu camera. Sự thật là phần lớn những chiếc thẻ ấy **không hỏng dữ liệu**, chỉ hỏng *mục lục* — cái bảng nhỏ ở đầu thẻ ghi tệp nào nằm ở ô nhớ nào. Format nghĩa là viết một mục lục mới, rỗng. Dữ liệu cũ vẫn còn đó nhưng không ai tìm lại được nữa. Mất dữ liệu xảy ra do cái bấm chuột, chứ không phải do thẻ hỏng."
   },
   {
+   "maApp": "auto-family",
+   "thuTu": 1,
+   "tieuDe": "Vì sao một gia đình cũng cần một phần mềm",
+   "noiDung": "Việc trong nhà không ít hơn việc ở xưởng: ai nấu bữa nào, tuần này mua gì, tháng này chi bao nhiêu, con đã làm bài chưa, lịch tiêm của bé ra sao. Phần lớn gia đình giữ những thứ đó trong đầu người mẹ, vài nhóm Zalo và một cuốn sổ. Auto Family gom tất cả về một chỗ, và quan trọng hơn: **mỗi người trong nhà cùng nhìn một bức tranh** — không ai phải hỏi lại \"hôm nay nhà mình cần làm gì\"."
+  },
+  {
    "maApp": "auto-rd",
    "thuTu": 2,
    "tieuDe": "Mười bốn phân hệ, một dòng số liệu duy nhất",
@@ -492,6 +517,12 @@ const NOI_DUNG_DU_PHONG = {
    "thuTu": 2,
    "tieuDe": "Bốn bậc màu — biết hậu quả trước khi bấm",
    "noiDung": "Mỗi nút trong Auto Fix Card mang một nhãn màu ở dòng đầu, nhìn màu là biết hậu quả. 🟢 **Xanh — SOI**: chỉ đọc, không ghi gì xuống thẻ, bấm bao nhiêu lần cũng được. 🟡 **Cam — CỨU**: có ghi xuống thẻ nhưng giữ nguyên dữ liệu, và app chép vùng cũ ra tệp trước khi ghi. 🔴 **Đỏ — DỰNG LẠI**: mất hết dữ liệu, phải gõ tay chữ XOA mới chạy. ⛔ **Đen — PHỤC HỒI SÂU**: ghi đè từng ô nhớ, rất lâu, chỉ dùng khi hết cách. Không công cụ nào khác nói trước cho người dùng biết bấm cái nào là mất dữ liệu."
+  },
+  {
+   "maApp": "auto-family",
+   "thuTu": 2,
+   "tieuDe": "Mỗi người một tài khoản, bố mẹ quyết ai thấy gì",
+   "noiDung": "Mỗi thành viên có tài khoản và mã PIN riêng. Bố mẹ thuộc nhóm chủ, mở ma trận phân quyền 13 vùng để bật tắt từng quyền **Xem · Thêm-Sửa · Duyệt** cho con cái, người lớn khác hoặc từng người. Tắt quyền xem một màn thì màn đó biến mất khỏi menu, thông báo và cả Trợ lý AI — máy chủ cũng không gửi dữ liệu đó về máy của người không được xem. Con không thấy số tiền, nhưng vẫn ghi được việc nhà của mình và gửi đề xuất."
   },
   {
    "maApp": "auto-rd",
@@ -548,6 +579,12 @@ const NOI_DUNG_DU_PHONG = {
    "noiDung": "Người ta hay làm bừa: format, không được thì cài phần mềm lạ, rồi thẻ hỏng nặng hơn. Auto Fix Card đi đúng thứ tự qua **16 mức sửa chữa**, từ nhẹ nhất tới nặng nhất. Trong đó **7 mức giữ nguyên dữ liệu** — chạy xong dữ liệu vẫn còn. Có 7 lớp an toàn chống xoá nhầm. Còn nếu thẻ hỏng chip thật, app nói thẳng: cái này không cứu được — khỏi mất thêm thời gian."
   },
   {
+   "maApp": "auto-family",
+   "thuTu": 3,
+   "tieuDe": "Việc nhà biến thành trò chơi có điểm",
+   "noiDung": "Con bấm một chạm \"đã rửa bát\", bố mẹ xác nhận, sao tự cộng. Sao đổi được quà do bố mẹ đặt, cuối tuần có bảng vinh danh. Việc lớn hơn thì giao kiểu bảng Kanban: hạn chót, sao thưởng, nghiệm thu bằng ảnh chụp. Mọi con số thống kê chỉ tính việc đã được xác nhận, nên không có chuyện \"khai khống\" lấy sao."
+  },
+  {
    "maApp": "auto-rd",
    "thuTu": 4,
    "tieuDe": "Chỗ dễ sai nhất vẫn là đơn vị",
@@ -600,6 +637,12 @@ const NOI_DUNG_DU_PHONG = {
    "thuTu": 4,
    "tieuDe": "Chẩn đoán một nút",
    "noiDung": "Nút đầu tiên luôn là 🩺 CHẨN ĐOÁN THẺ: app tự đọc thẻ rồi chỉ đúng việc cần làm tiếp theo, người không biết gì cũng biết bước sau. Muốn nhìn tận nơi có Xem sâu cấu trúc thẻ (MBR, boot sector, bảng FAT), Nhận diện thiết bị (hãng, số hiệu, VID/PID, firmware — tra được thẻ giả nhãn), Theo dõi kết nối 60 giây để bắt đúng ca thẻ lúc nhận lúc không, và Hỏi thẳng chip bằng lệnh gửi xuống tận con chip. Tất cả đều thuộc nhóm 🟢 SOI — an toàn tuyệt đối."
+  },
+  {
+   "maApp": "auto-family",
+   "thuTu": 4,
+   "tieuDe": "Thực đơn – đi chợ – thu chi nối liền một mạch",
+   "noiDung": "Lên thực đơn ba bữa cho cả tuần (có gợi ý món và cảnh báo dị ứng), app tự gom nguyên liệu thành danh sách đi chợ, tìm không dấu. Mua xong đánh dấu là thành phiếu chi, so ngay với hạn mức từng hạng mục. Thu – chi chia nhiều ví, có khoản định kỳ (điện, nước, học phí) tự nhắc trước hạn trên lịch chung của cả nhà."
   },
   {
    "maApp": "auto-rd",
@@ -656,6 +699,12 @@ const NOI_DUNG_DU_PHONG = {
    "noiDung": "Thợ sửa máy tính và cửa hàng điện thoại — khách mang thẻ hỏng tới mỗi tuần, có app này thì trả lời được trong vài phút: cứu được hay không. Thợ lắp camera giám sát — thẻ camera ghi suốt ngày đêm, tháo ra là Windows đòi format dù thẻ còn tốt. Thợ ảnh, quay phim — biết thẻ sắp hỏng trước khi nó hỏng giữa buổi chụp. Người mua thẻ trên mạng — thẻ giả dung lượng ghi 512 GB nhưng thật chỉ 32 GB. Và văn phòng, trường học không có người IT."
   },
   {
+   "maApp": "auto-family",
+   "thuTu": 5,
+   "tieuDe": "Trợ lý AI đọc đúng dữ liệu nhà mình",
+   "noiDung": "Hỏi bằng lời bình thường — \"tháng này nhà mình chi ăn uống bao nhiêu?\", \"tuần sau ai có lịch gì?\" — Trợ lý AI trả lời từ chính dữ liệu của gia đình và kho tài liệu riêng trên Google Drive, đúng theo quyền của người đang hỏi. Khoá AI cất trên máy chủ của gia đình, người nhà dùng được mà không phải dán khoá; trên bản dùng thử, câu hỏi đi qua máy chủ rd.newlab nên trang web không chứa khoá nào."
+  },
+  {
    "maApp": "auto-rd",
    "thuTu": 6,
    "tieuDe": "Từ công thức tới bộ hồ sơ nộp được",
@@ -708,6 +757,12 @@ const NOI_DUNG_DU_PHONG = {
    "thuTu": 6,
    "tieuDe": "Nhỏ, nhanh, nói thật",
    "noiDung": "Bản chạy chỉ **763 KB** — nhỏ hơn một tấm ảnh chụp bằng điện thoại, bật lên trong 0,5 giây, không phải cài thêm gì, chép vào USB chạy thẳng. Trong app có sẵn 13 bài hướng dẫn tiếng Việt, không cần tra mạng. Mỗi lần dựng bản, 559 phép thử tự động chạy lại toàn bộ. Dùng thử đầy đủ mọi tính năng trong 7 ngày."
+  },
+  {
+   "maApp": "auto-family",
+   "thuTu": 6,
+   "tieuDe": "Dữ liệu ở Google Sheet của chính gia đình",
+   "noiDung": "Không có máy chủ trung gian giữ dữ liệu: cả nhà đồng bộ qua một Google Sheet do chính gia đình sở hữu, có chống spam và giới hạn ghi. Bố dựng Sheet một lần, thêm nhanh cả nhà, rồi gửi link — người nhận chạm vào tên mình, nhập PIN là vào, không phải dán mã gì. Mất mạng vẫn dùng được, có mạng lại tự đồng bộ; cài ra màn hình điện thoại như một app, kèm bản Windows."
   },
   {
    "maApp": "auto-rd",
@@ -1077,7 +1132,7 @@ const NOI_DUNG_DU_PHONG = {
    "ma": "morong",
    "ten": "Hỗ trợ & mở rộng",
    "icon": "🧩",
-   "moTa": "Công cụ đi kèm — xếp hàng, quản lý hồ sơ, cứu dữ liệu"
+   "moTa": "Công cụ đi kèm — xếp hàng, quản lý hồ sơ, cứu dữ liệu, quản lý gia đình"
   }
  ],
  "nhomTaiLieu": [

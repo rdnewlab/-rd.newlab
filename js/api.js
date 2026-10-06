@@ -123,6 +123,8 @@ function gopNhom(tuSheet, duPhong) {
 
    Luật ghép: ô nào Sheet CÓ CHỮ thì Sheet thắng (chủ web luôn là người quyết định);
    ô nào Sheet thiếu hoặc để trống mới lấy bản dự phòng bù vào. Ghép theo mã app. */
+const LINK_CHU_WEB_TAT = ['linkMo', 'linkTai', 'linkVideo'];   // ô trống trên Sheet = tắt nút đó
+
 function gopUngDung(tuSheet, duPhong, conCu) {
   if (!Array.isArray(tuSheet) || !tuSheet.length) return duPhong;
 
@@ -135,6 +137,9 @@ function gopUngDung(tuSheet, duPhong, conCu) {
     const gop = Object.assign({}, u);
     Object.keys(bu).forEach(k => {
       const v = gop[k];
+      /* [SỬA 06/10/2026] Nút Dùng thử / Tải / Video là CÔNG TẮC của chủ web: Sheet CÓ cột đó mà để trống
+         = muốn TẮT nút → không bù từ bản dự phòng. Chỉ bù khi Sheet chưa hề có cột (Sheet đời cũ). */
+      if (LINK_CHU_WEB_TAT.indexOf(k) >= 0 && v !== undefined) return;
       if (v === undefined || v === null || String(v).trim() === '') gop[k] = bu[k];
     });
     /* Sheet còn cũ thì ĐƯỜNG DẪN ẢNH lấy theo code, kể cả khi Sheet có ghi.

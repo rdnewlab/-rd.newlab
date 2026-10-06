@@ -347,10 +347,9 @@ function theUngDungGon(u) {
         </div>
         <p class="the-ud__phu-de">${locHtml(u.phuDe)}</p>
         <p class="the-ud__tom-tat">${dinhDang(u.tomTat)}</p>
-        <div class="the-ud__chan">
+        <div class="the-ud__chan the-ud__chan--gon">
+          <div class="the-ud__nut">${nutMoApp(u, 'gon')}${nutTaiApp(u, 'gon')}</div>
           <a class="lien-ket-doc" href="#/ung-dung/${locHtml(u.id)}">Đọc bài viết <span aria-hidden="true">→</span></a>
-          ${nutMoApp(u, 'nho')}
-          ${nutTaiApp(u, 'nho')}
         </div>
       </div>
     </article>`;
@@ -454,7 +453,7 @@ function veUngDung(ds, nhomLoc) {
       (moRong.length ? `
       <section class="nhom-ud nhom-ud--mo-rong" data-nhom="${locHtml(maMR)}" style="--tt:1">
         ${dau(nhomMR.icon, nhomMR.ten, moRong.length, nhomMR.moTa)}
-        <div class="luoi-ung-dung luoi-ung-dung--con luoi-ung-dung--gon">${moRong.map(theUngDungGon).join('')}</div>
+        <div class="luoi-ung-dung luoi-ung-dung--con luoi-ung-dung--gon" style="--so-cot:${Math.min(4, moRong.length)}">${moRong.map(theUngDungGon).join('')}</div>
       </section>` : '') +
       veTheDichVu(cd);
     return;
@@ -483,7 +482,7 @@ function veUngDung(ds, nhomLoc) {
           ${k.n.moTa ? `<p class="nhom-ud__mo-ta">${dinhDang(k.n.moTa)}</p>` : ''}
         </div>
       </header>
-      <div class="luoi-ung-dung luoi-ung-dung--con${kieu}">${k.app.map(laMR ? theUngDungGon : theUngDung).join('')}</div>
+      <div class="luoi-ung-dung luoi-ung-dung--con${kieu}"${laMR ? ` style="--so-cot:${Math.min(4, n)}"` : ''}>${k.app.map(laMR ? theUngDungGon : theUngDung).join('')}</div>
     </section>`;
   }).join('') +
   veTheDichVu(DU_LIEU.caiDat);
@@ -566,6 +565,7 @@ function nutTaiApp(u, co) {
   const ghi  = locHtml(u.chuThichTai);
 
   if (!link) {
+    if (co === 'gon') return '';             // [SỬA 06/10/2026] thẻ gọn: chỉ nút — ghi chú dài làm lệch hàng, đã có trong bài viết
     return ghi ? `<span class="chua-co-ban-tai">${ghi}</span>` : '';
   }
 
@@ -573,7 +573,7 @@ function nutTaiApp(u, co) {
   return `<a class="${lop}" href="${link}" target="_blank" rel="noopener"
              data-tk-loai="bam_tai_app" data-tk-muc="${locHtml(u.ten)} ${locHtml(u.phienBan)}"
              title="${ghi}">
-            <span class="ico-tai" aria-hidden="true">⤓</span> Tải dùng thử
+            <span class="ico-tai" aria-hidden="true">⤓</span> ${co === 'gon' ? 'Tải bản cài' : 'Tải dùng thử'}
           </a>`;
 }
 
@@ -586,7 +586,7 @@ function nutMoApp(u, co) {
   return `<a class="${lop}" href="${link}" target="_blank" rel="noopener"
              data-tk-loai="bam_tai_app" data-tk-muc="Dùng thử ${locHtml(u.ten)}"
              title="Mở bản dùng thử ${locHtml(u.ten)} trên trình duyệt">
-            <span aria-hidden="true">▶</span> Dùng thử ngay
+            <span aria-hidden="true">▶</span> ${co === 'gon' ? 'Dùng thử' : 'Dùng thử ngay'}
           </a>`;
 }
 
