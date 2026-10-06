@@ -249,7 +249,24 @@ async function layNoiDung() {
     const json = await phanHoi.json();
     if (json.status && json.status !== 'success') throw new Error(json.message || 'Sheet trả lỗi');
 
-    const data = chuanHoa(json.data || json);
+    /* [THÊM MỚI 06/10/2026] Máy chủ trả nội dung chính KHÔNG kèm bài viết (gói đầy đủ > 100 KB thì Google
+       báo lỗi) → lấy tiếp phần bài viết riêng (?phan=baiviet). Phần này lỗi thì thôi: chuanHoa tự dùng
+       bài viết trong bản dự phòng, trang không vỡ. */
+    const tho = json.data || json;
+    if (!Array.isArray(tho.baiViet)) {
+      try {
+        const hen2 = new AbortController();
+        const dongHo2 = setTimeout(() => hen2.abort(), CONFIG.TIMEOUT_GIAY * 1000);
+        const ph2 = await fetch(CONFIG.API_URL + (CONFIG.API_URL.indexOf('?') >= 0 ? '&' : '?') + 'phan=baiviet', { signal: hen2.signal });
+        clearTimeout(dongHo2);
+        const j2 = ph2.ok ? await ph2.json() : null;
+        if (j2 && j2.status === 'success' && j2.data && Array.isArray(j2.data.baiViet)) tho.baiViet = j2.data.baiViet;
+      } catch (e2) {
+        if (CONFIG.DEBUG) console.warn('[noi-dung] Chưa lấy được bài viết — dùng bài viết dự phòng:', e2.message);
+      }
+    }
+
+    const data = chuanHoa(tho);
     ghiCache(data);
     if (CONFIG.DEBUG) console.log('[noi-dung] Đã lấy từ Google Sheet');
     return data;

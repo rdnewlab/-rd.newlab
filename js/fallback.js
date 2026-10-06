@@ -403,6 +403,401 @@ const NOI_DUNG_DU_PHONG = {
    "linkMo": "https://rdnewlab-family.web.app"
   }
  ],
+ "taiLieu": [
+  {
+   "id": "pl-attp",
+   "tieuDe": "Văn bản An toàn thực phẩm",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Nghị định, thông tư và hướng dẫn về điều kiện sản xuất, công bố và ghi nhãn thực phẩm.",
+   "link": "https://drive.google.com/drive/folders/1vYagdiGQlMobSuPWeRce-E1PNYpitJVr",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-mypham",
+   "tieuDe": "Văn bản Mỹ phẩm",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Quy định quản lý mỹ phẩm, công bố sản phẩm, hồ sơ thông tin sản phẩm và CGMP ASEAN.",
+   "link": "https://drive.google.com/drive/folders/1WW0sK4cFW_Zq5JQzmmIyvhy1JjGW4ZTW",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-duoc",
+   "tieuDe": "Văn bản Dược",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Luật Dược và các văn bản hướng dẫn về sản xuất, đăng ký và lưu hành thuốc.",
+   "link": "https://drive.google.com/drive/folders/1YU-_MC-gP0tgNVr7dt902peL3MO9AZdF",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-qcvn",
+   "tieuDe": "Quy chuẩn kỹ thuật quốc gia (QCVN)",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Bộ QCVN áp dụng cho thực phẩm, phụ gia, giới hạn ô nhiễm và bao bì tiếp xúc.",
+   "link": "https://drive.google.com/drive/folders/1Si3dTeGVFRMt_HabUrLlSdB29SSSsL8a",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-tcvn",
+   "tieuDe": "Tiêu chuẩn quốc gia (TCVN)",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Tiêu chuẩn Việt Nam dùng khi xây dựng tiêu chuẩn cơ sở và phương pháp thử.",
+   "link": "https://drive.google.com/drive/folders/177LOCLCkM9tVWDaImhUEgLPUCCpDG2M5",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-codex",
+   "tieuDe": "Tiêu chuẩn CODEX",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Bộ tiêu chuẩn quốc tế CODEX, gồm danh mục phụ gia và mức sử dụng tối đa theo nhóm thực phẩm.",
+   "link": "https://drive.google.com/drive/folders/1gNWyw2rZFHCxa3mP8rMK-5YBDz0sfnMJ",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-iso",
+   "tieuDe": "Bộ tiêu chuẩn ISO",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Tài liệu ISO phục vụ xây dựng và duy trì hệ thống quản lý chất lượng trong nhà máy.",
+   "link": "https://drive.google.com/drive/folders/1l-0YxVbGL_F59Y5Qef-O5jaQcZCFtkJR",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-hoachat",
+   "tieuDe": "Luật Hoá chất và văn bản hướng dẫn",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Quy định về khai báo, bảo quản và sử dụng hoá chất trong sản xuất công nghiệp.",
+   "link": "https://drive.google.com/drive/folders/1eDJWgsKE4nuD37IQfa-T_qeeEER_pvar",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "pl-moitruong",
+   "tieuDe": "Văn bản Môi trường",
+   "nhom": "phapluat",
+   "dinhDang": "VB",
+   "dungLuong": "thư mục",
+   "moTa": "Quy định về xả thải, quản lý chất thải và hồ sơ môi trường của cơ sở sản xuất.",
+   "link": "https://drive.google.com/drive/folders/1uJelTCwI8pmQlhquU9Dj0QQXDYvf2rli",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "app-rd",
+   "tieuDe": "Auto RD — bản dùng thử (V11.1)",
+   "nhom": "appdungthu",
+   "dinhDang": "RAR",
+   "dungLuong": "92,9 MB",
+   "moTa": "Bản dùng thử đầy đủ tính năng, có sẵn dữ liệu mẫu để hình dung ngay. Chạy trên Windows 10 / 11, không cần Internet. Trong thư mục có kèm bộ poster sơ đồ tính năng và hướng dẫn cài đặt.",
+   "link": "https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "app-box",
+   "tieuDe": "Auto Box Plus V16.0 — bản dùng thử",
+   "nhom": "appdungthu",
+   "dinhDang": "RAR",
+   "dungLuong": "73 MB",
+   "moTa": "Bản portable, giải nén là chạy, không cần cài đặt. Dùng thử 7 ngày đầy đủ tính năng xếp hộp – thùng – xe kèm mô phỏng 3D.",
+   "link": "https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "app-file",
+   "tieuDe": "Autofile V23 — bản dùng thử",
+   "nhom": "appdungthu",
+   "dinhDang": "RAR",
+   "dungLuong": "1,2 MB",
+   "moTa": "Một file EXE duy nhất, không cần cài đặt. Dùng thử 7 ngày toàn bộ chức năng đặt tên, tìm kiếm và trích xuất hồ sơ.",
+   "link": "https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-excipients",
+   "tieuDe": "Handbook of Pharmaceutical Excipients (6th ed.)",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Cẩm nang tra cứu tá dược: chức năng, mức dùng thông thường, tương kỵ và độ ổn định — tài liệu tôi mở nhiều nhất khi dựng công thức mới.",
+   "link": "https://drive.google.com/file/d/1Zh0l8mP7nlXFFq2yWOHPUWmf_68DE9dy/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-formulations",
+   "tieuDe": "Handbook of Pharmaceutical Manufacturing Formulations — trọn bộ 6 tập",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "6 tập",
+   "moTa": "Công thức mẫu cho viên nén, thuốc bột, dạng lỏng, bán rắn, OTC và sản phẩm vô trùng. Dùng để tham chiếu khi bắt đầu một dạng bào chế chưa từng làm.",
+   "link": "https://drive.google.com/drive/folders/1GdR9spFqVRZAA_s4iz_eoY1tHH12UXvr",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-granulation",
+   "tieuDe": "Handbook of Pharmaceutical Granulation Technology",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Kỹ thuật tạo hạt: xát hạt ướt, tạo hạt khô, sấy tầng sôi và các yếu tố ảnh hưởng tới độ đồng đều hàm lượng.",
+   "link": "https://drive.google.com/file/d/1eW6XFzGJrUZ5j4ygiR6C4mmlLRE15Cwl/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-coating",
+   "tieuDe": "Coating of Pharmaceutical Solid Dosage Forms",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "3,1 MB",
+   "moTa": "Kỹ thuật bao phim viên nén: lựa chọn polymer, thông số bao, và các lỗi bề mặt thường gặp cùng cách khắc phục.",
+   "link": "https://drive.google.com/file/d/1L8SieN4pjcjNrvFCHVC53Z5YAsspHyfH/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-stability",
+   "tieuDe": "Handbook of Stability Testing in Pharmaceutical Development",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Thiết kế nghiên cứu độ ổn định, chọn điều kiện bảo quản và diễn giải số liệu để xác định hạn dùng.",
+   "link": "https://drive.google.com/file/d/16kR2i-U_BhetnZnpQ2plby4auv2IBir6/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-stability-who",
+   "tieuDe": "Stability testing of API and finished products (01/2017)",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Hướng dẫn thử độ ổn định cho hoạt chất và thành phẩm — bản cập nhật tháng 01/2017, dùng khi xây dựng đề cương theo dõi.",
+   "link": "https://drive.google.com/file/d/1cC0CsvJMVebfWNJDxaFQdTIwqQw9Pr7l/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-skincare",
+   "tieuDe": "Cosmetic Formulation of Skin Care Products",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "4,3 MB",
+   "moTa": "Nguyên lý xây dựng công thức skincare: hệ nhũ tương, chất làm mềm, hoạt chất và cảm quan sản phẩm.",
+   "link": "https://drive.google.com/file/d/1DREPH3fWDjSDt-bRpPHOpBrxkQqGoLpG/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-preservation",
+   "tieuDe": "Cosmetics Preservation — A Review on Present Strategies",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Tổng quan các hệ bảo quản mỹ phẩm hiện hành, phổ tác dụng và xu hướng thay thế paraben.",
+   "link": "https://drive.google.com/file/d/1SylZbSZiRlpMkrlb5tMuPTvdj-O3QYaH/view",
+   "ngayCapNhat": ""
+  },
+  {
+   "id": "nc-microbio",
+   "tieuDe": "Cosmetic Microbiology — A Practical Approach (2nd ed.)",
+   "nhom": "nghiencuu",
+   "dinhDang": "PDF",
+   "dungLuong": "",
+   "moTa": "Kiểm soát vi sinh trong sản xuất mỹ phẩm: nguồn nhiễm, phương pháp thử và thử thách hệ bảo quản.",
+   "link": "https://drive.google.com/file/d/1V0Qddwl5CP1N4IN2cCVRmMoxkYS91toL/view",
+   "ngayCapNhat": ""
+  }
+ ],
+ "congDong": [
+  {
+   "id": "fb-nghiencuu",
+   "nen": "facebook",
+   "mau": "#8B5CF6",
+   "ten": "Nghiên cứu phát triển TPCN, Mỹ phẩm, Dược phẩm GMP, Hoá phẩm gia dụng",
+   "moTa": "Trao đổi công thức, quy trình và tiêu chuẩn giữa những người trực tiếp làm R&D.",
+   "link": "https://www.facebook.com/groups/143844272053220/"
+  },
+  {
+   "id": "fb-nguyenlieu",
+   "nen": "facebook",
+   "mau": "#10B981",
+   "ten": "Nguyên liệu — Dược phẩm, Mỹ phẩm, TPCN",
+   "moTa": "Hỏi đáp và giới thiệu nguồn nguyên liệu: hoạt chất, tá dược, phụ gia, bao bì.",
+   "link": "https://www.facebook.com/share/g/197HdU24Xw/"
+  },
+  {
+   "id": "fb-sanxuat",
+   "nen": "facebook",
+   "mau": "#F59E0B",
+   "ten": "Sản xuất TPCN, Mỹ phẩm, Dược phẩm GMP",
+   "moTa": "Chuyện nhà xưởng: thiết bị, cỡ lô, GMP và vận hành sản xuất hằng ngày.",
+   "link": "https://www.facebook.com/share/g/1BxQStptdV/"
+  },
+  {
+   "id": "fb-kinhdoanh",
+   "nen": "facebook",
+   "mau": "#EC4899",
+   "ten": "Kinh doanh TPCN, Mỹ phẩm, Dược phẩm GMP",
+   "moTa": "Thị trường, công bố, phân phối và câu chuyện bán hàng ngành hàng sức khoẻ.",
+   "link": "https://www.facebook.com/share/g/1FBQtQGLkH/"
+  },
+  {
+   "id": "zalo-nhom",
+   "nen": "zalo",
+   "mau": "#0068FF",
+   "ten": "Nhóm Zalo trao đổi trực tiếp",
+   "moTa": "Hỏi nhanh đáp nhanh với tôi và anh em trong ngành, ngay trên Zalo.",
+   "link": "https://zalo.me/g/kntqdg821"
+  }
+ ],
+ "nhomUngDung": [
+  {
+   "ma": "all",
+   "ten": "Tất cả",
+   "icon": "✨",
+   "moTa": ""
+  },
+  {
+   "ma": "nghiencuu",
+   "ten": "Nghiên cứu R&D",
+   "icon": "🧪",
+   "moTa": "Từ ý tưởng công thức tới bộ hồ sơ công bố"
+  },
+  {
+   "ma": "sanxuat",
+   "ten": "Sản xuất",
+   "icon": "🏭",
+   "moTa": "Vật tư, lệnh sản xuất và kiểm nghiệm — chạy theo lô"
+  },
+  {
+   "ma": "kinhdoanh",
+   "ten": "Kinh doanh",
+   "icon": "🤝",
+   "moTa": "Khách hàng, báo giá, đơn hàng và công nợ"
+  },
+  {
+   "ma": "vanphong",
+   "ten": "Nhân sự",
+   "icon": "👥",
+   "moTa": "Chấm công, đơn từ, KPI và lương"
+  },
+  {
+   "ma": "morong",
+   "ten": "Hỗ trợ & mở rộng",
+   "icon": "🧩",
+   "moTa": "Công cụ đi kèm — xếp hàng, quản lý hồ sơ, cứu dữ liệu, quản lý gia đình"
+  }
+ ],
+ "nhomTaiLieu": [
+  {
+   "ma": "all",
+   "ten": "Tất cả danh mục",
+   "icon": "",
+   "moTa": ""
+  },
+  {
+   "ma": "phapluat",
+   "ten": "1. Văn bản pháp luật",
+   "icon": "",
+   "moTa": ""
+  },
+  {
+   "ma": "appdungthu",
+   "ten": "2. App dùng thử",
+   "icon": "",
+   "moTa": ""
+  },
+  {
+   "ma": "nghiencuu",
+   "ten": "3. Tài liệu nghiên cứu",
+   "icon": "",
+   "moTa": ""
+  }
+ ],
+ "videos": {
+  "kenh": "https://www.youtube.com/channel/UCe31TzXPFjDIBfJuA0-c8lQ",
+  "ds": [
+   {
+    "id": "cfYAUo0JBXI",
+    "ten": "Auto KHVT",
+    "moTa": "",
+    "ngay": "2026-09-21"
+   },
+   {
+    "id": "X3NdqgG9w1o",
+    "ten": "Auto HCNS V5 2",
+    "moTa": "",
+    "ngay": "2026-09-20"
+   },
+   {
+    "id": "x4NLn_utyx8",
+    "ten": "Auto HCNS V5",
+    "moTa": "",
+    "ngay": "2026-09-20"
+   },
+   {
+    "id": "qatDchrlzYA",
+    "ten": "Auto HCNS V2",
+    "moTa": "",
+    "ngay": "2026-09-01"
+   },
+   {
+    "id": "kL_L1WnCcCw",
+    "ten": "Nắm Vững Autofile V21",
+    "moTa": "",
+    "ngay": "2026-07-12"
+   },
+   {
+    "id": "BSxlW0SSYdY",
+    "ten": "Auto RDV8.1 Ban dung thử làm được gì",
+    "moTa": "",
+    "ngay": "2026-07-04"
+   },
+   {
+    "id": "mtjd5n5przU",
+    "ten": "Auto RD_Tính GT DD thế nào",
+    "moTa": "",
+    "ngay": "2026-06-26"
+   },
+   {
+    "id": "E4F3GPJ3yww",
+    "ten": "Auto R&D làm được gì",
+    "moTa": "",
+    "ngay": "2026-06-21"
+   },
+   {
+    "id": "gb-8zBepnIw",
+    "ten": "Auto RD - tinh nang tính GTDD và so sanh RNI",
+    "moTa": "",
+    "ngay": "2026-06-21"
+   },
+   {
+    "id": "01BGY0EdLG4",
+    "ten": "Auto R&D",
+    "moTa": "",
+    "ngay": "2026-06-21"
+   },
+   {
+    "id": "KQn_SL-tDAA",
+    "ten": "Auto Nutri an",
+    "moTa": "",
+    "ngay": "2026-06-07"
+   },
+   {
+    "id": "obYdseLPLQ0",
+    "ten": "Autofile V14",
+    "moTa": "",
+    "ngay": "2026-05-31"
+   }
+  ]
+ },
  "baiViet": [
   {
    "maApp": "auto-rd",
@@ -842,400 +1237,5 @@ const NOI_DUNG_DU_PHONG = {
    "tieuDe": "Kho phải có sơ đồ, không chỉ có con số",
    "noiDung": "Thủ kho không tìm hàng bằng con số tồn, họ tìm bằng mắt và bằng trí nhớ vị trí. Vì vậy bản V7 thêm sơ đồ kho: khai các dãy kệ rồi kéo – thả từng lô vào đúng ô của nó, gõ một mã lô là ra ngay vị trí, hạn dùng và toàn bộ lịch sử nhập xuất. Có một luật tôi đặt ra và giữ chặt khi làm phần này: sơ đồ không bao giờ được báo nhiều hơn tồn thật. Thà sơ đồ hiển thị thiếu một lô chưa kịp xếp chỗ, còn hơn để người ta ra kho lấy một thứ mà trên giấy có nhưng trong kệ không có."
   }
- ],
- "taiLieu": [
-  {
-   "id": "pl-attp",
-   "tieuDe": "Văn bản An toàn thực phẩm",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Nghị định, thông tư và hướng dẫn về điều kiện sản xuất, công bố và ghi nhãn thực phẩm.",
-   "link": "https://drive.google.com/drive/folders/1vYagdiGQlMobSuPWeRce-E1PNYpitJVr",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-mypham",
-   "tieuDe": "Văn bản Mỹ phẩm",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Quy định quản lý mỹ phẩm, công bố sản phẩm, hồ sơ thông tin sản phẩm và CGMP ASEAN.",
-   "link": "https://drive.google.com/drive/folders/1WW0sK4cFW_Zq5JQzmmIyvhy1JjGW4ZTW",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-duoc",
-   "tieuDe": "Văn bản Dược",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Luật Dược và các văn bản hướng dẫn về sản xuất, đăng ký và lưu hành thuốc.",
-   "link": "https://drive.google.com/drive/folders/1YU-_MC-gP0tgNVr7dt902peL3MO9AZdF",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-qcvn",
-   "tieuDe": "Quy chuẩn kỹ thuật quốc gia (QCVN)",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Bộ QCVN áp dụng cho thực phẩm, phụ gia, giới hạn ô nhiễm và bao bì tiếp xúc.",
-   "link": "https://drive.google.com/drive/folders/1Si3dTeGVFRMt_HabUrLlSdB29SSSsL8a",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-tcvn",
-   "tieuDe": "Tiêu chuẩn quốc gia (TCVN)",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Tiêu chuẩn Việt Nam dùng khi xây dựng tiêu chuẩn cơ sở và phương pháp thử.",
-   "link": "https://drive.google.com/drive/folders/177LOCLCkM9tVWDaImhUEgLPUCCpDG2M5",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-codex",
-   "tieuDe": "Tiêu chuẩn CODEX",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Bộ tiêu chuẩn quốc tế CODEX, gồm danh mục phụ gia và mức sử dụng tối đa theo nhóm thực phẩm.",
-   "link": "https://drive.google.com/drive/folders/1gNWyw2rZFHCxa3mP8rMK-5YBDz0sfnMJ",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-iso",
-   "tieuDe": "Bộ tiêu chuẩn ISO",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Tài liệu ISO phục vụ xây dựng và duy trì hệ thống quản lý chất lượng trong nhà máy.",
-   "link": "https://drive.google.com/drive/folders/1l-0YxVbGL_F59Y5Qef-O5jaQcZCFtkJR",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-hoachat",
-   "tieuDe": "Luật Hoá chất và văn bản hướng dẫn",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Quy định về khai báo, bảo quản và sử dụng hoá chất trong sản xuất công nghiệp.",
-   "link": "https://drive.google.com/drive/folders/1eDJWgsKE4nuD37IQfa-T_qeeEER_pvar",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "pl-moitruong",
-   "tieuDe": "Văn bản Môi trường",
-   "nhom": "phapluat",
-   "dinhDang": "VB",
-   "dungLuong": "thư mục",
-   "moTa": "Quy định về xả thải, quản lý chất thải và hồ sơ môi trường của cơ sở sản xuất.",
-   "link": "https://drive.google.com/drive/folders/1uJelTCwI8pmQlhquU9Dj0QQXDYvf2rli",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "app-rd",
-   "tieuDe": "Auto RD — bản dùng thử (V11.1)",
-   "nhom": "appdungthu",
-   "dinhDang": "RAR",
-   "dungLuong": "92,9 MB",
-   "moTa": "Bản dùng thử đầy đủ tính năng, có sẵn dữ liệu mẫu để hình dung ngay. Chạy trên Windows 10 / 11, không cần Internet. Trong thư mục có kèm bộ poster sơ đồ tính năng và hướng dẫn cài đặt.",
-   "link": "https://drive.google.com/drive/folders/1dqSODPQ6yYR_gPJxmkErJuamsOYH9NhQ",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "app-box",
-   "tieuDe": "Auto Box Plus V16.0 — bản dùng thử",
-   "nhom": "appdungthu",
-   "dinhDang": "RAR",
-   "dungLuong": "73 MB",
-   "moTa": "Bản portable, giải nén là chạy, không cần cài đặt. Dùng thử 7 ngày đầy đủ tính năng xếp hộp – thùng – xe kèm mô phỏng 3D.",
-   "link": "https://drive.google.com/drive/folders/1xMwXGKUCwXxYlJ6Ojf6_Lq71S8eVg3DJ",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "app-file",
-   "tieuDe": "Autofile V23 — bản dùng thử",
-   "nhom": "appdungthu",
-   "dinhDang": "RAR",
-   "dungLuong": "1,2 MB",
-   "moTa": "Một file EXE duy nhất, không cần cài đặt. Dùng thử 7 ngày toàn bộ chức năng đặt tên, tìm kiếm và trích xuất hồ sơ.",
-   "link": "https://drive.google.com/drive/folders/1Gj7eezfIqBvblLxRRlp8mw-QQxxXjTOg",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-excipients",
-   "tieuDe": "Handbook of Pharmaceutical Excipients (6th ed.)",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Cẩm nang tra cứu tá dược: chức năng, mức dùng thông thường, tương kỵ và độ ổn định — tài liệu tôi mở nhiều nhất khi dựng công thức mới.",
-   "link": "https://drive.google.com/file/d/1Zh0l8mP7nlXFFq2yWOHPUWmf_68DE9dy/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-formulations",
-   "tieuDe": "Handbook of Pharmaceutical Manufacturing Formulations — trọn bộ 6 tập",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "6 tập",
-   "moTa": "Công thức mẫu cho viên nén, thuốc bột, dạng lỏng, bán rắn, OTC và sản phẩm vô trùng. Dùng để tham chiếu khi bắt đầu một dạng bào chế chưa từng làm.",
-   "link": "https://drive.google.com/drive/folders/1GdR9spFqVRZAA_s4iz_eoY1tHH12UXvr",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-granulation",
-   "tieuDe": "Handbook of Pharmaceutical Granulation Technology",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Kỹ thuật tạo hạt: xát hạt ướt, tạo hạt khô, sấy tầng sôi và các yếu tố ảnh hưởng tới độ đồng đều hàm lượng.",
-   "link": "https://drive.google.com/file/d/1eW6XFzGJrUZ5j4ygiR6C4mmlLRE15Cwl/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-coating",
-   "tieuDe": "Coating of Pharmaceutical Solid Dosage Forms",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "3,1 MB",
-   "moTa": "Kỹ thuật bao phim viên nén: lựa chọn polymer, thông số bao, và các lỗi bề mặt thường gặp cùng cách khắc phục.",
-   "link": "https://drive.google.com/file/d/1L8SieN4pjcjNrvFCHVC53Z5YAsspHyfH/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-stability",
-   "tieuDe": "Handbook of Stability Testing in Pharmaceutical Development",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Thiết kế nghiên cứu độ ổn định, chọn điều kiện bảo quản và diễn giải số liệu để xác định hạn dùng.",
-   "link": "https://drive.google.com/file/d/16kR2i-U_BhetnZnpQ2plby4auv2IBir6/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-stability-who",
-   "tieuDe": "Stability testing of API and finished products (01/2017)",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Hướng dẫn thử độ ổn định cho hoạt chất và thành phẩm — bản cập nhật tháng 01/2017, dùng khi xây dựng đề cương theo dõi.",
-   "link": "https://drive.google.com/file/d/1cC0CsvJMVebfWNJDxaFQdTIwqQw9Pr7l/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-skincare",
-   "tieuDe": "Cosmetic Formulation of Skin Care Products",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "4,3 MB",
-   "moTa": "Nguyên lý xây dựng công thức skincare: hệ nhũ tương, chất làm mềm, hoạt chất và cảm quan sản phẩm.",
-   "link": "https://drive.google.com/file/d/1DREPH3fWDjSDt-bRpPHOpBrxkQqGoLpG/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-preservation",
-   "tieuDe": "Cosmetics Preservation — A Review on Present Strategies",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Tổng quan các hệ bảo quản mỹ phẩm hiện hành, phổ tác dụng và xu hướng thay thế paraben.",
-   "link": "https://drive.google.com/file/d/1SylZbSZiRlpMkrlb5tMuPTvdj-O3QYaH/view",
-   "ngayCapNhat": ""
-  },
-  {
-   "id": "nc-microbio",
-   "tieuDe": "Cosmetic Microbiology — A Practical Approach (2nd ed.)",
-   "nhom": "nghiencuu",
-   "dinhDang": "PDF",
-   "dungLuong": "",
-   "moTa": "Kiểm soát vi sinh trong sản xuất mỹ phẩm: nguồn nhiễm, phương pháp thử và thử thách hệ bảo quản.",
-   "link": "https://drive.google.com/file/d/1V0Qddwl5CP1N4IN2cCVRmMoxkYS91toL/view",
-   "ngayCapNhat": ""
-  }
- ],
- "congDong": [
-  {
-   "id": "fb-nghiencuu",
-   "nen": "facebook",
-   "mau": "#8B5CF6",
-   "ten": "Nghiên cứu phát triển TPCN, Mỹ phẩm, Dược phẩm GMP, Hoá phẩm gia dụng",
-   "moTa": "Trao đổi công thức, quy trình và tiêu chuẩn giữa những người trực tiếp làm R&D.",
-   "link": "https://www.facebook.com/groups/143844272053220/"
-  },
-  {
-   "id": "fb-nguyenlieu",
-   "nen": "facebook",
-   "mau": "#10B981",
-   "ten": "Nguyên liệu — Dược phẩm, Mỹ phẩm, TPCN",
-   "moTa": "Hỏi đáp và giới thiệu nguồn nguyên liệu: hoạt chất, tá dược, phụ gia, bao bì.",
-   "link": "https://www.facebook.com/share/g/197HdU24Xw/"
-  },
-  {
-   "id": "fb-sanxuat",
-   "nen": "facebook",
-   "mau": "#F59E0B",
-   "ten": "Sản xuất TPCN, Mỹ phẩm, Dược phẩm GMP",
-   "moTa": "Chuyện nhà xưởng: thiết bị, cỡ lô, GMP và vận hành sản xuất hằng ngày.",
-   "link": "https://www.facebook.com/share/g/1BxQStptdV/"
-  },
-  {
-   "id": "fb-kinhdoanh",
-   "nen": "facebook",
-   "mau": "#EC4899",
-   "ten": "Kinh doanh TPCN, Mỹ phẩm, Dược phẩm GMP",
-   "moTa": "Thị trường, công bố, phân phối và câu chuyện bán hàng ngành hàng sức khoẻ.",
-   "link": "https://www.facebook.com/share/g/1FBQtQGLkH/"
-  },
-  {
-   "id": "zalo-nhom",
-   "nen": "zalo",
-   "mau": "#0068FF",
-   "ten": "Nhóm Zalo trao đổi trực tiếp",
-   "moTa": "Hỏi nhanh đáp nhanh với tôi và anh em trong ngành, ngay trên Zalo.",
-   "link": "https://zalo.me/g/kntqdg821"
-  }
- ],
- "nhomUngDung": [
-  {
-   "ma": "all",
-   "ten": "Tất cả",
-   "icon": "✨",
-   "moTa": ""
-  },
-  {
-   "ma": "nghiencuu",
-   "ten": "Nghiên cứu R&D",
-   "icon": "🧪",
-   "moTa": "Từ ý tưởng công thức tới bộ hồ sơ công bố"
-  },
-  {
-   "ma": "sanxuat",
-   "ten": "Sản xuất",
-   "icon": "🏭",
-   "moTa": "Vật tư, lệnh sản xuất và kiểm nghiệm — chạy theo lô"
-  },
-  {
-   "ma": "kinhdoanh",
-   "ten": "Kinh doanh",
-   "icon": "🤝",
-   "moTa": "Khách hàng, báo giá, đơn hàng và công nợ"
-  },
-  {
-   "ma": "vanphong",
-   "ten": "Nhân sự",
-   "icon": "👥",
-   "moTa": "Chấm công, đơn từ, KPI và lương"
-  },
-  {
-   "ma": "morong",
-   "ten": "Hỗ trợ & mở rộng",
-   "icon": "🧩",
-   "moTa": "Công cụ đi kèm — xếp hàng, quản lý hồ sơ, cứu dữ liệu, quản lý gia đình"
-  }
- ],
- "nhomTaiLieu": [
-  {
-   "ma": "all",
-   "ten": "Tất cả danh mục",
-   "icon": "",
-   "moTa": ""
-  },
-  {
-   "ma": "phapluat",
-   "ten": "1. Văn bản pháp luật",
-   "icon": "",
-   "moTa": ""
-  },
-  {
-   "ma": "appdungthu",
-   "ten": "2. App dùng thử",
-   "icon": "",
-   "moTa": ""
-  },
-  {
-   "ma": "nghiencuu",
-   "ten": "3. Tài liệu nghiên cứu",
-   "icon": "",
-   "moTa": ""
-  }
- ],
- "videos": {
-  "kenh": "https://www.youtube.com/channel/UCe31TzXPFjDIBfJuA0-c8lQ",
-  "ds": [
-   {
-    "id": "cfYAUo0JBXI",
-    "ten": "Auto KHVT",
-    "moTa": "",
-    "ngay": "2026-09-21"
-   },
-   {
-    "id": "X3NdqgG9w1o",
-    "ten": "Auto HCNS V5 2",
-    "moTa": "",
-    "ngay": "2026-09-20"
-   },
-   {
-    "id": "x4NLn_utyx8",
-    "ten": "Auto HCNS V5",
-    "moTa": "",
-    "ngay": "2026-09-20"
-   },
-   {
-    "id": "qatDchrlzYA",
-    "ten": "Auto HCNS V2",
-    "moTa": "",
-    "ngay": "2026-09-01"
-   },
-   {
-    "id": "kL_L1WnCcCw",
-    "ten": "Nắm Vững Autofile V21",
-    "moTa": "",
-    "ngay": "2026-07-12"
-   },
-   {
-    "id": "BSxlW0SSYdY",
-    "ten": "Auto RDV8.1 Ban dung thử làm được gì",
-    "moTa": "",
-    "ngay": "2026-07-04"
-   },
-   {
-    "id": "mtjd5n5przU",
-    "ten": "Auto RD_Tính GT DD thế nào",
-    "moTa": "",
-    "ngay": "2026-06-26"
-   },
-   {
-    "id": "E4F3GPJ3yww",
-    "ten": "Auto R&D làm được gì",
-    "moTa": "",
-    "ngay": "2026-06-21"
-   },
-   {
-    "id": "gb-8zBepnIw",
-    "ten": "Auto RD - tinh nang tính GTDD và so sanh RNI",
-    "moTa": "",
-    "ngay": "2026-06-21"
-   },
-   {
-    "id": "01BGY0EdLG4",
-    "ten": "Auto R&D",
-    "moTa": "",
-    "ngay": "2026-06-21"
-   },
-   {
-    "id": "KQn_SL-tDAA",
-    "ten": "Auto Nutri an",
-    "moTa": "",
-    "ngay": "2026-06-07"
-   },
-   {
-    "id": "obYdseLPLQ0",
-    "ten": "Autofile V14",
-    "moTa": "",
-    "ngay": "2026-05-31"
-   }
-  ]
- }
+ ]
 };
