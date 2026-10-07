@@ -322,7 +322,15 @@ async function guiChat(cauHoi, lichSu) {
   form.append('hoi', String(cauHoi || '').slice(0, 1000));
   form.append('lichSu', JSON.stringify((lichSu || []).slice(-5)));
   try { form.append('khach', ThongKe.maKhach()); } catch (e) {}
-  const phanHoi = await fetch(CONFIG.URL_FORM, { method: 'POST', body: form });
-  if (!phanHoi.ok) throw new Error('Máy chủ trả về mã ' + phanHoi.status);
-  return await phanHoi.json();
+  // [THÊM MỚI 07/10/2026] Hẹn giờ 60 giây — trước: không hẹn, máy chủ nghẽn là khách nhìn 3 chấm tới vài phút.
+  //   Quá giờ → báo lỗi → chat.js hiện câu "Mình đang bận… nhắn Zalo" (khách vẫn có đường liên hệ).
+  const hen = new AbortController();
+  const dongHo = setTimeout(() => hen.abort(), 60000);
+  try {
+    const phanHoi = await fetch(CONFIG.URL_FORM, { method: 'POST', body: form, signal: hen.signal });
+    if (!phanHoi.ok) throw new Error('Máy chủ trả về mã ' + phanHoi.status);
+    return await phanHoi.json();
+  } finally {
+    clearTimeout(dongHo);
+  }
 }
