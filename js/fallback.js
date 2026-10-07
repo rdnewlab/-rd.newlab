@@ -264,7 +264,7 @@ const NOI_DUNG_DU_PHONG = {
    "diemChinh": "Báo giá bậc thang theo 4 mốc MOQ: 3.000 · 5.000 · 10.000 · 20.000, VAT 0–10%|Đơn hàng chạy 8 khâu: tạm ứng → maket → vật tư → sản xuất → QC & COA → nhập kho → giao|Cổng khách hàng 7 thẻ: khách tự xem tiến độ, báo giá, công nợ, chấm điểm mẫu|Bao bì 3 cấp + 3 mức giá tự cộng vào giá thành — khách chỉ thấy khoảng giá|Khách của ai người nấy giữ: bảo vệ 45 ngày, cảnh báo trùng khi nhập|Phân quyền 13 menu × 6 thao tác, 4 quy trình duyệt chạy thật|Thiết kế bao bì 3D xoay tay, đổi màu thân · nắp · nhãn, lưu ảnh PNG gửi khách",
    "trangThai": "Đang triển khai",
    "mauNhan": "cam",
-   "linkTai": "https://drive.google.com/drive/folders/1xQZjqsdhbl6Nk6qQAeLgmTJe7lTNede6",
+   "linkTai": "https://drive.google.com/drive/folders/1HMyRBYeLSTl17dW3HOm5IK6AHPy9p4FX",
    "chuThichTai": "Miễn phí 7 ngày · dùng thử 30 ngày",
    "linkVideo": "",
    "linkMo": "https://rdnewlab-kd.web.app"
