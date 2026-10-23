@@ -54,6 +54,21 @@ function dinhTuyen() {
   const hash    = window.location.hash || '#/';
   const manChu  = document.getElementById('man-chu');
   const manBai  = document.getElementById('man-bai-viet');
+  const manLink = document.getElementById('man-link');
+  const theLink = document.getElementById('dh-link-web');
+
+  // [V6] Màn Link web: #/link-web — trang riêng, trang chủ không hiện khối này
+  const laLink = hash === '#/link-web';
+  manLink.classList.toggle('an', !laLink);
+  if (theLink) theLink.classList.toggle('dang-xem', laLink);
+  if (laLink) {
+    manChu.classList.add('an');
+    manBai.classList.add('an');
+    window.scrollTo(0, 0);
+    LinkWeb.mo();
+    ThongKe.gui('doc_bai', 'link-web');
+    return;
+  }
 
   // Màn bài viết chi tiết: #/ung-dung/<ma>
   const khop = hash.match(/^#\/ung-dung\/([\w-]+)$/);
